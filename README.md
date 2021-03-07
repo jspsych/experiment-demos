@@ -12,11 +12,13 @@ The goal is two-fold:
 1. Raise an issue [here](https://github.com/jspsych/experiment-demos/issues). Provide enough detail so that your other contributors can know which experiment you are planning to do. Apply label "DemoTaskDevelopment". Assign yourself to the issue.   
 1. Make a pull request. Other contributors may reach out to you about adaptating or optimizing the experiment. 
 
-## How Should My Study Be Structured? 
+## How Should My Study Be Structured?
+<pre>
 my_experiment
 ├── assets
 │   ├── images
 │   └── sound
 ├── data
 └── jspsych
+</pre>
 ## 
