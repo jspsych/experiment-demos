@@ -13,5 +13,10 @@ The goal is two-fold:
 1. Make a pull request. Other contributors may reach out to you about adaptating or optimizing the experiment. 
 
 ## How Should My Study Be Structured? 
-
+my_experiment
+├── assets
+│   ├── images
+│   └── sound
+├── data
+└── jspsych
 ## 
