@@ -19,6 +19,9 @@ my_experiment
 │   ├── images
 │   └── sound
 ├── data
+├── index.html
 └── jspsych
 ```
+"my_experiment" should be a descriptive name for the experiment, all lower-case. "jspsych" should contain the jspsych files necesserary to run the experiment. 
+
 ## 
