@@ -11,17 +11,17 @@ We have two goals with this repository:
 ## How Do I Contribute a Study?
 1. Raise an issue [here](https://github.com/jspsych/experiment-demos/issues) to announce the experiment that you plan to contribute. Provide enough detail so that your other contributors can know which experiment you are planning to do. Apply label "DemoTaskDevelopment". Assign yourself to the issue.
 2. Make a branch of the experiment-demos repository. Add your new experiment as a subfolder at the top-level using this structure: 
-```bash
-experiment-demos
-└── my_experiment
-    ├── assets
-    │   ├── images
-    │   └── sound
-    ├── data
-    ├── index.html
-    └── jspsych
-```
-"my_experiment" should be a descriptive name for the experiment, all lower-case. "jspsych" should contain the jspsych files necesserary to run the experiment.     
+    ```bash
+    experiment-demos
+    └── my_experiment
+        ├── assets
+        │   ├── images
+        │   └── sound
+        ├── data
+        ├── index.html
+        └── jspsych
+    ```
+    "my_experiment" should be a descriptive name for the experiment, all lower-case. "jspsych" should contain the jspsych files necesserary to run the experiment.     
 3. Make a pull request. Other contributors may reach out to you about adaptating or optimizing the experiment. 
 
 ## How Can I Run the Experiment?
