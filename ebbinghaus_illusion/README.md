@@ -1,6 +1,5 @@
-# pessiglione
-refactor or Pessiglione ePrime task from uMaryland
-Josh Kenney % Ben Robinson
+# Ebbinghaus Illusion
+Josh Kenney & Ben Robinson
 
 ## Development Guide
 
