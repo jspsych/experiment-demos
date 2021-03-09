@@ -2,11 +2,11 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <meta name="description" content="jsPsych Cognitive task">
+    <meta name="description" content="jsPsych Stroop: Word Task">
     <meta name="keywords" content="HTML, CSS, JavaScript">
     <meta name="author" content="Jason Steffener, NCMLab">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NCM Lab: Stroop</title>
+    <title>Stroop: Word</title>
     <script src="jspsych-6.2.0/jspsych.js"></script>
     <script src="jspsych-6.2.0/plugins/jspsych-html-keyboard-response.js"></script>
     <script src="jspsych-6.2.0/plugins/jspsych-image-keyboard-response.js"></script>
@@ -14,7 +14,6 @@
     <script src="jspsych-6.2.0/plugins/jspsych-instructions.js"></script>    
     <script src="StroopColorWord_Setup_EN.js"></script>
     <link href="jspsych-6.2.0/css/jspsych.css" rel="stylesheet" type="text/css">
-    <script src="/assets/javascripts/jatos.js"></script>
     <style>
       .stimulus { font-size: StimulusFontSize; }
     </style>
@@ -38,7 +37,7 @@
     // Note, that the fullscreen plugin needs to imported above
     timeline.push({
       type: 'fullscreen',
-      fullscreen_mode: true
+      fullscreen_mode: FullScreenMode
     });
 
    /* Create the initial welcome and instructions for practice.
@@ -129,7 +128,7 @@
       timeline_variables: StroopWordList,
       sample: {
         type: 'fixed-repetitions',
-        size: 1, 
+        size: WordPracticeRepeats, 
       }
     }
     // Define the test procedure which does NOT provide feedback
@@ -138,7 +137,7 @@
       timeline_variables: StroopWordList,
       sample: {
         type: 'fixed-repetitions',
-        size: 1, 
+        size: WordTestRepeats, 
       }
     }
     // Prepare debriefing for after the practice trials
@@ -192,6 +191,7 @@
     /* start the experiment */
   //jatos.onLoad(function() {
     jsPsych.init({
+        override_safe_mode: true,
         experiment_width: 600,
         timeline: timeline,
         on_interaction_data_update: function(data) {

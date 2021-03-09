@@ -3,11 +3,11 @@
   <head>
 
     <meta charset="UTF-8">
-    <meta name="description" content="jsPsych Cognitive task">
+    <meta name="description" content="jsPsych Stroop: Color Task">
     <meta name="keywords" content="HTML, CSS, JavaScript">
     <meta name="author" content="Jason Steffener, NCMLab">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NCM Lab: Stroop</title>
+    <title>Stroop: Color</title>
     <script src="jspsych-6.2.0/jspsych.js"></script>
     <script src="jspsych-6.2.0/plugins/jspsych-html-keyboard-response.js"></script>
     <script src="jspsych-6.2.0/plugins/jspsych-image-keyboard-response.js"></script>
@@ -15,7 +15,6 @@
      <script src="jspsych-6.2.0/plugins/jspsych-instructions.js"></script>
     <script src="StroopColorWord_Setup_EN.js"></script>
     <link href="jspsych-6.2.0/css/jspsych.css" rel="stylesheet" type="text/css">
-    <script src="/assets/javascripts/jatos.js"></script>
     <style>
       .stimulus { font-size: StimulusFontSize; }
     </style>
@@ -30,7 +29,7 @@
     // Note, that the fullscreen plugin needs to imported above
     timeline.push({
       type: 'fullscreen',
-      fullscreen_mode: true
+      fullscreen_mode: FullScreenMode
     });
 
    /* Create the initial welcome and instructions for practice.
@@ -95,7 +94,7 @@
       },
   	  choices: jsPsych.NO_KEYS,
   	  trial_duration: function(){
-          /eturn jsPsych.randomization.sampleWithoutReplacement([250, 500, 750, 1000, 1250, 1500, 1750, 2000], 1)[0];*/
+          return jsPsych.randomization.sampleWithoutReplacement([250, 500, 750, 1000, 1250, 1500, 1750, 2000], 1)[0];
         },
       data: {test_part: 'fixation'}
   	}
@@ -186,6 +185,7 @@
   //jatos.onLoad(function() {  
     jsPsych.init({
       // This sets the width of the experiment to 600 pixels. This will wrap all text to that amount.
+        override_safe_mode: true,
         experiment_width: 600,
       	timeline: timeline,
         on_interaction_data_update: function(data) {

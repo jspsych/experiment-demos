@@ -1,3 +1,4 @@
+var FullScreenMode = false;
 var TextFontSize = "30px";
 var StimulusFontSize = '60px';
 

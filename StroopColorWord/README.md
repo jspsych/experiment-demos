@@ -7,6 +7,12 @@ This is an implementation of the classic Stroop task with keyboard input.
 # Task Description
 Participants see rectangles of different color and need to indentify the color of the rectangle. Participants are next shown words presented in black font color and they need to identify the color that the word represents. Finally, participants see words, which are the same names of colors as in teh previous task, and they need to identify the font color that the word is presented in.
 
+The three parts of the Stroop are broekn into three separate HTML files. 
+For each task instructions are shown to the participant where they are told what to do and which keys to use to respond. 
+After the instructions practice trials are presented and accuracy feedback is provided. If the participant gets 50% accuracy then the test trials are run. If accuracy is below 50% then the practice is run a second time. Practice will be run a maximum of 3 times if accuracy is below 50%. After that the test trials are presented. Test trials do not present feedback. The same structure is used for the Color, Word and Color/Word versions of the task.
+
+Currently, when the task is completed the results are automatically saved as CSV files. Note, no participant ID is included in the name and files will be overwritten upon a subsequent run of the code.
+
 # Duration
 This depends on the timing parameters chosen and the response time of the participants. 
 
