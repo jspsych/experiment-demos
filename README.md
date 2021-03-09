@@ -40,6 +40,7 @@ We have two goals with this repository:
 3. Make a pull request. Other contributors may reach out to you about adaptating or optimizing the experiment. 
 
 ## How Can I Test an Experiment? 
+Simply clone the repository or download the files to your local machine. Each experiment (or in some cases: set of sub-experiments) lives within in its own self-contained folder. Opening the index.html folder in your browser will launch the experiment.  
 
 ## How Can I Collect Data Using an Experiment?
 ### Cognition.run
