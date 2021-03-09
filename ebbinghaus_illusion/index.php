@@ -9,10 +9,10 @@
     <title>Ebbinghaus</title>
     <script src="db/validate.js"></script>
     <script src="js/jquery-3.5.1.min.js"></script>
-    <script type="text/javascript" src="jsPsych/jspsych.js"></script>
-    <script type="text/javascript" src="jsPsych/plugins/jspsych-html-keyboard-response.js"></script>
-    <script type="text/javascript" src="jsPsych/plugins/jspsych-image-keyboard-response.js"></script>
-    <link href="jsPsych/css/jspsych.css" rel="stylesheet" type="text/css"></link>
+    <script type="text/javascript" src="jspsych/jspsych.js"></script>
+    <script type="text/javascript" src="jspsych/plugins/jspsych-html-keyboard-response.js"></script>
+    <script type="text/javascript" src="jspsych/plugins/jspsych-image-keyboard-response.js"></script>
+    <link href="jspsych/css/jspsych.css" rel="stylesheet" type="text/css"></link>
     <link rel="stylesheet" type="text/css" href="css/style.css">
   </head>
   <body id='unload' onbeforeunload="return areYouSure()" style="background-color: white;">  
@@ -57,7 +57,7 @@
         siteNumber = "<?php echo $institutionAlias?>";
         ageAtAssessment = "<?php echo $ageInMonths?>";
         groupStatus = "<?php echo $groupStatus?>";
-        feedbackLink = "https://belieflab.yale.edu/omnibus/eCRFs/feedback/tasks/ebbinghaus.php?candidateId=<?php echo $candidateId?>&studyId=<?php echo $studyId?>";
+        feedbackLink = "";
       }
     </script>
   </footer>
