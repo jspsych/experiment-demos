@@ -39,5 +39,15 @@ We have two goals with this repository:
     *  "my_experiment_setup_eng.js" should be named using the name used for the experiment folder, with "eng" indicating the language (using [ISO 639-3 codes](https://iso639-3.sil.org/code_tables/639/data)). It is a JS file that contain variables for all of the modifiable parameters of the experiment. This includes text (welcome, instructions, feedback) and experiment parameters. This approach because separates everything someone might want to change for their own purposes from the main experiment code. The language code ("eng" in this case) indicates the language used for instructions etc. and make it easier for other contributors to translate the task for other languages.
 3. Make a pull request. Other contributors may reach out to you about adaptating or optimizing the experiment. 
 
-## How Can I Run the Experiment?
+## How Can I Test an Experiment? 
+
+## How Can I Collect Data Using an Experiment?
+### Cognition.run
+...
+### Pavlovia
+...
+### Self-hosting
+...
+
+
 
