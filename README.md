@@ -8,7 +8,7 @@ We have two goals with this repository:
 1. *Supporting Education in Experimental Psychology* by providing a set of experiments that can be hosted online so that students can collect behavioral data from themselves and each other, and analyze the data, as a part of lab and programming courses.   
 1. *Supporting new research with jsPsych* by providing inspiration and a starting point for researchers interested in using jsPsych to develop new studies. 
 
-## How Do I Contribute a Study?
+## How Do I Contribute an Experiment?
 1. Raise an issue [here](https://github.com/jspsych/experiment-demos/issues) to announce the experiment that you plan to contribute. Provide enough detail so that your other contributors can know which experiment you are planning to do. After you have raised the issue, maintainers will apply label "DemoTaskDevelopment" and assign you to the issue.
 2. Make a branch of the experiment-demos repository. Add your new experiment as a subfolder at the top-level using this structure: 
     ```bash
@@ -39,10 +39,10 @@ We have two goals with this repository:
     *  "my_experiment_setup_eng.js" should be named using the name used for the experiment folder, with "eng" indicating the language (using [ISO 639-3 codes](https://iso639-3.sil.org/code_tables/639/data)). It is a JS file that contain variables for all of the modifiable parameters of the experiment. This includes text (welcome, instructions, feedback) and experiment parameters. This approach because separates everything someone might want to change for their own purposes from the main experiment code. The language code ("eng" in this case) indicates the language used for instructions etc. and make it easier for other contributors to translate the task for other languages.
 3. Make a pull request. Other contributors may reach out to you about adaptating or optimizing the experiment. 
 
-## How Can I Test an Experiment? 
+## How Do I Test an Experiment? 
 Simply clone the repository or download the files to your local machine. Each experiment (or in some cases: set of sub-experiments) lives within in its own self-contained folder. Opening the index.html folder in your browser will launch the experiment.  
 
-## How Can I Collect Data Using an Experiment?
+## How Do I Collect Data Using an Experiment?
 ### Cognition.run
 ...
 ### Pavlovia
