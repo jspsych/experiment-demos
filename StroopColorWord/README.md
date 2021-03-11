@@ -17,7 +17,7 @@ Currently, when the task is completed the results are automatically saved as CSV
 This depends on the timing parameters chosen and the response time of the participants. 
 
 # Results File Information
-The results fil contains trial level information about response time, accuracy, key press and time elapsed. Fixation, practice and test trials are included in the document. To get responses only for test trials the results need to be filtered for all trials occuring after the test trials begin and only "trials" in the "test_part" column of the results.
+The results fil contains trial level information about response time, accuracy, key press and time elapsed. Fixation, practice and test trials are included in the document. To get responses only for test trials the results need to be filtered to only include "test trials" in the "type" column of the results.
 
 # Experimental Set-up
 There is a setup file which allows the researcher to modify all instructions, timing and number fo trials for all three of the tasks.
