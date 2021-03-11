@@ -10,7 +10,7 @@ We have two goals with this repository:
 
 ## How Do I Contribute an Experiment?
 1. Raise an issue [here](https://github.com/jspsych/experiment-demos/issues) to announce the experiment that you plan to contribute. Provide enough detail so that your other contributors can know which experiment you are planning to do. After you have raised the issue, maintainers will apply label "DemoTaskDevelopment" and assign you to the issue.
-2. Make a branch of the experiment-demos repository. Add your new experiment as a subfolder at the top-level. Please read the [guidelines](contributing.md) for contribution carefully. If this is your first contribution you can also add your name and github to [the list of contributors](contributors.md)
+2. Make a branch of the experiment-demos repository. Add your new experiment as a subfolder at the top-level. Please read the [guidelines](contributing.md) for contribution carefully. If this is your first contribution you can also add your name and github to the list of [contributors](contributors.md).
 3. Make a pull request. Other contributors may reach out to you about adaptating or optimizing the experiment. 
 
 ## How Do I Test an Experiment? 
