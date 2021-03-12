@@ -29,11 +29,11 @@ var ColorWordInstrPoorPerformanceText = ['<p style="font-size:'+TextFontSize+'">
 
 var ColorWordTestInstrText = ['<p style="font-size:'+TextFontSize+'">You will now respond without any feedback. Try to respond as quickly and accurately as possible. </p>'];
 
-var ColorThankYouText = 'Thank you for participanting. Press any key to continue to the next task.'
+var ColorThankYouText = 'Thank you'
 
-var WordThankYouText = 'Thank you for participanting. Press any key to continue to the next task.'
+var WordThankYouText = 'Thank you'
 
-var ColorWordThankYouText = 'Thank you for participating.'
+var ColorWordThankYouText = 'Thank you'
 
 /* If the response choice get modified here they also need to be modified below
 */
