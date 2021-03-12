@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="description" content="jsPsych Stroop Color/Word Task">
+    <meta name="keywords" content="HTML, CSS, JavaScript">
+    <meta name="author" content="Jason Steffener, NCMLab">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stroop Color/Word</title>
+    <script src="jspsych-6.2.0/jspsych.js"></script>
+    <script src="jspsych-6.2.0/plugins/jspsych-html-keyboard-response.js"></script>
+    <script src="jspsych-6.2.0/plugins/jspsych-image-keyboard-response.js"></script>
+    <script src="jspsych-6.2.0/plugins/jspsych-fullscreen.js"></script>
+    <script src="jspsych-6.2.0/plugins/jspsych-instructions.js"></script>
+    <script src="Stroop_Setup_EN.js"></script>
+    <link href="jspsych-6.2.0/css/jspsych.css" rel="stylesheet" type="text/css">
+    <link href="Stroop.css" rel="stylesheet">
+    <style>
+      .stimulus { font-size: StimulusFontSize; }
+    </style>
+  </head>
+  <script>
+	/*<?php
+		$post_data = json_decode(file_get_contents('php://input'), true); 
+		// the directory "data" must be writable by the server
+		$name = "data/".$post_data['filename'].".csv"; 
+		$data = $post_data['filedata'];
+		// write the file to disk
+		file_put_contents($name, $data);
+		?>*/
+
+    /* create timeline */
+    var timeline = [];
+    // Make experiment run in full screen mode
+    // Note, that the fullscreen plugin needs to imported above
+    timeline.push({
+      type: 'fullscreen',
+      fullscreen_mode: FullScreenMode
+    });
+
+   /* Create the initial welcome and instructions for practice.
+   This uses the built in instructions module. Make sure it gets imported above */ 
+    var ColorWordInstr = {
+       type: 'instructions',
+       pages: ColorWordInstrText,
+       show_clickable_nav: true
+    }
+    /* After practice is completed the performance is being checked. If accuracy is below 50% then the practice is repeated.
+    These are the instructions stating that practice will be repeated. */
+    var ColorWordPoorPerfInstr = {
+       type: 'instructions',
+       pages: ColorWordInstrPoorPerformanceText,
+       show_clickable_nav: true
+    }
+    /* Instructions shown to participants before test trials begin. */
+    var ColorWordTestInstr = {
+       type: 'instructions',
+       pages: ColorWordTestInstrText,
+       show_clickable_nav: true
+    }
+
+      /* define thank you trial */
+    var thank_you = {
+        type: "html-keyboard-response",
+        stimulus: ColorWordThankYouText
+    };
+
+    var Stimulus = {
+      type: 'html-keyboard-response',
+      stimulus: function()
+      { 
+        var Stim = '<p class="stimulus" style="color:rgb'+jsPsych.timelineVariable('Color', true)+';">' +jsPsych.timelineVariable('Word', true)+'</p>'
+        var temp = PutIntoTable('',Stim)
+        return temp;
+        //return '<p class="stimulus" style="color:rgb'+jsPsych.timelineVariable('Color', true)+';">' +jsPsych.timelineVariable('Word', true)+'</p>'; 
+      },
+      choices: ResponseChoices,
+      post_trial_gap: 0,
+      on_finish: function(data){
+        data.correct = data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode(data.letter);
+        /* If the ESCAPE key is pressed the current timeline is ended and the thank you screen is shown */
+        if (data.key_press == 27) {
+          //jsPsych.endCurrentTimeline();
+          jsPsych.end();
+        }
+      },
+    }
+
+    var prac_stimulus = Object.assign({}, Stimulus)
+    prac_stimulus = Object.assign(prac_stimulus, {    
+      data: {
+        Congruency: jsPsych.timelineVariable('Congruency'),
+        letter: jsPsych.timelineVariable('letter'),
+        type: 'practice trial'
+      }
+    })
+
+    var test_stimulus = Object.assign({}, Stimulus)
+    test_stimulus = Object.assign(test_stimulus, {    
+      data: {
+        Congruency: jsPsych.timelineVariable('Congruency'),
+        letter: jsPsych.timelineVariable('letter'),
+        type: 'test trial'
+      }
+    })
+
+  	var fixation = {
+  	  type: 'html-keyboard-response',
+  	  stimulus: function(){
+        var temp = PutIntoTable('','+')
+        return temp;
+      },
+      
+      //return '<div style="font-size:60px;">+</div><p><p><img src="StroopColorsKeyboard.png" style="position:relative; bottom:-200px">'},
+  	  choices: jsPsych.NO_KEYS,
+  	  trial_duration: function(){
+          return jsPsych.randomization.sampleWithoutReplacement([250, 500, 750, 1000, 1250, 1500, 1750, 2000], 1)[0];
+        },
+      data: {type: 'fixation'}
+  	}
+
+    /* ARROWS 37 = left, 38 = up, 39 = right, 40 = down */
+    /* Escape = 27 */ 
+    var feedback = {
+      type: 'html-keyboard-response',
+      trial_duration: FeedbackLength,
+      stimulus: function(){
+        var last_trial_correct = jsPsych.data.get().last(1).values()[0].correct;
+        if(last_trial_correct){
+            var temp = PutIntoTable('','Correct!')
+            return temp;
+        } else {
+            var temp = PutIntoTable('','Incorrect')
+            return temp;;
+        }
+      }
+    }
+
+    // Define a practice procedure which provides feedback
+    var practice_procedure = {
+      timeline: [fixation, prac_stimulus, feedback],
+      timeline_variables: StroopColorWordList,
+      sample: {
+        type: 'fixed-repetitions',
+        size: ColorWordPracticeRepeats, 
+      }
+    }
+
+    // Define the test procedure which does NOT provide feedback
+    var test_procedure = {
+      timeline: [fixation, test_stimulus],
+      timeline_variables: StroopColorWordList,
+      sample: {
+        type: 'fixed-repetitions',
+        size: ColorWordTestRepeats, 
+      }
+    }
+    // Prepare debriefing for after the practice trials
+    var debrief = {
+      type: "html-keyboard-response",
+      stimulus: function() {
+        var DataFromThisPracticeRun = jsPsych.data.get().filter({type: 'practice trial'}).last(16*ColorWordPracticeRepeats)
+        var total_trials = DataFromThisPracticeRun.count();
+        var NumberCorrect = DataFromThisPracticeRun.filter({correct: true}).count()
+        var accuracy = Math.round(NumberCorrect / total_trials * 100);
+
+        /*var congruent_rt = Math.round(jsPsych.data.get().filter({correct: true, Congruency: 'Con'}).select('rt').mean());
+        var incongruent_rt = Math.round(jsPsych.data.get().filter({correct: true, Congruency: 'Incon'}).select('rt').mean());*/
+
+        return "<p>You responded correctly on <strong>"+accuracy+"%</strong> of the "+total_trials+" trials.</p> " +
+        /*"<p>Your average response time for congruent trials was <strong>" + congruent_rt + "ms</strong>.</p>"+
+        "<p>Your average response time for incongruent trials was <strong>" + incongruent_rt + "ms</strong>.</p>"+*/
+        "<p>Press any key to continue the experiment.</p>";   
+      }
+    };
+    // This a conditional block which checks to see if the performance during practice was good enough
+    // if performance on the practice is above 50% accurate then the test procedure is done.
+    // otherwise practice is done again
+    var if_node = {
+      timeline: [ColorWordPoorPerfInstr, practice_procedure],
+      conditional_function: function(){
+        // check performance on the practice
+        var DataFromThisPracticeRun = jsPsych.data.get().filter({type: 'practice trial'}).last(16*ColorWordPracticeRepeats)
+        var total_trials = DataFromThisPracticeRun.count();
+        var NumberCorrect = DataFromThisPracticeRun.filter({correct: true}).count()
+        var accuracy = Math.round(NumberCorrect / total_trials * 100);
+        if (accuracy < 50) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    }
+
+    timeline.push(ColorWordInstr);
+    // run the practice trials
+    timeline.push(practice_procedure);
+    // provide feedback as to their performance
+    timeline.push(debrief);
+    // decide if the person did well enough
+    timeline.push(if_node);
+    // decide if the person did well enough
+    timeline.push(if_node);
+    // Present test instructions
+    timeline.push(ColorWordTestInstr);
+    // run the test
+    timeline.push(test_procedure);
+    timeline.push(thank_you);
+
+    /* start the experiment */
+    //jatos.onLoad(function() {
+    jsPsych.init({
+        experiment_width: 600,
+        timeline: timeline,
+        on_interaction_data_update: function(data) {
+          console.log(JSON.stringify(data))
+        },
+        on_finish: function() {
+          jsPsych.data.get().localSave('csv','StroopColorWordMydata.csv');
+        }
+
+    });
+  </script>
+</html>
