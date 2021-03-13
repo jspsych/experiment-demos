@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="jspsych-6.3/jspsych.js"></script>
+  <script src="jspsych-6.3/jspsych-psychophysics/jspsych-psychophysics.js"></script>
+  <script src="jspsych-6.3/plugins/jspsych-html-keyboard-response.js"></script>
+  <script src="jspsych-6.3/plugins/jspsych-preload.js"></script>
+  <link rel="stylesheet" href="jspsych-6.3/css/jspsych.css"></link>
+  <link href="ebbinghaus.css" rel="stylesheet">
+  <script src="ebbinghaus_setup_EN.js"></script>
+  <meta charset="utf-8"/>
+</head>
+<body></body>
+<script>
+    const cross = {
+        obj_type: 'cross',        
+        startX: 0, // location of the cross's center in the canvas
+        startY: 0,
+        origin_center: true, // Change the coordinate origin to the center of the window
+        line_length: 40,
+        line_width: 4,
+        line_color: fix_color
+    }
+
+    const disc = {
+        obj_type: 'circle',        
+        startX: 0, // location of the disc's center in the canvas
+        startY: 0,
+        radius: ref_inner,
+        fill_color: color_inner,
+        origin_center: true // Change the coordinate origin to the center of the window
+    }
+
+    const factors = {
+        test_side: [-1, 1], // randomize test position (left vs right)
+        test_outer: test_outer,              // randomize test outer radius (same as ref or smaller)
+        test_inner: test_inner               // randomize test inner radius
+    }
+
+    const full_design = jsPsych.randomization.factorial(factors, repeat_trials)
+
+    const block_len = Math.floor(full_design.length/block_number)
+
+    var prompt = {
+        obj_type: 'text',
+        startX: 0,
+        startY: 200,
+        content: prompt_msg,
+        font: "20px 'Arial'",
+        text_color: 'white',
+        origin_center: true,
+    }
+
+    const welcome = {
+        type: "html-keyboard-response",
+        stimulus: '<p style="color: white">Welcome to the Ebbinghaus Experiment. <br>' +
+                  'There will be ' + block_number + ' blocks in this experiment. <br>' +
+                  'There will be ' + block_len + ' trials in each block. <br>'+
+                  'You will be given a chance to take a break between blocks. <br>'+ 
+                  'Press any key to start the experiment.</p>'
+    }
+
+    const first_msg = "Press any key to continue."
+    let first_prompt = Object.assign({}, prompt)
+    first_prompt = Object.assign(first_prompt, {content: prompt_msg + first_msg})
+    const first_prompt_trial = { type: 'psychophysics', stimuli: [cross, first_prompt] }
+
+    var procedure = {
+        timeline: [
+            {
+                type: 'psychophysics',
+                stimuli: function(){
+                    const test_x = dist_groups * jsPsych.timelineVariable('test_side', true)
+                    const test_radius = jsPsych.timelineVariable('test_inner', true)
+                    // standard inner disc
+                    let ref_inner_disc = Object.assign({}, disc)
+                    ref_inner_disc = Object.assign(ref_inner_disc, {startX: (test_x*-1)})
+                    // test inner disc
+                    let test_inner_disc = Object.assign({}, disc)
+                    test_inner_disc = Object.assign(test_inner_disc, {startX: test_x, radius: test_radius})
+                    // add to array
+                    let obj_array = [cross, ref_inner_disc, test_inner_disc]
+                    for (let i = 0; i < 360; i=i+60) {
+                        let outer_x = dist_discs * Math.cos(i * Math.PI / 180); 
+                        let outer_y = dist_discs * Math.sin(i * Math.PI / 180); 
+
+                        let ref_outer_disc = Object.assign({}, disc)
+                        ref_outer_disc = Object.assign(ref_outer_disc, 
+                            {
+                                startX: outer_x + (test_x*-1), 
+                                startY: outer_y,
+                                fill_color: color_outer,
+                                radius: ref_outer // always use the first element
+                            } 
+                        )
+                        obj_array.push(ref_outer_disc)
+                        let test_outer_disc = Object.assign({}, disc)
+                        test_outer_disc = Object.assign(test_outer_disc, 
+                            {
+                                startX: outer_x + test_x, 
+                                startY: outer_y, 
+                                fill_color: color_outer,
+                                radius: jsPsych.timelineVariable('test_outer', true)
+                            } 
+                        )
+                        obj_array.push(test_outer_disc)
+                    }
+                    return(obj_array)
+                },
+                choices: ["ArrowLeft", "ArrowRight"],
+                data: function(){
+                    let t = jsPsych.data.get().filter({ref_inner_radius: ref_inner}).count() + 1 
+                    let b = Math.floor(t/block_len)+1
+                    const data_obj = {
+                        trial: t,
+                        block: b,
+                        test_pos: jsPsych.timelineVariable('test_side', true),
+                        test_inner_radius: jsPsych.timelineVariable('test_inner', true),
+                        test_outer_radius: jsPsych.timelineVariable('test_outer', true),
+                        ref_inner_radius: ref_inner,
+                        ref_outer_radius: ref_outer // store reference values just in case
+                    }
+                    return data_obj
+                },
+                // record responses relative to test position (left vs right)
+                on_finish: function(data){
+                    if ( data.test_pos > 0 ) {
+                        if ( data.key_press == "arrowleft" ) {
+                            data.test_bigger = true
+                        } else if ( data.key_press == "arrowright" ) {
+                            data.test_bigger = false
+                        } else {
+                            data.test_bigger = null
+                        }
+                    } else {
+                        if ( data.key_press == "arrowleft" ) {
+                            data.test_bigger = false
+                        } else if ( data.key_press == "arrowright" ) {
+                            data.test_bigger = true
+                        } else {
+                            data.test_bigger = null
+                        }
+                    }
+                },
+            },
+            {
+                type: 'psychophysics',
+                stimuli: function(){
+                        let t = jsPsych.data.get().last(1).values()[0]["trial"] // trials so far
+                        let trial_msg = "You have completed " + t + ' of ' + full_design.length + " trials.\n\n"+
+                                        "Get ready for the next trial."
+                        let cur_prompt = Object.assign({}, prompt)
+                        cur_prompt = Object.assign(cur_prompt, {content: prompt_msg + trial_msg})
+                        return [cross, cur_prompt]
+                },
+                choices: jsPsych.NO_KEYS,
+                trial_duration: 1000,
+                response_ends_trial: false
+            },
+            // break statement
+            {
+                timeline: [
+                    {
+                        type: "html-keyboard-response",
+                        stimulus: function() {
+                            let t = jsPsych.data.get().last(2).values()[0]["trial"] // trials so far
+                            let b = jsPsych.data.get().last(2).values()[0]["block"] // block
+                            const html_out = '<div style="color: white; text-align: center; vertical-align: top; display: inline-block; width: 800px; margin: auto">'+
+                                '<p>You have completed ' + (t/full_design.length * 100).toFixed(0) + '% of the trials. You are on block ' + b + ' of 10. <br>Good job! Take a break if you need to.</p>'+
+                                '<p>Press any key to continue the experiment.</p></div>'
+                            return html_out
+                        },
+                        post_trial_gap: 1000
+                    }
+                ],
+                conditional_function: function(){
+                    let t = jsPsych.data.get().last(2).values()[0]["trial"] // trials so far
+                    if ( ( ( t % block_len ) == 0 ) && ( t < full_design.length ) ) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            }
+        ],
+        timeline_variables: full_design,
+        randomize_order: true
+    }
+
+    jsPsych.init({
+        timeline: [welcome, first_prompt_trial, procedure],
+        on_finish: function() {
+            jsPsych.data.get().localSave('csv','ebbinghaus_data.csv');
+        }
+    });
+</script>
+
+</html>
