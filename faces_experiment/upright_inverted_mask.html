@@ -1,0 +1,1248 @@
+<head>
+    <script src="jspsych/jspsych-6.1.0/jspsych.js"></script>
+    <link href= "jspsych/jspsych-6.1.0/css/jspsych.css" rel="stylesheet" type="text/css">
+    <script src="jspsych-html-keyboard-response.js"></script>
+    <script src="jspsych-image-keyboard-response.js"></script>
+    <script src="jspsych-survey-html-form.js"></script>
+    <script src="jspsych-external-html.js"></script>
+</head>
+    <body style="background: rgb(128, 128, 128); font-size: 20px;">
+    <script>
+    timeline = [];
+    
+    const welcome = {
+      type: 'html-keyboard-response',
+      type_of_trial: 'Welcome',
+      stimulus: 'Welcome to the experiment. Press any key to begin.',
+      choices: jsPsych.ALL_KEYS,
+      correct_key: ''
+    }
+
+    const survey = {
+                type: "survey-html-form",
+                html: "<div style='text-align: left; vertical-align: top; display: inline-block; float: left; width: 100%'>"+
+                      "<p><u>Age:</u> <input style='font-size: 18px; line-height: 1.6em;' input type='text' id='start' name='age'></p>"+
+                      "<p><u>Handedness:</u> </strong><input type='radio' id='left' name='handedness' value='left'>"+
+                      "<label for='left'>Left-handed</label>"+
+                      "<input type='radio' id='right' name='handedness' value='right' checked>"+
+                      "<label for='right'>Right-handed</label>"+
+                      "<input type='radio' id='ambi' name='handedness' value='ambi'>"+
+                      "<label for='ambi'>Ambidextrous</label></p>"+
+                      "<p><u>Sex:</u> <input type='radio' id='female' name='sex' value='female' checked>"+
+                      "<label for='female'>Female</label>"+
+                      "<input type='radio' id='male' name='sex' value='male'>"+
+                      "<label for='male'>Male</label>"+
+                      "<input type='radio' name='sex' value='other'><label for='other'>Other, please specify: </label>"+ 
+                      "<input type='text' name='other_sex' id='other_sex' value=''></p>"+
+                      "<p>Highest level of education achieved:<br><select id='education' name='education' style='font-size: 1em' required=''>"+
+                      "<option value=''>Please select</option><option value='less than high school'>less than High school</option>"+
+                      "<option value='high school or equivalent'>High school or equivalent</option><option value='college or technical school'>College or technical school</option>"+
+                      "<option value='Bachelor degree'>Bachelor degree</option><option value='Master/Doctorate'>Master/Doctorate</option>"+
+                      "</select></p>"+
+                      "</div>",
+                preamble: "<strong>Please provide some personal information: </strong>",
+                button_label: "continue",
+                }
+    var instructions ={
+      type: 'html-keyboard-response',
+      type_of_trial: 'instructions',
+      stimulus: '<p><strong>PRACTICE</strong></p><p>Memorize the face in the next three images.</p><p>A test will follow.</p><p>Press any key on your keyboard to begin.</p>',
+      choices: jsPsych.ALL_KEYS,
+      correct_key: ''
+    }
+    timeline.push(welcome, survey, instructions)
+    const stim1_w = 186
+    const stim1_h = 193
+    var learn = {
+      type: 'image-keyboard-response',
+      choices: jsPsych.NO_KEYS,
+      prompt: '<p>Practice</p>',
+      trial_duration: 3000,
+      stimulus_width: stim1_w,
+      stimulus_height: stim1_h,
+      correct_key: '',
+      type_of_trial: 'learn',
+      timeline: [
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/bart_left.jpg'},
+        
+      ]
+    }
+    
+    const stim6_w = 171
+    const stim6_h = 193
+    var learn2 = {
+      type: 'image-keyboard-response',
+      choices: jsPsych.NO_KEYS,
+      prompt: '<p>Practice</p>',
+      trial_duration: 3000,
+      stimulus_width: stim6_w,
+      stimulus_height: stim6_h,
+      correct_key: '',
+      type_of_trial: 'learn',
+      timeline: [
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/bart_straight.jpg'}
+      ]
+    }
+    const stim7_w = 184
+    const stim7_h = 193
+    var learn3 = {
+      type: 'image-keyboard-response',
+      choices: jsPsych.NO_KEYS,
+      prompt: '<p>Practice</p>',
+      trial_duration: 3000,
+      stimulus_height: stim7_h,
+      correct_key: '',
+      stimulus_width: stim7_w,
+      type_of_trial: 'learn',
+      timeline: [
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/bart_right.jpg'}
+      ]
+    }
+    const stim2_w = 507
+    const stim2_h = 251
+    var practice = {
+      type: 'image-keyboard-response',
+      choices: ['1', '2', '3'],
+      stimulus_width: stim2_w,
+      stimulus_height: stim2_h,
+      prompt: '<p>Which face did you just view? There is only one correct answer. Press 1, 2 or 3.</p>',
+      type_of_trial: 'practice',
+      timeline: [
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/pract_left.jpg', correct_key: '1'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/pract_right.jpg', correct_key: '2'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/pract_straight.jpg', correct_key: '2'}
+      ]
+    }
+    timeline.push(learn, learn2, learn3, practice)
+    var instructions_2 = {
+      type: 'html-keyboard-response',
+      stimulus: '<p>These were the practice trials.</p><p>Great! Lets go on and do the actual test.</p><p>In this test, you will learn to recognize six people.</p><p>To begin memorizing the first face, press any key on your keyboard.</p>',
+      choices: jsPsych.ALL_KEYS,
+      type_of_trial: 'instructions',
+      correct_key: ''
+    }
+    const stim3_h = 194
+    const stim3_w = 135
+    var brs = {
+      type: 'image-keyboard-response',
+      choices: jsPsych.NO_KEYS,
+      prompt: '<p>Memorize</p>',
+      trial_duration: 3000,
+      stimulus_height: stim3_h,
+      stimulus_width: stim3_w,
+      correct_key: '',
+      type_of_trial: 'learn',
+      timeline: [
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/Bob_left_study.jpg'}
+      ]
+    }
+    const stim8_h = 194
+    const stim8_w = 127
+    var brs_2 = {
+      type: 'image-keyboard-response',
+      choices: jsPsych.NO_KEYS,
+      prompt: '<p>Memorize</p>',
+      trial_duration: 3000,
+      stimulus_height: stim8_h,
+      correct_key: '',
+      stimulus_width: stim8_w,
+      type_of_trial: 'learn',
+      timeline: [
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/Bob_frontal_study.jpg'}
+      ]
+    }
+    timeline.push(instructions_2, brs, brs_2)
+    const stim9_h = 194
+    const stim9_w = 139
+    var brs_3 = {
+      type: 'image-keyboard-response',
+      choices: jsPsych.NO_KEYS,
+      prompt: '<p>Memorize</p>',
+      trial_duration: 3000,
+      stimulus_height: stim9_h,
+      correct_key: '',
+      stimulus_width: stim9_w,
+      type_of_trial: 'learn',
+      timeline: [
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/Bob_right_study.jpg'}
+      ]
+    }
+    var b_iden = {
+      type: 'image-keyboard-response',
+      choices: ['1', '2', '3'],
+      prompt: '<p>Which face did you just view?</p>',
+      stimulus_height: stim2_h,
+      stimulus_width: stim2_w,
+      type_of_trial: 'test',
+      difficulty: 'easy',
+      timeline: [
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/B1_Identical_Left.jpg', correct_key: '2'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/B2_Identical_Frontal.jpg', correct_key: '3'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/B3_Identical_Right.jpg', correct_key: '3'}
+      ]
+    }
+    var instructions_3 = {
+      type: 'html-keyboard-response',
+      choices: jsPsych.ALL_KEYS,
+      stimulus: '<p>Memorize the following face.</p><p>To begin press any key on your keyboard.</p>',
+      type_of_trial: 'instructions',
+      correct_key: ''
+    }
+    timeline.push(brs_3, b_iden, instructions_3)
+    const stim10_h = 194
+    const stim10_w = 150
+    var dan = {
+      type: 'image-keyboard-response', 
+      choices: jsPsych.NO_KEYS,
+      prompt: '<p>Memorize</p>',
+      stimulus_height: stim10_h,
+      correct_key: '',
+      trial_duration: 3000,
+      stimulus_width: stim10_w,
+      type_of_trial: 'learn',
+      timeline: [
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/Dan_Left_Study.jpg'}
+        
+      ]
+    }
+    const stim11_h = 194
+    const stim11_w = 176
+    var dan_2 = {
+      type: 'image-keyboard-response', 
+      choices: jsPsych.NO_KEYS,
+      prompt: '<p>Memorize</p>',
+      stimulus_height: stim11_h,
+      correct_key: '',
+      trial_duration: 3000,
+      stimulus_width: stim11_w,
+      type_of_trial: 'learn',
+      timeline: [
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/Dan_frontal_study.jpg'}
+      ]
+    }
+    const stim12_h = 194
+    const stim12_w = 170
+    var dan_3 = {
+      type: 'image-keyboard-response', 
+      choices: jsPsych.NO_KEYS,
+      prompt: '<p>Memorize</p>',
+      correct_key: '',
+      stimulus_height: stim12_h,
+      trial_duration: 3000,
+      stimulus_width: stim12_w,
+      type_of_trial: 'learn',
+      timeline: [
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/Dan_Right_Frontal.jpg'}
+      ]
+    }
+    timeline.push(dan, dan_2, dan_3)
+    var d_iden = {
+      type: 'image-keyboard-response',
+      choices: ['1', '2', '3'],
+      prompt: '<p>Which face did you just view?</p>',
+      stimulus_height: stim2_h,
+      stimulus_width: stim2_w,
+      type_of_trial: 'test',
+      difficulty: 'easy',
+      timeline: [
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/D1_Identical_Left.jpg', correct_key: '2'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/D2_Identical_Frontal.jpg', correct_key: '3'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/D3_Identical_Right.jpg', correct_key: '3'}
+      ]
+    }
+    var instructions_4 = {
+      type: 'html-keyboard-response',
+      choices: jsPsych.ALL_KEYS,
+      stimulus: 'Press any key on your keyboard.',
+      type_of_trial: 'instructions',
+      correct_key: ''
+    }
+    const stim13_h = 194
+    const stim13_w = 171
+    var jim = {
+      type: 'image-keyboard-response',
+      choices: jsPsych.NO_KEYS,
+      prompt: '<p>Memorize</p>',
+      stimulus_height: stim13_h,
+      stimulus_width: stim13_w,
+      correct_key: '',
+      trial_duration: 3000,
+      type_of_trial: 'learn',
+      timeline: [
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/Jim_left.jpg'}
+        
+      ]
+    }
+    timeline.push(d_iden, instructions_4, jim)
+    const stim14_h = 194
+    const stim14_w = 172
+    var jim_2 = {
+      type: 'image-keyboard-response',
+      choices: jsPsych.NO_KEYS,
+      prompt: '<p>Memorize</p>',
+      stimulus_height: stim14_h,
+      correct_key: '',
+      stimulus_width: stim14_w,
+      trial_duration: 3000,
+      type_of_trial: 'learn',
+      timeline: [
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/Jim_front.jpg'}
+      ]
+    }
+    const stim15_h = 194
+    const stim15_w = 188
+    var jim_3 = {
+      type: 'image-keyboard-response',
+      choices: jsPsych.NO_KEYS,
+      prompt: '<p>Memorize</p>',
+      stimulus_height: stim15_h,
+      correct_key: '',
+      stimulus_width: stim15_w,
+      trial_duration: 3000,
+      type_of_trial: 'learn',
+      timeline: [
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/Jim_right.jpg'}
+      ]
+    }
+    var j_1_iden = {
+      type: 'image-keyboard-response',
+      choices: ['1', '2', '3'],
+      prompt: '<p>Which face did you just view?</p>',
+      stimulus_height: stim2_h,
+      stimulus_width: stim2_w,
+      type_of_trial: 'test',
+      difficulty: 'easy',
+      timeline: [
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/J_1_Iden_L.jpg', correct_key: '3'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/J_2_Iden_Front.jpg', correct_key: '3'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/J_3_Iden_R.jpg', correct_key: '1'}
+      ]
+    }
+    timeline.push(jim_2, jim_3, j_1_iden)
+    var instructions_5 = {
+      type: 'html-keyboard-response',
+      type_of_trial: 'instructions',
+      correct_key: '',
+      choices: jsPsych.ALL_KEYS,
+      stimulus: 'Memorize the following face. Press any key on your keyboard.'
+    }
+    const stim16_h = 194
+    const stim16_w = 172
+    var matt = {
+      type: 'image-keyboard-response',
+      choices: jsPsych.NO_KEYS,
+      prompt: '<p>Memorize</p>',
+      stimulus_height: stim16_h,
+      correct_key: '',
+      stimulus_width: stim16_w,
+      trial_duration: 3000,
+      type_of_trial: 'learn',
+      timeline: [
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/Matt_left_cropped.jpg'}
+        
+      ]
+    }
+    const stim17_h = 194
+    const stim17_w = 196
+    var matt_2 = {
+      type: 'image-keyboard-response',
+      choices: jsPsych.NO_KEYS,
+      prompt: '<p>Memorize</p>',
+      stimulus_height: stim17_h,
+      stimulus_width: stim17_w,
+      correct_key: '',
+      trial_duration: 3000,
+      type_of_trial: 'learn',
+      timeline: [
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/Matt_front.jpg'}
+      ]
+    }
+    timeline.push(instructions_5, matt, matt_2)
+    const stim18_h = 194
+    const stim18_w = 192
+    var matt_3 = {
+      type: 'image-keyboard-response',
+      choices: jsPsych.NO_KEYS,
+      prompt: '<p>Memorize</p>',
+      stimulus_height: stim13_h,
+      correct_key: '',
+      stimulus_width: stim13_w,
+      trial_duration: 3000,
+      type_of_trial: 'learn',
+      timeline: [
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/Matt_right_cropped.jpg'}
+      ]
+    }
+    var m_1_iden = { 
+      type: 'image-keyboard-response',
+      choices: ['1', '2', '3'],
+      prompt: '<p>Which face did you just view?</p>',
+      stimulus_height: stim2_h,
+      stimulus_width: stim2_w,
+      type_of_trial: 'test',
+      difficulty: 'easy',
+      timeline: [
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/M_1_Iden_L.jpg', correct_key: '2'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/M_2_Iden_Front.jpg', correct_key: '3'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/M_3_Iden_R.jpg', correct_key: '1'}
+      ]
+    }
+    var instructions_6 = {
+      type: 'html-keyboard-response',
+      stimulus: 'Memorize the following face. Press any key on your keyboard.',
+      type_of_trial: 'instructions',
+      choices: jsPsych.ALL_KEYS,
+      correct_key: ''
+    }
+    timeline.push(matt_3, m_1_iden, instructions_6)
+    const stim19_h = 194
+    const stim19_w = 176
+    var nate = {
+      type: 'image-keyboard-response',
+      choices: jsPsych.NO_KEYS,
+      prompt: '<p>Memorize</p>',
+      stimulus_height: stim19_h,
+      stimulus_width: stim19_w,
+      correct_key: '',
+      trial_duration: 3000,
+      type_of_trial: 'learn',
+      timeline: [
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/Nate_left_cropped.jpg'}
+        
+      ]
+    }
+    const stim20_h = 194
+    const stim20_w = 172
+    var nate_2 = {
+      type: 'image-keyboard-response',
+      choices: jsPsych.NO_KEYS,
+      prompt: '<p>Memorize</p>',
+      stimulus_height: stim20_h,
+      correct_key: '',
+      stimulus_width: stim20_w,
+      trial_duration: 3000,
+      type_of_trial: 'learn',
+      timeline: [
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/Nate_front_cropped.jpg'}
+      ]
+    }
+    const stim21_h = 194
+    const stim21_w = 166
+    var nate_3 = {
+      type: 'image-keyboard-response',
+      choices: jsPsych.NO_KEYS,
+      prompt: '<p>Memorize</p>',
+      stimulus_height: stim21_h,
+      correct_key: '',
+      stimulus_width: stim21_w,
+      trial_duration: 3000,
+      type_of_trial: 'learn',
+      timeline: [
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/Nate_right_cropped.jpg'}
+      ]
+    }
+    timeline.push(nate, nate_2, nate_3)
+    var n_1_iden = {
+      type: 'image-keyboard-response',
+      choices: ['1', '2', '3'],
+      prompt: '<p>Which face did you just view?</p>',
+      stimulus_height: stim2_h,
+      stimulus_width: stim2_w,
+      type_of_trial: 'test',
+      difficulty: 'easy',
+      timeline: [
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/N_1_Iden_L.jpg', correct_key: '3'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/N_2_Iden_Front.jpg', correct_key: '1'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/N_3_Iden_R.jpg', correct_key: '3'}
+      ]
+    }
+    var instructions_7 = {
+      type: 'html-keyboard-response',
+      stimulus: 'Memorize the following face. Press any key on your keyboard.',
+      choices: jsPsych.ALL_KEYS,
+      type_of_trial: 'instructions',
+      correct_key: ''
+    }
+    const stim22_h = 194
+    const stim22_w = 160
+    var zack = {
+      type: 'image-keyboard-response',
+      choices: jsPsych.NO_KEYS,
+      prompt: '<p>Memorize</p>',
+      stimulus_height: stim22_h,
+      stimulus_width: stim22_w,
+      type_of_trial: 'learn',
+      correct_key: '',
+      trial_duration: 3000,
+      timeline: [
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/Zack_Left_cropped.jpg'}
+        
+      ]
+    }
+    timeline.push(n_1_iden, instructions_7, zack)
+    const stim23_h = 194
+    const stim23_w =183
+    var zack_2 = {
+      type: 'image-keyboard-response',
+      choices: jsPsych.NO_KEYS,
+      prompt: '<p>Memorize</p>',
+      stimulus_height: stim23_h,
+      stimulus_width: stim23_w,
+      correct_key: '',
+      trial_duration: 3000,
+      type_of_trial: 'learn',
+      timeline: [
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/Zack_Front_cropped.jpg'}
+      ]
+    }
+    const stim24_h = 194
+    const stim24_w = 172
+    var zack_3 = {
+      type: 'image-keyboard-response',
+      choices: jsPsych.NO_KEYS,
+      prompt: '<p>Memorize</p>',
+      stimulus_height: stim24_h,
+      correct_key: '',
+      stimulus_width: stim24_w,
+      trial_duration: 3000,
+      type_of_trial: 'learn',
+      timeline: [
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/Zack_Right_Cropped.jpg'}
+      ]
+    }
+    var z_1_iden = {
+      type: 'image-keyboard-response',
+      choices: ['1', '2', '3'],
+      prompt: '<p>Which face did you just view?</p>',
+      stimulus_height: stim2_h,
+      stimulus_width: stim2_w,
+      type_of_trial: 'test',
+      difficulty: 'easy',
+      timeline: [
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/Z_1_Iden_L.jpg', correct_key: '1'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/Z_2_Iden_Front.jpg', correct_key: '3'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/Z_3_Iden_R.jpg', correct_key: '1'}
+      ]
+    }
+    timeline.push(zack_2, zack_3, z_1_iden)
+    var instructions_8 = {
+      type: 'html-keyboard-response',
+      stimulus: 'Next you will review the same six people for 20 seconds. Press any key on your keyboard.',
+      type_of_trial: 'instructions',
+      choices: jsPsych.ALL_KEYS,
+      correct_key: ''
+    }
+    const stim4_h = 616
+    const stim4_w = 616
+    var review_1 = {
+      type: 'image-keyboard-response',
+      choices: jsPsych.NO_KEYS,
+      stimulus_height: stim4_h,
+      stimulus_width: stim4_w,
+      correct_key: '',
+      prompt: '<p>Review the faces (20 seconds)</p>',
+      trial_duration: 20000,
+      type_of_trial: 'learn',
+      timeline: [
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/AA_Review_image.jpg'}
+      ]
+    }
+    var instructions_9 = {
+      type: 'html-keyboard-response',
+      choices: jsPsych.ALL_KEYS,
+      stimulus: '<p>Now your memory of these faces will be tested. In the remaining trials, the correct answer can be any of the six faces.</p><p>The incorrect faces are sometimes very similar to the target faces, so be sure to look at each face prior to answering.</p><p>Press any key to begin.</p>',
+      type_of_trial: 'instructions',
+      correct_key: ''
+    }
+    
+    timeline.push(instructions_8, review_1, instructions_9)
+    var m_5 = {
+      type: 'image-keyboard-response',
+      choices: ['1', '2', '3'],
+      prompt: '<p>Which face is one of the six target faces?</p>',
+      stimulus_height: stim2_h,
+      stimulus_width: stim2_w,
+      type_of_trial: 'test',
+      difficulty: 'medium',
+      timeline: [
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/M_5_Front_Halflit.jpg', correct_key: '1'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/N_8_13_R_Pro_dark.jpg', correct_key: '2'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/Z_6_23_Pro_L.jpg', correct_key: '1'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/D5_Halflit_Frontal.jpg', correct_key: '3'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/B7_Bottomlit_Frontal.jpg', correct_key: '3'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/J_6_23_L_Pro.jpg', correct_key: '2'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/D7_Bottomlit_Frontal.jpg', correct_key: '1'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/Z_5_Front_Half.jpg', correct_key: '3'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/M_6_23_L_Pro.jpg', correct_key: '2'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/J_7_Bottom_Lit.jpg', correct_key: '3'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/N_4_23_R_Pro.jpg', correct_key: '2'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/M_8_13_R_Pro_dark.jpg', correct_key: '3'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/J_5_Front_Halflit.jpg', correct_key: '2'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/N_7_Front_Bot.jpg', correct_key: '1'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/Z_4_23_Pro_R.jpg', correct_key: '2'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/D8_13_Profile_R.jpg', correct_key: '2'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/M_7_Front_Bot.jpg', correct_key: '2'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/B4_23_pro_ri.jpg', correct_key: '2'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/D6_23_Profile_L.jpg', correct_key: '1'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/N_5_Front_Half.jpg', correct_key: '3'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/B6_23_pro_L.jpg', correct_key: '1'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/Z_8_13_Pro_R_dark.jpg', correct_key: '2'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/J_4_23_R_Pro.jpg', correct_key: '2'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/B8_13_pro_R_HS.jpg', correct_key: '1'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/M_4_23_R_Pro.jpg', correct_key: '3'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/J_8_13_r_pro_dark.jpg', correct_key: '1'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/Z_7_Front_Bot.jpg', correct_key: '2'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/D4_23_profile_R.jpg', correct_key: '1'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/N_6_23_L_Pro.jpg', correct_key: '1'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/B5_halflit_frontal.jpg', correct_key: '3'}
+      ]
+    }
+    
+    timeline.push(m_5)
+    var review_2 = {
+      type: 'image-keyboard-response',
+      choices: jsPsych.NO_KEYS,
+      stimulus_height: stim4_h,
+      stimulus_width: stim4_w,
+      prompt: '<p>Review the faces (20 seconds)</p>',
+      trial_duration: 20000,
+      correct_key: '',
+      type_of_trial: 'learn',
+      timeline: [
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/AA_Review_image.jpg'}
+      ]
+    }
+    timeline.push(review_2)
+    var z_12 = {
+      type: 'image-keyboard-response',
+      choices: ['1', '2', '3'],
+      prompt: '<p>Which face is one of the six target faces?</p>',
+      stimulus_height: stim2_h,
+      stimulus_width: stim2_w,
+      type_of_trial: 'test',
+      difficulty: 'hard',
+      timeline: [
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/Z_12_Front_Noisy.jpg', correct_key: '2'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/M_11_23_N_R_Pro.jpg', correct_key: '3'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/D10_Noisy_13_Profile_L.jpg', correct_key: '1'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/J_12_Frontal_HS.jpg', correct_key: '1'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/J_11_23_pro_R.jpg', correct_key: '3'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/N_9_Front_LS.jpg', correct_key: '1'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/B12_Noisy_frontal_HS.jpg', correct_key: '2'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/M_12_Front_N_HS.jpg', correct_key: '1'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/D12_Noisy_Frontal_HS.jpg', correct_key: '2'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/Z_11_23_Pro_R.jpg', correct_key: '2'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/N_10_13_L_Pro_dark.jpg', correct_key: '2'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/B9_Noisy_frontal_LS.jpg', correct_key: '2'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/M_9_Front_N_LS.jpg', correct_key: '1'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/J_9_N_Frontal_50.jpg', correct_key: '2'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/N_12_Front_Noisy.jpg', correct_key: '1'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/B10_Noisy_13_pro_L.jpg', correct_key: '2'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/N_11_23_R_Pro.jpg', correct_key: '3'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/J_10_13_pro_l.jpg', correct_key: '1'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/Z_9_Front_Noisy.jpg', correct_key: '3'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/D9_Noisy_Frontal_LS.jpg', correct_key: '1'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/M_10_N_13_L_Pro_D.jpg', correct_key: '1'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/Z_10_13_Pro_L.jpg', correct_key: '1'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/B11_Noise_23_pro_R.jpg', correct_key: '1'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/D11_Noisy_23_profile_R.jpg', correct_key: '3'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/N_IF.jpg', correct_key: '3'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/Z_OE.jpg', correct_key: '2'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/D_OE.jpg', correct_key: '2'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/M_P.jpg', correct_key: '2'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/J_S.jpg', correct_key: '2'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/D_HU.jpg', correct_key: '3'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/B_S.jpg', correct_key: '1'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/D_P.jpg', correct_key: '2'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/Z_IF.jpg', correct_key: '1'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/J_IF.jpg', correct_key: '2'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/M_OE.jpg', correct_key: '3'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/B_P.jpg', correct_key: '3'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/M_HU.jpg', correct_key: '3'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/Z_HU.jpg', correct_key: '3'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/N_S.jpg', correct_key: '3'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/D_IF.jpg', correct_key: '3'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/B_OE.jpg', correct_key: '2'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/M_IF.jpg', correct_key: '1'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/N_HU.jpg', correct_key: '2'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/J_P.jpg', correct_key: '3'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/M_S.jpg', correct_key: '1'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/N_OE.jpg', correct_key: '1'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/B_IF.jpg', correct_key: '1'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/Z_S.jpg', correct_key: '2'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/J_HU.jpg', correct_key: '2'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/Z_P.jpg', correct_key: '3'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/N_P.jpg', correct_key: '2'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/J_OE.jpg', correct_key: '1'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/B_HU.jpg', correct_key: '1'},
+        {stimulus: 'assets/images/620513_stimuli_20200513_0037/D_S.jpg', correct_key: '1'}
+      ]
+    }
+    timeline.push(z_12)
+    var instructions_inverted ={
+        type: 'html-keyboard-response',
+        type_of_trial: 'instructions',
+        stimulus: '<p>Well done! Now you will proceed to the second part of the experiment.</p><p>As before, the next round is a practice round. Memorize the face in the next three images.</p><p>A test will follow.</p><p>Press any key on your keyboard to begin.</p>',
+        choices: jsPsych.ALL_KEYS
+      }
+      var learn_inverted = {
+        type: 'image-keyboard-response',
+        choices: jsPsych.NO_KEYS,
+        prompt: '<p>Practice</p>',
+        trial_duration: 3000,
+        stimulus_width: stim1_w,
+        stimulus_height: stim1_h,
+        type_of_trial: 'learn',
+        timeline: [
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/bart_left.jpg'},
+          
+        ]
+      }
+      var learn2_inverted = {
+        type: 'image-keyboard-response',
+        choices: jsPsych.NO_KEYS,
+        prompt: '<p>Practice</p>',
+        trial_duration: 3000,
+        stimulus_width: stim6_w,
+        stimulus_height: stim6_h,
+        type_of_trial: 'learn',
+        timeline: [
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/bart_straight.jpg'}
+        ]
+      }
+      timeline.push(instructions_inverted, learn_inverted, learn2_inverted)
+      var learn3_inverted = {
+        type: 'image-keyboard-response',
+        choices: jsPsych.NO_KEYS,
+        prompt: '<p>Practice</p>',
+        trial_duration: 3000,
+        stimulus_height: stim7_h,
+        stimulus_width: stim7_w,
+        type_of_trial: 'learn',
+        timeline: [
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/bart_right.jpg'}
+        ]
+      }
+      var practice_inverted = {
+        type: 'image-keyboard-response',
+        choices: ['1', '2', '3'],
+        stimulus_width: stim2_w,
+        stimulus_height: stim2_h,
+        prompt: '<p>Which face did you just view? There is only one correct answer. Press 1, 2 or 3.</p>',
+        type_of_trial: 'practice',
+        timeline: [
+            {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/pract_left.jpg', correct_key: '1'},
+            {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/pract_right.jpg', correct_key: '2'},
+            {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/pract_straight.jpg', correct_key: '2'}
+            ]
+      }
+      var instructions_10 = {
+        type: 'html-keyboard-response',
+        stimulus: '<p>These were the practice trials.</p><p>Great! Lets go on and do the actual test.</p><p>In this test, you will learn to recognize six people.</p><p>To begin memorizing the first face, press any key on your keyboard.</p>',
+        choices: jsPsych.ALL_KEYS,
+        type_of_trial: 'instructions',
+        correct_key: ''
+        }
+      var brs_inverted = {
+        type: 'image-keyboard-response',
+        choices: jsPsych.NO_KEYS,
+        prompt: '<p>Memorize</p>',
+        trial_duration: 3000,
+        stimulus_height: stim3_h,
+        stimulus_width: stim3_w,
+        type_of_trial: 'learn',
+        timeline: [
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/Bob_left_study.jpg'}
+        ]
+      }
+      var brs_2_inverted = {
+        type: 'image-keyboard-response',
+        choices: jsPsych.NO_KEYS,
+        prompt: '<p>Memorize</p>',
+        trial_duration: 3000,
+        stimulus_height: stim8_h,
+        stimulus_width: stim8_w,
+        type_of_trial: 'learn',
+        timeline: [
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/Bob_frontal_study.jpg'}
+        ]
+      }
+      timeline.push(learn3_inverted, practice_inverted, instructions_10, brs_inverted, brs_2_inverted)
+      var brs_3_inverted = {
+        type: 'image-keyboard-response',
+        choices: jsPsych.NO_KEYS,
+        prompt: '<p>Memorize</p>',
+        trial_duration: 3000,
+        stimulus_height: stim9_h,
+        stimulus_width: stim9_w,
+        type_of_trial: 'learn',
+        timeline: [
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/Bob_right_study.jpg'}
+        ]
+      }
+      var b_iden_inverted = {
+        type: 'image-keyboard-response',
+        choices: ['1', '2', '3'],
+        prompt: '<p>Which face did you just view?</p>',
+        stimulus_height: stim2_h,
+        stimulus_width: stim2_w,
+        type_of_trial: 'test',
+        difficulty: 'easy',
+        timeline: [
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/B1_Identical_Left.jpg', correct_key: '2'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/B2_Identical_Frontal.jpg', correct_key: '3'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/B3_Identical_Right.jpg', correct_key: '3'}
+        ]
+      }
+      var instructions_3_inverted = {
+        type: 'html-keyboard-response',
+        choices: jsPsych.ALL_KEYS,
+        stimulus: '<p>Memorize the following face.</p><p>To begin press any key on your keyboard.</p>',
+        type_of_trial: 'instructions'
+      }
+      timeline.push(brs_3_inverted, b_iden_inverted, instructions_3_inverted)
+      var dan_inverted = {
+        type: 'image-keyboard-response', 
+        choices: jsPsych.NO_KEYS,
+        prompt: '<p>Memorize</p>',
+        stimulus_height: stim10_h,
+        trial_duration: 3000,
+        stimulus_width: stim10_w,
+        type_of_trial: 'learn',
+        timeline: [
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/Dan_Left_Study.jpg'}
+          
+        ]
+      }
+      var dan_2_inverted = {
+        type: 'image-keyboard-response', 
+        choices: jsPsych.NO_KEYS,
+        prompt: '<p>Memorize</p>',
+        stimulus_height: stim11_h,
+        trial_duration: 3000,
+        stimulus_width: stim11_w,
+        type_of_trial: 'learn',
+        timeline: [
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/Dan_frontal_study.jpg'}
+        ]
+      }
+      var dan_3_inverted = {
+        type: 'image-keyboard-response', 
+        choices: jsPsych.NO_KEYS,
+        prompt: '<p>Memorize</p>',
+        stimulus_height: stim12_h,
+        trial_duration: 3000,
+        stimulus_width: stim12_w,
+        type_of_trial: 'learn',
+        timeline: [
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/Dan_Right_Frontal.jpg'}
+        ]
+      }
+      timeline.push(dan_inverted, dan_2_inverted, dan_3_inverted)
+      var d_iden_inverted = {
+        type: 'image-keyboard-response',
+        choices: ['1', '2', '3'],
+        prompt: '<p>Which face did you just view?</p>',
+        stimulus_height: stim2_h,
+        stimulus_width: stim2_w,
+        type_of_trial: 'test',
+        difficulty: 'easy',
+        timeline: [
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/D1_Identical_Left.jpg', correct_key: '2'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/D2_Identical_Frontal.jpg', correct_key: '3'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/D3_Identical_Right.jpg', correct_key: '3'}
+        ]
+      }
+      var instructions_4_inverted = {
+        type: 'html-keyboard-response',
+        choices: jsPsych.ALL_KEYS,
+        stimulus: 'Press any key on your keyboard.',
+        type_of_trial: 'instructions'
+      }
+      var jim_inverted = {
+        type: 'image-keyboard-response',
+        choices: jsPsych.NO_KEYS,
+        prompt: '<p>Memorize</p>',
+        stimulus_height: stim13_h,
+        stimulus_width: stim13_w,
+        trial_duration: 3000,
+        type_of_trial: 'learn',
+        timeline: [
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/Jim_left.jpg'}
+          
+        ]
+      }
+      timeline.push(d_iden_inverted, instructions_4_inverted, jim_inverted)
+      var jim_2_inverted = {
+        type: 'image-keyboard-response',
+        choices: jsPsych.NO_KEYS,
+        prompt: '<p>Memorize</p>',
+        stimulus_height: stim14_h,
+        stimulus_width: stim14_w,
+        trial_duration: 3000,
+        type_of_trial: 'learn',
+        timeline: [
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/Jim_front.jpg'}
+        ]
+      }
+      var jim_3_inverted = {
+        type: 'image-keyboard-response',
+        choices: jsPsych.NO_KEYS,
+        prompt: '<p>Memorize</p>',
+        stimulus_height: stim15_h,
+        stimulus_width: stim15_w,
+        trial_duration: 3000,
+        type_of_trial: 'learn',
+        timeline: [
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/Jim_right.jpg'}
+        ]
+      }
+      var j_1_iden_inverted = {
+        type: 'image-keyboard-response',
+        choices: ['1', '2', '3'],
+        prompt: '<p>Which face did you just view?</p>',
+        stimulus_height: stim2_h,
+        stimulus_width: stim2_w,
+        type_of_trial: 'test',
+        difficulty: 'easy',
+        timeline: [
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/J_1_Iden_L.jpg', correct_key: '3'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/J_2_Iden_Front.jpg', correct_key: '3'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/J_3_Iden_R.jpg', correct_key: '1'}
+        ]
+      }
+      timeline.push(jim_2_inverted, jim_3_inverted, j_1_iden_inverted)
+      var instructions_5_inverted = {
+        type: 'html-keyboard-response',
+        choices: jsPsych.ALL_KEYS,
+        stimulus: 'Memorize the following face. Press any key on your keyboard.'
+      }
+      var matt_inverted = {
+        type: 'image-keyboard-response',
+        choices: jsPsych.NO_KEYS,
+        prompt: '<p>Memorize</p>',
+        stimulus_height: stim16_h,
+        stimulus_width: stim16_w,
+        trial_duration: 3000,
+        type_of_trial: 'learn',
+        timeline: [
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/Matt_left_cropped.jpg'}
+          
+        ]
+      }
+      var matt_2_inverted = {
+        type: 'image-keyboard-response',
+        choices: jsPsych.NO_KEYS,
+        prompt: '<p>Memorize</p>',
+        stimulus_height: stim17_h,
+        stimulus_width: stim17_w,
+        trial_duration: 3000,
+        type_of_trial: 'learn',
+        timeline: [
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/Matt_front.jpg'}
+        ]
+      }
+      timeline.push(instructions_5_inverted, matt_inverted, matt_2_inverted)
+      var matt_3_inverted = {
+        type: 'image-keyboard-response',
+        choices: jsPsych.NO_KEYS,
+        prompt: '<p>Memorize</p>',
+        stimulus_height: stim13_h,
+        stimulus_width: stim13_w,
+        trial_duration: 3000,
+        type_of_trial: 'learn',
+        timeline: [
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/Matt_right_cropped.jpg'}
+        ]
+      }
+      var m_1_iden_inverted = { 
+        type: 'image-keyboard-response',
+        choices: ['1', '2', '3'],
+        prompt: '<p>Which face did you just view?</p>',
+        stimulus_height: stim2_h,
+        stimulus_width: stim2_w,
+        type_of_trial: 'test',
+        difficulty: 'easy',
+        timeline: [
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/M_1_Iden_L.jpg', correct_key: '2'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/M_2_Iden_Front.jpg', correct_key: '3'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/M_3_Iden_R.jpg', correct_key: '1'}
+        ]
+      }
+      var instructions_6_inverted = {
+        type: 'html-keyboard-response',
+        stimulus: 'Memorize the following face. Press any key on your keyboard.',
+        type_of_trial: 'instructions',
+        choices: jsPsych.ALL_KEYS
+      }
+      timeline.push(matt_3_inverted, m_1_iden_inverted, instructions_6_inverted)
+      var nate_inverted = {
+        type: 'image-keyboard-response',
+        choices: jsPsych.NO_KEYS,
+        prompt: '<p>Memorize</p>',
+        stimulus_height: stim19_h,
+        stimulus_width: stim19_w,
+        trial_duration: 3000,
+        type_of_trial: 'learn',
+        timeline: [
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/Nate_left_cropped.jpg'}
+          
+        ]
+      }
+      var nate_2_inverted = {
+        type: 'image-keyboard-response',
+        choices: jsPsych.NO_KEYS,
+        prompt: '<p>Memorize</p>',
+        stimulus_height: stim20_h,
+        stimulus_width: stim20_w,
+        trial_duration: 3000,
+        type_of_trial: 'learn',
+        timeline: [
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/Nate_front_cropped.jpg'}
+        ]
+      }
+      var nate_3_inverted = {
+        type: 'image-keyboard-response',
+        choices: jsPsych.NO_KEYS,
+        prompt: '<p>Memorize</p>',
+        stimulus_height: stim21_h,
+        stimulus_width: stim21_w,
+        trial_duration: 3000,
+        type_of_trial: 'learn',
+        timeline: [
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/Nate_right_cropped.jpg'}
+        ]
+      }
+      timeline.push(nate_inverted, nate_2_inverted, nate_3_inverted)
+      var n_1_iden_inverted = {
+        type: 'image-keyboard-response',
+        choices: ['1', '2', '3'],
+        prompt: '<p>Which face did you just view?</p>',
+        stimulus_height: stim2_h,
+        stimulus_width: stim2_w,
+        type_of_trial: 'test',
+        difficulty: 'easy',
+        timeline: [
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/N_1_Iden_L.jpg', correct_key: '3'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/N_2_Iden_Front.jpg', correct_key: '1'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/N_3_Iden_R.jpg', correct_key: '3'}
+        ]
+      }
+      var instructions_7_inverted = {
+        type: 'html-keyboard-response',
+        stimulus: 'Memorize the following face. Press any key on your keyboard.',
+        choices: jsPsych.ALL_KEYS,
+        type_of_trial: 'instructions'
+      }
+      var zack_inverted = {
+        type: 'image-keyboard-response',
+        choices: jsPsych.NO_KEYS,
+        prompt: '<p>Memorize</p>',
+        stimulus_height: stim22_h,
+        stimulus_width: stim22_w,
+        type_of_trial: 'learn',
+        trial_duration: 3000,
+        timeline: [
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/Zack_Left_cropped.jpg'}
+          
+        ]
+      }
+      timeline.push(n_1_iden_inverted, instructions_7_inverted, zack_inverted)
+      var zack_2_inverted = {
+        type: 'image-keyboard-response',
+        choices: jsPsych.NO_KEYS,
+        prompt: '<p>Memorize</p>',
+        stimulus_height: stim23_h,
+        stimulus_width: stim23_w,
+        trial_duration: 3000,
+        type_of_trial: 'learn',
+        timeline: [
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/Zack_Front_cropped.jpg'}
+        ]
+      }
+      var zack_3_inverted = {
+        type: 'image-keyboard-response',
+        choices: jsPsych.NO_KEYS,
+        prompt: '<p>Memorize</p>',
+        stimulus_height: stim24_h,
+        stimulus_width: stim24_w,
+        trial_duration: 3000,
+        type_of_trial: 'learn',
+        timeline: [
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/Zack_Right_Cropped.jpg'}
+        ]
+      }
+      var z_1_iden_inverted = {
+        type: 'image-keyboard-response',
+        choices: ['1', '2', '3'],
+        prompt: '<p>Which face did you just view?</p>',
+        stimulus_height: stim2_h,
+        stimulus_width: stim2_w,
+        type_of_trial: 'test',
+        difficulty: 'easy',
+        timeline: [
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/Z_1_Iden_L.jpg', correct_key: '1'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/Z_2_Iden_Front.jpg', correct_key: '3'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/Z_3_Iden_R.jpg', correct_key: '1'}
+        ]
+      }
+      timeline.push(zack_2_inverted, zack_3_inverted, z_1_iden_inverted)
+      var instructions_8_inverted = {
+        type: 'html-keyboard-response',
+        stimulus: 'Next you will review the same six people for 20 seconds. Press any key on your keyboard.',
+        type_of_trial: 'instructions',
+        choices: jsPsych.ALL_KEYS
+      }
+      var review_1_inverted = {
+        type: 'image-keyboard-response',
+        choices: jsPsych.NO_KEYS,
+        stimulus_height: stim4_h,
+        stimulus_width: stim4_w,
+        prompt: '<p>Review the faces (20 seconds)</p>',
+        trial_duration: 20000,
+        type_of_trial: 'learn',
+        timeline: [
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/AA_Review_image.jpg'}
+        ]
+      }
+      var instructions_9_inverted = {
+        type: 'html-keyboard-response',
+        choices: jsPsych.ALL_KEYS,
+        stimulus: '<p>Now your memory of these faces will be tested. In the remaining trials, the correct answer can be any of the six faces.</p><p>The incorrect faces are sometimes very similar to the target faces, so be sure to look at each face prior to answering.</p><p>Press any key to begin.</p>',
+        type_of_trial: 'instructions'
+      }
+      timeline.push(instructions_8_inverted, review_1_inverted, instructions_9_inverted)
+      var m_5_inverted = {
+        type: 'image-keyboard-response',
+        choices: ['1', '2', '3'],
+        prompt: '<p>Which face is one of the six target faces?</p>',
+        stimulus_height: stim2_h,
+        stimulus_width: stim2_w,
+        type_of_trial: 'test',
+        difficulty: 'medium',
+        timeline: [
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/M_5_Front_Halflit.jpg', correct_key: '1'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/N_8_13_R_Pro_dark.jpg', correct_key: '2'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/Z_6_23_Pro_L.jpg', correct_key: '1'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/D5_Halflit_Frontal.jpg', correct_key: '3'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/B7_Bottomlit_Frontal.jpg', correct_key: '3'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/J_6_23_L_Pro.jpg', correct_key: '2'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/D7_Bottomlit_Frontal.jpg', correct_key: '1'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/Z_5_Front_Half.jpg', correct_key: '3'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/M_6_23_L_Pro.jpg', correct_key: '2'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/J_7_Bottom_Lit.jpg', correct_key: '3'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/N_4_23_R_Pro.jpg', correct_key: '2'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/M_8_13_R_Pro_dark.jpg', correct_key: '3'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/J_5_Front_Halflit.jpg', correct_key: '2'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/N_7_Front_Bot.jpg', correct_key: '1'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/Z_4_23_Pro_R.jpg', correct_key: '2'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/D8_13_Profile_R.jpg', correct_key: '2'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/M_7_Front_Bot.jpg', correct_key: '2'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/B4_23_pro_ri.jpg', correct_key: '2'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/D6_23_Profile_L.jpg', correct_key: '1'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/N_5_Front_Half.jpg', correct_key: '3'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/B6_23_pro_L.jpg', correct_key: '1'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/Z_8_13_Pro_R_dark.jpg', correct_key: '2'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/J_4_23_R_Pro.jpg', correct_key: '2'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/B8_13_pro_R_HS.jpg', correct_key: '1'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/M_4_23_R_Pro.jpg', correct_key: '3'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/J_8_13_r_pro_dark.jpg', correct_key: '1'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/Z_7_Front_Bot.jpg', correct_key: '2'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/D4_23_profile_R.jpg', correct_key: '1'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/N_6_23_L_Pro.jpg', correct_key: '1'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/B5_halflit_frontal.jpg', correct_key: '3'}
+        ]
+      }
+      timeline.push(m_5_inverted)
+      var review_2_inverted = {
+        type: 'image-keyboard-response',
+        choices: jsPsych.NO_KEYS,
+        stimulus_height: stim4_h,
+        stimulus_width: stim4_w,
+        prompt: '<p>Review the faces (20 seconds)</p>',
+        trial_duration: 20000,
+        type_of_trial: 'learn',
+        timeline: [
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/AA_Review_image.jpg'}
+        ]
+      }
+      timeline.push(review_2_inverted)
+      var z_12_inverted = {
+        type: 'image-keyboard-response',
+        choices: ['1', '2', '3'],
+        prompt: '<p>Which face is one of the six target faces?</p>',
+        stimulus_height: stim2_h,
+        stimulus_width: stim2_w,
+        type_of_trial: 'test',
+        difficulty: 'hard',
+        timeline: [
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/Z_12_Front_Noisy.jpg', correct_key: '2'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/M_11_23_N_R_Pro.jpg', correct_key: '3'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/D10_Noisy_13_Profile_L.jpg', correct_key: '1'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/J_12_Frontal_HS.jpg', correct_key: '1'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/J_11_23_pro_R.jpg', correct_key: '3'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/N_9_Front_LS.jpg', correct_key: '1'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/B12_Noisy_frontal_HS.jpg', correct_key: '2'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/M_12_Front_N_HS.jpg', correct_key: '1'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/D12_Noisy_Frontal_HS.jpg', correct_key: '2'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/Z_11_23_Pro_R.jpg', correct_key: '2'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/N_10_13_L_Pro_dark.jpg', correct_key: '2'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/B9_Noisy_frontal_LS.jpg', correct_key: '2'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/M_9_Front_N_LS.jpg', correct_key: '1'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/J_9_N_Frontal_50.jpg', correct_key: '2'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/N_12_Front_Noisy.jpg', correct_key: '1'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/B10_Noisy_13_pro_L.jpg', correct_key: '2'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/N_11_23_R_Pro.jpg', correct_key: '3'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/J_10_13_pro_l.jpg', correct_key: '1'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/Z_9_Front_Noisy.jpg', correct_key: '3'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/D9_Noisy_Frontal_LS.jpg', correct_key: '1'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/M_10_N_13_L_Pro_D.jpg', correct_key: '1'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/Z_10_13_Pro_L.jpg', correct_key: '1'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/B11_Noise_23_pro_R.jpg', correct_key: '1'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/D11_Noisy_23_profile_R.jpg', correct_key: '3'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/N_IF.jpg', correct_key: '3'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/Z_OE.jpg', correct_key: '2'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/D_OE.jpg', correct_key: '2'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/M_P.jpg', correct_key: '2'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/J_S.jpg', correct_key: '2'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/D_HU.jpg', correct_key: '3'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/B_S.jpg', correct_key: '1'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/D_P.jpg', correct_key: '2'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/Z_IF.jpg', correct_key: '1'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/J_IF.jpg', correct_key: '2'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/M_OE.jpg', correct_key: '3'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/B_P.jpg', correct_key: '3'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/M_HU.jpg', correct_key: '3'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/Z_HU.jpg', correct_key: '3'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/N_S.jpg', correct_key: '3'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/D_IF.jpg', correct_key: '3'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/B_OE.jpg', correct_key: '2'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/M_IF.jpg', correct_key: '1'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/N_HU.jpg', correct_key: '2'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/J_P.jpg', correct_key: '3'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/M_S.jpg', correct_key: '1'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/N_OE.jpg', correct_key: '1'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/B_IF.jpg', correct_key: '1'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/Z_S.jpg', correct_key: '2'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/J_HU.jpg', correct_key: '2'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/Z_P.jpg', correct_key: '3'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/N_P.jpg', correct_key: '2'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/J_OE.jpg', correct_key: '1'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/B_HU.jpg', correct_key: '1'},
+          {stimulus: 'assets/images/620513_stimuli_20200513_0037_inverted/D_S.jpg', correct_key: '1'}
+        ]
+      }
+    timeline.push(z_12_inverted)
+    
+    jsPsych.init({
+      timeline: timeline,
+      on_finish: function () {
+      const display_element = jsPsych.getDisplayElement();
+      display_element.innerHTML = '<p>You have completed the experiment. Thank you for participating!</p>'
+      jsPsych.data.get().localSave('csv','mydata.csv');
+  }
+    });
+    
+    </script>
+    </body>
+    
