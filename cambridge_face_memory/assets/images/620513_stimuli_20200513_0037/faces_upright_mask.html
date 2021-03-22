@@ -1,0 +1,2020 @@
+<head>
+	<script type="text/javascript" src="lib/vendors/jspsych-6.0.0/jspsych.js"></script>
+	<link rel="stylesheet" type="text/css" href="lib/vendors/jspsych-6.0.0/css/jspsych.css"/>
+
+	<script type="text/javascript" src="lib/vendors/jspsych-6.0.0/plugins/jspsych-html-keyboard-response.js"></script>
+	<script type="text/javascript" src="lib/vendors/jspsych-6.0.0/plugins/jspsych-image-keyboard-response.js"></script>
+
+	<script type="text/javascript" src="lib/vendors/jquery-2.2.0.min.js"></script>
+    <script type="text/javascript" src="lib/jspsych-pavlovia-3.0.0.js"></script>
+    <script src="jspsych-survey-html-form.js"></script>
+    <link rel="preload" href="256245_stimuli_20200513_0036/AA_Review_image.jpg" as="image">
+    <link rel="preload" href="256245_stimuli_20200513_0036/B10_Noisy_13_pro_L.jpg" as="image">
+    <link rel="preload" href="256245_stimuli_20200513_0036/B11_Noise_23_pro_R.jpg" as="image">
+    <link rel="preload" href="256245_stimuli_20200513_0036/B12_Noisy_frontal_HS.jpg" as="image">
+    <link rel="preload" href="256245_stimuli_20200513_0036/B9_Noisy_frontal_LS.jpg" as="image">
+    <link rel="preload" href="256245_stimuli_20200513_0036/D10_Noisy_13_Profile_L.jpg" as="image">
+    <link rel="preload" href="256245_stimuli_20200513_0036/D11_Noisy_23_profile_R.jpg" as="image">
+    <link rel="preload" href="256245_stimuli_20200513_0036/D12_Noisy_Frontal_HS.jpg" as="image">
+    <link rel="preload" href="256245_stimuli_20200513_0036/D9_Noisy_Frontal_LS.jpg" as="image">
+    <link rel="preload" href="256245_stimuli_20200513_0036/N_12_Front_Noisy.jpg" as="image">
+    <link rel="preload" href="256245_stimuli_20200513_0036/Z_12_Front_Noisy.jpg" as="image">
+    <link rel="preload" href="256245_stimuli_20200513_0036/Z_9_Front_Noisy.jpg" as="image">
+</head>
+<body>
+    <script>
+        timeline = [];
+
+        /* init connection with pavlovia.org */
+        var pavlovia_init = {
+            type: "pavlovia",
+            command: "init"
+        };
+        timeline.push(pavlovia_init);
+
+        const welcome = {
+            type: 'html-keyboard-response',
+            stimulus: 'Welcome to the experiment! Press any key to begin.',
+        }
+        timeline.push(welcome)
+
+        const survey = {
+            type: "survey-html-form",
+            html: "<div style='text-align: left; vertical-align: top; display: inline-block; float: left; width: 100%'>"+
+                  "<p><u>Age:</u> <input style='font-size: 18px; line-height: 1.6em;' input type='text' id='start' name='age'></p>"+
+                  "<p><u>Handedness:</u> </strong><input type='radio' id='left' name='handedness' value='left'>"+
+                  "<label for='left'>Left-handed</label>"+
+                  "<input type='radio' id='right' name='handedness' value='right' checked>"+
+                  "<label for='right'>Right-handed</label>"+
+                  "<input type='radio' id='ambi' name='handedness' value='ambi'>"+
+                  "<label for='ambi'>Ambidextrous</label></p>"+
+                  "<p><u>Sex:</u> <input type='radio' id='female' name='sex' value='female' checked>"+
+                  "<label for='female'>Female</label>"+
+                  "<input type='radio' id='male' name='sex' value='male'>"+
+                  "<label for='male'>Male</label>"+
+                  "<input type='radio' name='sex' value='other'><label for='other'>Other, please specify: </label>"+ 
+                  "<input type='text' name='other_sex' id='other_sex' value=''></p>"+
+                  "<p>Highest level of education achieved:<br><select id='education' name='education' style='font-size: 1em' required=''>"+
+                  "<option value=''>Please select</option><option value='less than high school'>less than High school</option>"+
+                  "<option value='high school or equivalent'>High school or equivalent</option><option value='college or technical school'>College or technical school</option>"+
+                  "<option value='Bachelor degree'>Bachelor degree</option><option value='Master/Doctorate'>Master/Doctorate</option>"+
+                  "</select></p>"+
+                  "</div>",
+            preamble: "<strong>Please provide some personal information: </strong>",
+            button_label: "continue",
+            }
+            timeline.push(survey)
+
+            //experiment block//
+            let html_str = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str += '<div style="width: 1000px; text-align:center; vertical-align: middle; display: inline-block; font-size: 200%; color:black; position: absolute;>'   
+            html_str += '<p><strong>PRACTICE</strong></p><p>Memorize the face in the next three images.</p><p>A test will follow.</p><p>Press any key on your keyboard to begin.</p>'
+            html_str += '</div></div>'
+
+            var trial0 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str,
+            }
+            timeline.push(trial0)
+
+            const img_h = 193
+            const img_w = 171
+            const img_bart_left = '620513_stimuli_20200513_0037/bart_left.jpg'
+            let html_str_1 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 150%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_1 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_1 += '<p>Practice</p>'
+            html_str_1 += '<img src ="' + img_bart_left + '" ' + 'data-src="' + img_bart_left + '" ' + 'height=' + img_h + ' px width=' + img_w + 'px></img>'
+            html_str_1 += '</div></div>'
+
+            var trial1 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_1,
+                trial_duration: 3000,
+                choices: jsPsych.NO_KEYS
+            }
+            timeline.push(trial1)
+
+            const img_bart_straight = '620513_stimuli_20200513_0037/bart_straight.jpg'
+            let html_str_2 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 150%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_2 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_2 += '<p>Practice</p>'
+            html_str_2 += '<img src ="' + img_bart_straight + '" ' + 'data-src="' + img_bart_straight + '" ' + 'height=' + img_h + ' px width=' + img_w + 'px></img>'
+            html_str_2 += '</div></div>'
+
+            var trial2 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_2,
+                trial_duration: 3000,
+                choices: jsPsych.NO_KEYS
+            }
+            timeline.push(trial2)
+
+            const img_bart_right = '620513_stimuli_20200513_0037/bart_right.jpg'
+            let html_str_3 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 150%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_3 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_3 += '<p>Practice</p>'
+            html_str_3 += '<img src ="' + img_bart_right + '" ' + 'data-src="' + img_bart_right + '" ' + 'height=' + img_h + ' px width=' + img_w + 'px></img>'
+            html_str_3 += '</div></div>'
+
+            var trial3 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_3,
+                trial_duration: 3000,
+                choices: jsPsych.NO_KEYS
+            }
+            timeline.push(trial3)
+
+            const img_z = 501
+            const img_y = 251
+            const img_pract_left = '620513_stimuli_20200513_0037/pract_left.jpg'
+            let html_str_4 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_4 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_4 += '<p>Which face did you just view? There is only one correct answer.<strong> Press 1, 2 or 3</strong>.</p>'
+            html_str_4 += '<img src ="' + img_pract_left + '" ' + 'data-src="' + img_pract_left + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_4 += '</div></div>'
+            
+            var trial4 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_4,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial4)
+
+            const img_pract_right = '620513_stimuli_20200513_0037/pract_right.jpg'
+            let html_str_5 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_5 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_5 += '<p>Which face did you just view? There is only one correct answer.<strong> Press 1, 2 or 3</strong>.</p>'
+            html_str_5 += '<img src ="' + img_pract_right + '" ' + 'data-src="' + img_pract_right + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_5 += '</div></div>'
+
+            var trial5 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_5,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial5)
+
+            const img_pract_straight = '620513_stimuli_20200513_0037/pract_straight.jpg'
+            let html_str_6 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_6 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_6 += '<p>Which face did you just view? There is only one correct answer.<strong> Press 1, 2 or 3</strong>.</p>'
+            html_str_6 += '<img src ="' + img_pract_straight + '" ' + 'data-src="' + img_pract_straight + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_6 += '</div></div>'
+
+            var trial6 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_6,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial6)
+
+            let html_str_7 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_7 += '<div style="width: 1000px; text-align:center; vertical-align: middle; display: inline-block; font-size: 200%; color:black; position: absolute;>'   
+            html_str_7 += '<p>These were the practice trials.</p><p>Great! Lets go on and do the actual test.</p><p>In this test, you will learn to recognize six people.</p><p>To begin memorizing the first face, press any key on your keyboard.</p>'
+            html_str_7 += '</div></div>'
+            
+            var trial7 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_7,
+            }
+            timeline.push(trial7)
+
+            //real trials
+            const img_q = 200
+            const img_p = 146
+            const img_bob_left_study = '620513_stimuli_20200513_0037/Bob_left_study.jpg'
+            let html_str_8 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 150%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_8 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_8 += '<p>Memorize</p>'
+            html_str_8 += '<img src ="' + img_bob_left_study + '" ' + 'data-src="' + img_bob_left_study + '" ' + 'height=' + img_q + ' px width=' + img_p + 'px></img>'
+            html_str_8 += '</div></div>'
+
+            var trial8 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_8,
+                trial_duration: 3000,
+                choices: jsPsych.NO_KEYS
+            }
+            timeline.push(trial8)
+
+            const img_bob_frontal_study = '620513_stimuli_20200513_0037/Bob_frontal_study.jpg'
+            let html_str_9 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 150%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_9 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_9 += '<p>Memorize</p>'
+            html_str_9 += '<img src ="' + img_bob_frontal_study + '" ' + 'data-src="' + img_bob_frontal_study + '" ' + 'height=' + img_q + ' px width=' + img_p + 'px></img>'
+            html_str_9 += '</div></div>'
+
+            var trial9 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_9,
+                trial_duration: 3000,
+                choices: jsPsych.NO_KEYS
+            }
+            timeline.push(trial9)
+
+            const img_bob_right_study = '620513_stimuli_20200513_0037/Bob_right_study.jpg'
+            let html_str_10 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 150%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_10 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_10 += '<p>Memorize</p>'
+            html_str_10 += '<img src ="' + img_bob_right_study + '" ' + 'data-src="' + img_bob_right_study + '" ' + 'height=' + img_q + ' px width=' + img_p + 'px></img>'
+            html_str_10 += '</div></div>'
+
+            var trial10 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_10,
+                trial_duration: 3000,
+                choices: jsPsych.NO_KEYS
+            }
+            timeline.push(trial10)
+
+            const img_b1_identical_left = '620513_stimuli_20200513_0037/B1_Identical_Left.jpg'
+            let html_str_11 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_11 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_11 += '<p>Which face did you just view?</p>'
+            html_str_11 += '<img src ="' + img_b1_identical_left + '" ' + 'data-src="' + img_b1_identical_left + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_11 += '</div></div>'
+
+            var trial11 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_11,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial11)
+
+            const img_b2_identical_frontal = '620513_stimuli_20200513_0037/B2_Identical_Frontal.jpg'
+            let html_str_12 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_12 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_12 += '<p>Which face did you just view?</p>'
+            html_str_12 += '<img src ="' + img_b2_identical_frontal + '" ' + 'data-src="' + img_b2_identical_frontal+ '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_12 += '</div></div>'
+
+            var trial12 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_12,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial12)
+
+            const img_b3_identical_right = '620513_stimuli_20200513_0037/B3_Identical_Right.jpg'
+            let html_str_13 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_13 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_13 += '<p>Which face did you just view?</p>'
+            html_str_13 += '<img src ="' + img_b3_identical_right + '" ' + 'data-src="' + img_b3_identical_right + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_13 += '</div></div>'
+
+            var trial13 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_13,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial13)
+
+            let html_str_14 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_14 += '<div style="width: 1000px; text-align:center; vertical-align: middle; display: inline-block; font-size: 200%; color:black; position: absolute;>'   
+            html_str_14 += '<p>Memorize the following face.</p><p>To begin press any key on your keyboard.</p>'
+            html_str_14 += '</div></div>'
+            
+            var trial14 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_14,
+            }
+            timeline.push(trial14)
+
+            const img_dan_left_study = '620513_stimuli_20200513_0037/Dan_Left_Study.jpg'
+            let html_str_15 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 150%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_15 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_15 += '<p>Memorize</p>'
+            html_str_15 += '<img src ="' + img_dan_left_study + '" ' + 'data-src="' + img_dan_left_study + '" ' + 'height=' + img_q + ' px width=' + img_p + 'px></img>'
+            html_str_15 += '</div></div>'
+
+            var trial15 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_15,
+                trial_duration: 3000,
+                choices: jsPsych.NO_KEYS
+            }
+            timeline.push(trial15)
+
+            const img_dan_frontal_study = '620513_stimuli_20200513_0037/Dan_frontal_study.jpg'
+            let html_str_16 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 150%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_16 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_16 += '<p>Memorize</p>'
+            html_str_16 += '<img src ="' + img_dan_frontal_study + '" ' + 'data-src="' + img_dan_frontal_study + '" ' + 'height=' + img_q + ' px width=' + img_p + 'px></img>'
+            html_str_16 += '</div></div>'
+
+            var trial16 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_16,
+                trial_duration: 3000,
+                choices: jsPsych.NO_KEYS
+            }
+            timeline.push(trial16)
+
+            const img_dan_right_frontal = '620513_stimuli_20200513_0037/Dan_Right_Frontal.jpg'
+            let html_str_17 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 150%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_17 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_17 += '<p>Memorize</p>'
+            html_str_17 += '<img src ="' + img_dan_right_frontal+ '" ' + 'data-src="' + img_dan_right_frontal + '" ' + 'height=' + img_q + ' px width=' + img_p + 'px></img>'
+            html_str_17 += '</div></div>'
+
+            var trial17 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_17,
+                trial_duration: 3000,
+                choices: jsPsych.NO_KEYS
+            }
+            timeline.push(trial17)
+
+            const img_d1_identical_left = '620513_stimuli_20200513_0037/D1_Identical_Left.jpg'
+            let html_str_18 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_18 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_18 += '<p>Which face did you just view?</p>'
+            html_str_18 += '<img src ="' + img_d1_identical_left + '" ' + 'data-src="' + img_d1_identical_left + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_18 += '</div></div>'
+
+            var trial18 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_18,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial18)
+
+            const img_d2_identical_frontal = '620513_stimuli_20200513_0037/D2_Identical_Frontal.jpg'
+            let html_str_19 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_19 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_19 += '<p>Which face did you just view?</p>'
+            html_str_19 += '<img src ="' + img_d2_identical_frontal + '" ' + 'data-src="' + img_d2_identical_frontal + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_19 += '</div></div>'
+
+            var trial19 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_19,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial19)
+
+            const img_d3_identical_right = '620513_stimuli_20200513_0037/D3_Identical_Right.jpg'
+            let html_str_20 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_20 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_20 += '<p>Which face did you just view?</p>'
+            html_str_20 += '<img src ="' + img_d3_identical_right + '" ' + 'data-src="' + img_d3_identical_right + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_20 += '</div></div>'
+
+            var trial20 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_20,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial20)
+
+            let html_str_21 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_21 += '<div style="width: 1000px; text-align:center; vertical-align: middle; display: inline-block; font-size: 200%; color:black; position: absolute;>'   
+            html_str_21 += '<p>Press any key on your keyboard.</p>'
+            html_str_21 += '</div></div>'
+            
+            var trial21 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_21,
+            }
+            timeline.push(trial21)
+
+            const img_jim_left = '620513_stimuli_20200513_0037/Jim_left.jpg'
+            let html_str_22 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 150%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_22 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_22 += '<p>Memorize</p>'
+            html_str_22 += '<img src ="' + img_jim_left + '" ' + 'data-src="' + img_jim_left + '" ' + 'height=' + img_q + ' px width=' + img_p + 'px></img>'
+            html_str_22 += '</div></div>'
+
+            var trial22 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_22,
+                trial_duration: 3000,
+                choices: jsPsych.NO_KEYS
+            }
+            timeline.push(trial22)
+
+            const img_jim_front = '620513_stimuli_20200513_0037/Jim_front.jpg'
+            let html_str_23 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 150%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_23 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_23 += '<p>Memorize</p>'
+            html_str_23 += '<img src ="' + img_jim_front + '" ' + 'data-src="' + img_jim_front + '" ' + 'height=' + img_q + ' px width=' + img_p + 'px></img>'
+            html_str_23 += '</div></div>'
+
+            var trial23 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_23,
+                trial_duration: 3000,
+                choices: jsPsych.NO_KEYS
+            }
+            timeline.push(trial23)
+
+            const img_jim_right = '620513_stimuli_20200513_0037/Jim_right.jpg'
+            let html_str_24 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 150%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_24 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_24 += '<p>Memorize</p>'
+            html_str_24 += '<img src ="' + img_jim_right + '" ' + 'data-src="' + img_jim_right + '" ' + 'height=' + img_q + ' px width=' + img_p + 'px></img>'
+            html_str_24 += '</div></div>'
+
+            var trial24 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_24,
+                trial_duration: 3000,
+                choices: jsPsych.NO_KEYS
+            }
+            timeline.push(trial24)
+
+            const img_j_1_iden_l = '620513_stimuli_20200513_0037/J_1_Iden_L.jpg'
+            let html_str_25 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_25 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_25 += '<p>Which face did you just view?</p>'
+            html_str_25 += '<img src ="' + img_j_1_iden_l + '" ' + 'data-src="' + img_j_1_iden_l + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_25 += '</div></div>'
+
+            var trial25 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_25,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial25)
+
+            const img_j_2_iden_front = '620513_stimuli_20200513_0037/J_2_Iden_Front.jpg'
+            let html_str_26 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_26 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_26 += '<p>Which face did you just view?</p>'
+            html_str_26 += '<img src ="' + img_j_2_iden_front + '" ' + 'data-src="' + img_j_2_iden_front + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_26 += '</div></div>'
+
+            var trial26 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_26,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial26)
+
+            const img_j_3_iden_r= '620513_stimuli_20200513_0037/J_3_Iden_R.jpg'
+            let html_str_27 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_27 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_27 += '<p>Which face did you just view?</p>'
+            html_str_27 += '<img src ="' + img_j_3_iden_r + '" ' + 'data-src="' + img_j_3_iden_r + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_27 += '</div></div>'
+
+            var trial27 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_27,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial27)
+
+            let html_str_28 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_28 += '<div style="width: 1000px; text-align:center; vertical-align: middle; display: inline-block; font-size: 200%; color:black; position: absolute;>'   
+            html_str_28 += '<p><p>Memorize the following face.</p>Press any key on your keyboard.</p>'
+            html_str_28 += '</div></div>'
+            
+            var trial28 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_28,
+            }
+            timeline.push(trial28)
+
+            const img_matt_left_cropped = '620513_stimuli_20200513_0037/Matt_left_cropped.jpg'
+            let html_str_29 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 150%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_29 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_29 += '<p>Memorize</p>'
+            html_str_29 += '<img src ="' + img_matt_left_cropped + '" ' + 'data-src="' + img_matt_left_cropped + '" ' + 'height=' + img_q + ' px width=' + img_p + 'px></img>'
+            html_str_29 += '</div></div>'
+
+            var trial29 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_29,
+                trial_duration: 3000,
+                choices: jsPsych.NO_KEYS
+            }
+            timeline.push(trial29)
+
+            const img_matt_front = '620513_stimuli_20200513_0037/Matt_front.jpg'
+            let html_str_30 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 150%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_30 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_30 += '<p>Memorize</p>'
+            html_str_30 += '<img src ="' + img_matt_front + '" ' + 'data-src="' + img_matt_front + '" ' + 'height=' + img_q + ' px width=' + img_p + 'px></img>'
+            html_str_30 += '</div></div>'
+
+            var trial30 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_30,
+                trial_duration: 3000,
+                choices: jsPsych.NO_KEYS
+            }
+            timeline.push(trial30)
+
+            const img_matt_right_cropped = '620513_stimuli_20200513_0037/Matt_right_cropped.jpg'
+            let html_str_31 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 150%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_31 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_31 += '<p>Memorize</p>'
+            html_str_31 += '<img src ="' + img_matt_right_cropped + '" ' + 'data-src="' + img_matt_right_cropped + '" ' + 'height=' + img_q + ' px width=' + img_p + 'px></img>'
+            html_str_31 += '</div></div>'
+
+            var trial31 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_31,
+                trial_duration: 3000,
+                choices: jsPsych.NO_KEYS
+            }
+            timeline.push(trial31)
+
+            const img_m_1_iden_l = '620513_stimuli_20200513_0037/M_1_Iden_L.jpg'
+            let html_str_32 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_32 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_32 += '<p>Which face did you just view?</p>'
+            html_str_32 += '<img src ="' + img_m_1_iden_l + '" ' + 'data-src="' + img_m_1_iden_l + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_32 += '</div></div>'
+
+            var trial32 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_32,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial32)
+
+            const img_m_2_iden_front = '620513_stimuli_20200513_0037/M_2_Iden_Front.jpg'
+            let html_str_33 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_33 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_33 += '<p>Which face did you just view?</p>'
+            html_str_33 += '<img src ="' + img_m_2_iden_front + '" ' + 'data-src="' + img_m_2_iden_front + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_33 += '</div></div>'
+
+            var trial33 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_33,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial33)
+
+            const img_m_3_iden_r= '620513_stimuli_20200513_0037/M_3_Iden_R.jpg'
+            let html_str_34 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_34 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_34 += '<p>Which face did you just view?</p>'
+            html_str_34 += '<img src ="' + img_m_3_iden_r + '" ' + 'data-src="' + img_m_3_iden_r + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_34 += '</div></div>'
+
+            var trial34 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_34,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial34)
+
+            let html_str_35 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_35 += '<div style="width: 1000px; text-align:center; vertical-align: middle; display: inline-block; font-size: 200%; color:black; position: absolute;>'   
+            html_str_35 += '<p><p>Memorize the following face.</p>Press any key on your keyboard.</p>'
+            html_str_35 += '</div></div>'
+            
+            var trial35 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_35,
+            }
+            timeline.push(trial35)
+
+            const img_nate_left_cropped = '620513_stimuli_20200513_0037/Nate_left_cropped.jpg'
+            let html_str_36 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 150%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_36 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_36 += '<p>Memorize</p>'
+            html_str_36 += '<img src ="' + img_nate_left_cropped + '" ' + 'data-src="' + img_nate_left_cropped + '" ' + 'height=' + img_q + ' px width=' + img_p + 'px></img>'
+            html_str_36 += '</div></div>'
+
+            var trial36 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_36,
+                trial_duration: 3000,
+                choices: jsPsych.NO_KEYS
+            }
+            timeline.push(trial36)
+
+            const img_nate_front_cropped = '620513_stimuli_20200513_0037/Nate_front_cropped.jpg'
+            let html_str_37 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 150%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_37 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_37 += '<p>Memorize</p>'
+            html_str_37 += '<img src ="' + img_nate_front_cropped + '" ' + 'data-src="' + img_nate_front_cropped + '" ' + 'height=' + img_q + ' px width=' + img_p + 'px></img>'
+            html_str_37 += '</div></div>'
+
+            var trial37 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_37,
+                trial_duration: 3000,
+                choices: jsPsych.NO_KEYS
+            }
+            timeline.push(trial37)
+
+            const img_nate_right_cropped = '620513_stimuli_20200513_0037/Nate_right_cropped.jpg'
+            let html_str_38 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 150%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_38 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_38 += '<p>Memorize</p>'
+            html_str_38 += '<img src ="' + img_nate_right_cropped + '" ' + 'data-src="' + img_nate_right_cropped + '" ' + 'height=' + img_q + ' px width=' + img_p + 'px></img>'
+            html_str_38 += '</div></div>'
+
+            var trial38 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_38,
+                trial_duration: 3000,
+                choices: jsPsych.NO_KEYS
+            }
+            timeline.push(trial38)
+
+            const img_n_1_iden_l= '620513_stimuli_20200513_0037/N_1_Iden_L.jpg'
+            let html_str_39 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_39 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_39 += '<p>Which face did you just view?</p>'
+            html_str_39 += '<img src ="' + img_n_1_iden_l+ '" ' + 'data-src="' + img_n_1_iden_l + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_39 += '</div></div>'
+
+            var trial39 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_39,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial39)
+
+            const img_n_2_iden_front= '620513_stimuli_20200513_0037/N_2_Iden_Front.jpg'
+            let html_str_40 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_40 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_40 += '<p>Which face did you just view?</p>'
+            html_str_40 += '<img src ="' + img_n_2_iden_front + '" ' + 'data-src="' + img_n_2_iden_front + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_40 += '</div></div>'
+
+            var trial40 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_40,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial40)
+
+            const img_n_3_iden_r= '620513_stimuli_20200513_0037/N_3_Iden_R.jpg'
+            let html_str_41 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_41 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_41 += '<p>Which face did you just view?</p>'
+            html_str_41 += '<img src ="' + img_n_3_iden_r + '" ' + 'data-src="' + img_n_3_iden_r + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_41 += '</div></div>'
+
+            var trial41 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_41,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial41)
+
+            let html_str_42 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_42 += '<div style="width: 1000px; text-align:center; vertical-align: middle; display: inline-block; font-size: 200%; color:black; position: absolute;>'   
+            html_str_42 += '<p><p>Memorize the following face.</p>Press any key on your keyboard.</p>'
+            html_str_42 += '</div></div>'
+            
+            var trial42 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_42,
+            }
+            timeline.push(trial42)
+
+            const img_zack_left_cropped = '620513_stimuli_20200513_0037/Zack_Left_cropped.jpg'
+            let html_str_43 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 150%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_43 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_43 += '<p>Memorize</p>'
+            html_str_43 += '<img src ="' + img_zack_left_cropped + '" ' + 'data-src="' + img_zack_left_cropped + '" ' + 'height=' + img_q + ' px width=' + img_p + 'px></img>'
+            html_str_43 += '</div></div>'
+
+            var trial43 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_43,
+                trial_duration: 3000,
+                choices: jsPsych.NO_KEYS
+            }
+            timeline.push(trial43)
+
+            const img_zack_front_cropped = '620513_stimuli_20200513_0037/Zack_Front_cropped.jpg'
+            let html_str_44 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 150%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_44 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_44 += '<p>Memorize</p>'
+            html_str_44 += '<img src ="' + img_zack_front_cropped + '" ' + 'data-src="' + img_zack_front_cropped + '" ' + 'height=' + img_q + ' px width=' + img_p + 'px></img>'
+            html_str_44 += '</div></div>'
+
+            var trial44 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_44,
+                trial_duration: 3000,
+                choices: jsPsych.NO_KEYS
+            }
+            timeline.push(trial44)
+
+            const img_zack_right_cropped = '620513_stimuli_20200513_0037/Zack_Right_Cropped.jpg'
+            let html_str_45 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 150%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_45 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_45 += '<p>Memorize</p>'
+            html_str_45 += '<img src ="' + img_zack_right_cropped + '" ' + 'data-src="' + img_zack_right_cropped + '" ' + 'height=' + img_q + ' px width=' + img_p + 'px></img>'
+            html_str_45 += '</div></div>'
+
+            var trial45 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_45,
+                trial_duration: 3000,
+                choices: jsPsych.NO_KEYS
+            }
+            timeline.push(trial45)
+
+            const img_z_1_iden_l= '620513_stimuli_20200513_0037/Z_1_Iden_L.jpg'
+            let html_str_46 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_46 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_46 += '<p>Which face did you just view?</p>'
+            html_str_46 += '<img src ="' + img_z_1_iden_l + '" ' + 'data-src="' + img_z_1_iden_l + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_46 += '</div></div>'
+
+            var trial46 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_46,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial46)
+
+            const img_z_2_iden_front= '620513_stimuli_20200513_0037/Z_2_Iden_Front.jpg'
+            let html_str_47 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_47 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_47 += '<p>Which face did you just view?</p>'
+            html_str_47 += '<img src ="' + img_z_2_iden_front + '" ' + 'data-src="' + img_z_2_iden_front + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_47 += '</div></div>'
+
+            var trial47 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_47,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial47)
+
+            const img_z_3_iden_r= '620513_stimuli_20200513_0037/Z_3_Iden_R.jpg'
+            let html_str_48 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_48 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_48 += '<p>Which face did you just view?</p>'
+            html_str_48 += '<img src ="' + img_z_3_iden_r + '" ' + 'data-src="' + img_z_3_iden_r + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_48 += '</div></div>'
+
+            var trial48 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_48,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial48)
+
+            let html_str_49 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_49 += '<div style="width: 1000px; text-align:center; vertical-align: middle; display: inline-block; font-size: 200%; color:black; position: absolute;>'   
+            html_str_49 += '<p><p>Next you will review the same six people for 20 seconds.</p>Press any key on your keyboard.</p>'
+            html_str_49 += '</div></div>'
+            
+            var trial49 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_49,
+            }
+            timeline.push(trial49)
+            const img_c = 400
+            const img_l = 400
+            const img_review= '620513_stimuli_20200513_0037/AA_Review_image.jpg'
+
+            let html_str_50 = '<p>Study the faces (20 seconds).</p>'
+            html_str_50 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_50 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_50 += '<img src ="' + img_review + '" ' + 'data-src="' + img_review + '" ' + 'height=' + img_c + ' px width=' + img_l + 'px></img>'
+            html_str_50 += '</div></div>'
+
+            var trial50 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_50,
+                trial_duration: 20000,
+                choices: jsPsych.NO_KEYS
+            }
+            timeline.push(trial50)
+
+            let html_str_51 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_51 += '<div style="width: 1000px; text-align:center; vertical-align: middle; display: inline-block; font-size: 200%; color:black; position: absolute;>'   
+            html_str_51 += '<p>Now your memory of these faces will be tested.</p>In the remaining trials, the correct answer can be any of the six faces.</p><p>The incorrect faces are sometimes very similar to the target faces, so be sure to look at each face prior to answering.</p>'
+            html_str_51 += '<p>Press any key to begin.</p>'
+            html_str_51 += '</div></div>'
+            
+            var trial51 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_51,
+            }
+            timeline.push(trial51)
+
+            const img_m_5_front_halflit= '620513_stimuli_20200513_0037/M_5_Front_Halflit.jpg'
+            let html_str_52 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_52 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_52 += '<p>Which face is one of the six target faces?</p>'
+            html_str_52 += '<img src ="' + img_m_5_front_halflit + '" ' + 'data-src="' + img_m_5_front_halflit + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_52 += '</div></div>'
+
+            var trial52 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_52,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial52)
+
+            const img_n_8_13_r_pro_dark= '620513_stimuli_20200513_0037/N_8_13_R_Pro_dark.jpg'
+            let html_str_53 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_53 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_53 += '<p>Which face is one of the six target faces?</p>'
+            html_str_53 += '<img src ="' + img_n_8_13_r_pro_dark + '" ' + 'data-src="' + img_n_8_13_r_pro_dark + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_53 += '</div></div>'
+
+            var trial53 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_53,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial53)
+
+            const img_z_6_23_pro_l= '620513_stimuli_20200513_0037/Z_6_23_Pro_L.jpg'
+            let html_str_54 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_54 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_54 += '<p>Which face is one of the six target faces?</p>'
+            html_str_54 += '<img src ="' + img_z_6_23_pro_l + '" ' + 'data-src="' + img_z_6_23_pro_l + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_54 += '</div></div>'
+
+            var trial54 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_54,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial54)
+
+            const img_d5_halflit_frontal= '620513_stimuli_20200513_0037/D5_Halflit_Frontal.jpg'
+            let html_str_55 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_55 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_55 += '<p>Which face is one of the six target faces?</p>'
+            html_str_55 += '<img src ="' + img_d5_halflit_frontal + '" ' + 'data-src="' + img_d5_halflit_frontal + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_55 += '</div></div>'
+
+            var trial55 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_55,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial55)
+
+            const img_b7_bottomlit_frontal= '620513_stimuli_20200513_0037/B7_Bottomlit_Frontal.jpg'
+            let html_str_56 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_56 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_56 += '<p>Which face is one of the six target faces?</p>'
+            html_str_56 += '<img src ="' + img_b7_bottomlit_frontal + '" ' + 'data-src="' + img_b7_bottomlit_frontal + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_56 += '</div></div>'
+
+            var trial56 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_56,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial56)
+
+            const img_j_6_23_l_pro = '620513_stimuli_20200513_0037/J_6_23_L_Pro.jpg'
+            let html_str_57 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_57 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_57 += '<p>Which face is one of the six target faces?</p>'
+            html_str_57 += '<img src ="' + img_j_6_23_l_pro + '" ' + 'data-src="' + img_j_6_23_l_pro + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_57 += '</div></div>'
+
+            var trial57 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_57,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial57)
+
+            const img_d7_bottomlit_frontal = '620513_stimuli_20200513_0037/D7_Bottomlit_Frontal.jpg'
+            let html_str_58 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_58 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_58 += '<p>Which face is one of the six target faces?</p>'
+            html_str_58 += '<img src ="' + img_d7_bottomlit_frontal + '" ' + 'data-src="' + img_d7_bottomlit_frontal + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_58 += '</div></div>'
+
+            var trial58 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_58,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial58)
+
+            const img_z_5_front_half= '620513_stimuli_20200513_0037/Z_5_Front_Half.jpg'
+            let html_str_59 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_59 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_59 += '<p>Which face is one of the six target faces?</p>'
+            html_str_59 += '<img src ="' + img_z_5_front_half + '" ' + 'data-src="' + img_z_5_front_half + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_59 += '</div></div>'
+
+            var trial59 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_59,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial59)
+
+            const img_m_6_23_l_pro= '620513_stimuli_20200513_0037/M_6_23_L_Pro.jpg'
+            let html_str_60 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_60 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_60 += '<p>Which face is one of the six target faces?</p>'
+            html_str_60 += '<img src ="' + img_m_6_23_l_pro + '" ' + 'data-src="' + img_m_6_23_l_pro + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_60 += '</div></div>'
+
+            var trial60 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_60,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial60)
+
+            const img_j_7_bottom_lit= '620513_stimuli_20200513_0037/J_7_Bottom_Lit.jpg'
+            let html_str_61 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_61 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_61 += '<p>Which face is one of the six target faces?</p>'
+            html_str_61 += '<img src ="' + img_j_7_bottom_lit + '" ' + 'data-src="' + img_j_7_bottom_lit + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_61 += '</div></div>'
+
+            var trial61 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_61,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial61)
+
+            const img_n_4_23_r_pro= '620513_stimuli_20200513_0037/N_4_23_R_Pro.jpg'
+            let html_str_62 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_62 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_62 += '<p>Which face is one of the six target faces?</p>'
+            html_str_62 += '<img src ="' + img_n_4_23_r_pro + '" ' + 'data-src="' + img_n_4_23_r_pro + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_62 += '</div></div>'
+
+            var trial62 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_62,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial62)
+
+            const img_m_8_13_r_pro_dark= '620513_stimuli_20200513_0037/M_8_13_R_Pro_dark.jpg'
+            let html_str_63 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_63 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_63 += '<p>Which face is one of the six target faces?</p>'
+            html_str_63 += '<img src ="' + img_m_8_13_r_pro_dark + '" ' + 'data-src="' + img_m_8_13_r_pro_dark + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_63 += '</div></div>'
+
+            var trial63 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_63,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial63)
+
+            const img_j_5_front_halflit= '620513_stimuli_20200513_0037/J_5_Front_Halflit.jpg'
+            let html_str_64 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_64 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_64 += '<p>Which face is one of the six target faces?</p>'
+            html_str_64 += '<img src ="' + img_j_5_front_halflit + '" ' + 'data-src="' + img_j_5_front_halflit + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_64 += '</div></div>'
+
+            var trial64 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_64,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial64)
+
+            const img_n_7_front_bot= '620513_stimuli_20200513_0037/N_7_Front_Bot.jpg'
+            let html_str_65 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_65 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_65 += '<p>Which face is one of the six target faces?</p>'
+            html_str_65 += '<img src ="' + img_n_7_front_bot + '" ' + 'data-src="' + img_n_7_front_bot + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_65 += '</div></div>'
+
+            var trial65 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_65,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial65)
+
+            const img_z_4_23_pro_r= '620513_stimuli_20200513_0037/Z_4_23_Pro_R.jpg'
+            let html_str_66 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_66 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_66 += '<p>Which face is one of the six target faces?</p>'
+            html_str_66 += '<img src ="' + img_z_4_23_pro_r + '" ' + 'data-src="' + img_z_4_23_pro_r + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_66 += '</div></div>'
+
+            var trial66 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_66,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial66)
+
+            const img_d8_13_profile_r= '620513_stimuli_20200513_0037/D8_13_Profile_R.jpg'
+            let html_str_67 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_67 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_67 += '<p>Which face is one of the six target faces?</p>'
+            html_str_67 += '<img src ="' + img_d8_13_profile_r + '" ' + 'data-src="' + img_d8_13_profile_r + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_67 += '</div></div>'
+
+            var trial67 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_67,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial67)
+
+            const img_m_7_front_bot= '620513_stimuli_20200513_0037/M_7_Front_Bot.jpg'
+            let html_str_68 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_68 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_68 += '<p>Which face is one of the six target faces?</p>'
+            html_str_68 += '<img src ="' + img_m_7_front_bot + '" ' + 'data-src="' + img_m_7_front_bot + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_68 += '</div></div>'
+
+            var trial68 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_68,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial68)
+
+            const img_b4_23_pro_ri= '620513_stimuli_20200513_0037/B4_23_pro_ri.jpg'
+            let html_str_69 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_69 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_69 += '<p>Which face is one of the six target faces?</p>'
+            html_str_69 += '<img src ="' + img_b4_23_pro_ri + '" ' + 'data-src="' + img_b4_23_pro_ri + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_69 += '</div></div>'
+
+            var trial69 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_69,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial69)
+
+            const img_d6_23_profile_l= '620513_stimuli_20200513_0037/D6_23_Profile_L.jpg'
+            let html_str_70 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_70 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_70 += '<p>Which face is one of the six target faces?</p>'
+            html_str_70 += '<img src ="' + img_d6_23_profile_l + '" ' + 'data-src="' + img_d6_23_profile_l + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_70 += '</div></div>'
+
+            var trial70 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_70,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial70)
+
+            const img_n_5_front_half= '620513_stimuli_20200513_0037/N_5_Front_Half.jpg'
+            let html_str_71 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_71 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_71 += '<p>Which face is one of the six target faces?</p>'
+            html_str_71 += '<img src ="' + img_n_5_front_half + '" ' + 'data-src="' + img_n_5_front_half + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_71 += '</div></div>'
+
+            var trial71 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_71,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial71)
+
+            const img_b6_23_p_l= '620513_stimuli_20200513_0037/B6_23_pro_L.jpg'
+            let html_str_72 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_72 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_72 += '<p>Which face is one of the six target faces?</p>'
+            html_str_72 += '<img src ="' + img_b6_23_p_l + '" ' + 'data-src="' + img_b6_23_p_l + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_72 += '</div></div>'
+
+            var trial72 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_72,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial72)
+
+            const img_z_8_13_pro_r_dark= '620513_stimuli_20200513_0037/Z_8_13_Pro_R_dark.jpg'
+            let html_str_73 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_73 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_73 += '<p>Which face is one of the six target faces?</p>'
+            html_str_73 += '<img src ="' + img_z_8_13_pro_r_dark + '" ' + 'data-src="' + img_z_8_13_pro_r_dark + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_73 += '</div></div>'
+
+            var trial73 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_73,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial73)
+
+            const img_j_4_23_r_pro= '620513_stimuli_20200513_0037/J_4_23_R_Pro.jpg'
+            let html_str_74 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_74 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_74 += '<p>Which face is one of the six target faces?</p>'
+            html_str_74 += '<img src ="' + img_j_4_23_r_pro + '" ' + 'data-src="' + img_j_4_23_r_pro + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_74 += '</div></div>'
+
+            var trial74 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_74,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial74)
+
+            const img_b8_13_pro_r_hs= '620513_stimuli_20200513_0037/B8_13_pro_R_HS.jpg'
+            let html_str_75 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_75 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_75 += '<p>Which face is one of the six target faces?</p>'
+            html_str_75 += '<img src ="' + img_b8_13_pro_r_hs + '" ' + 'data-src="' + img_b8_13_pro_r_hs + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_75 += '</div></div>'
+
+            var trial75 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_75,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial75)
+
+            const img_m_4_23_r_pro= '620513_stimuli_20200513_0037/M_4_23_R_Pro.jpg'
+            let html_str_76 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_76 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_76 += '<p>Which face is one of the six target faces?</p>'
+            html_str_76 += '<img src ="' + img_m_4_23_r_pro + '" ' + 'data-src="' + img_m_4_23_r_pro + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_76 += '</div></div>'
+
+            var trial76 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_76,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial76)
+
+            const img_j_8_13_r_pro_dark= '620513_stimuli_20200513_0037/J_8_13_r_pro_dark.jpg'
+            let html_str_77 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_77 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_77 += '<p>Which face is one of the six target faces?</p>'
+            html_str_77 += '<img src ="' + img_j_8_13_r_pro_dark + '" ' + 'data-src="' + img_j_8_13_r_pro_dark + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_77 += '</div></div>'
+
+            var trial77 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_77,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial77)
+
+            const img_z_7_front_bot= '620513_stimuli_20200513_0037/Z_7_Front_Bot.jpg'
+            let html_str_78 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_78 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_78 += '<p>Which face is one of the six target faces?</p>'
+            html_str_78 += '<img src ="' + img_z_7_front_bot + '" ' + 'data-src="' + img_z_7_front_bot + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_78 += '</div></div>'
+
+            var trial78 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_78,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial78)
+
+            const img_d4_23_profile_r= '620513_stimuli_20200513_0037/D4_23_profile_R.jpg'
+            let html_str_79 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_79 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_79 += '<p>Which face is one of the six target faces?</p>'
+            html_str_79 += '<img src ="' + img_d4_23_profile_r + '" ' + 'data-src="' + img_d4_23_profile_r + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_79 += '</div></div>'
+
+            var trial79 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_79,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial79)
+
+            const img_n_6_23_l_pro= '620513_stimuli_20200513_0037/N_6_23_L_Pro.jpg'
+            let html_str_80 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_80 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_80 += '<p>Which face is one of the six target faces?</p>'
+            html_str_80 += '<img src ="' + img_n_6_23_l_pro + '" ' + 'data-src="' + img_n_6_23_l_pro + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_80 += '</div></div>'
+
+            var trial80 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_80,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial80)
+
+            const img_b5_halflit_frontal= '620513_stimuli_20200513_0037/B5_halflit_frontal.jpg'
+            let html_str_81 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_81 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_81 += '<p>Which face is one of the six target faces?</p>'
+            html_str_81 += '<img src ="' + img_b5_halflit_frontal + '" ' + 'data-src="' + img_b5_halflit_frontal + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_81 += '</div></div>'
+
+            var trial81 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_81,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial81)
+
+            const img_review_2= '620513_stimuli_20200513_0037/AA_Review_image.jpg'
+            let html_str_82 = '<p>Study the faces (20 seconds).</p>'
+            html_str_82 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 150%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_82 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_82 += '<img src ="' + img_review_2 + '" ' + 'data-src="' + img_review_2 + '" ' + 'height=' + img_c + ' px width=' + img_l + 'px></img>'
+            html_str_82 += '</div></div>'
+
+            var trial82 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_82,
+                trial_duration: 20000,
+                choices: jsPsych.NO_KEYS
+            }
+            timeline.push(trial82)
+
+            const img_z_12_front_noisy= '620513_stimuli_20200513_0037/Z_12_Front_Noisy.jpg'
+            let html_str_83 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_83 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_83 += '<p>Which face is one of the six target faces?</p>'
+            html_str_83 += '<img src ="' + img_z_12_front_noisy + '" ' + 'data-src="' + img_z_12_front_noisy + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_83 += '</div></div>'
+
+            var trial83 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_83,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial83)
+
+            const img_m_11_23_n_r_pro= '620513_stimuli_20200513_0037/M_11_23_N_R_Pro.jpg'
+            let html_str_84 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_84 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_84 += '<p>Which face is one of the six target faces?</p>'
+            html_str_84 += '<img src ="' + img_m_11_23_n_r_pro + '" ' + 'data-src="' + img_m_11_23_n_r_pro + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_84 += '</div></div>'
+
+            var trial84 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_84,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial84)
+
+            const img_d10_noisy_13_profile_l= '620513_stimuli_20200513_0037/D10_Noisy_13_Profile_L.jpg'
+            let html_str_85 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_85 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_85 += '<p>Which face is one of the six target faces?</p>'
+            html_str_85 += '<img src ="' + img_d10_noisy_13_profile_l + '" ' + 'data-src="' + img_d10_noisy_13_profile_l + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_85 += '</div></div>'
+
+            var trial85 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_85,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial85)
+
+            const img_j_12_frontal_hs= '620513_stimuli_20200513_0037/J_12_Frontal_HS.jpg'
+            let html_str_86 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_86 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_86 += '<p>Which face is one of the six target faces?</p>'
+            html_str_86 += '<img src ="' + img_j_12_frontal_hs + '" ' + 'data-src="' + img_j_12_frontal_hs + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_86 += '</div></div>'
+
+            var trial86 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_86,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial86)
+
+            const img_j_11_23_pro_r= '620513_stimuli_20200513_0037/J_11_23_pro_R.jpg'
+            let html_str_87 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_87 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_87 += '<p>Which face is one of the six target faces?</p>'
+            html_str_87 += '<img src ="' + img_j_11_23_pro_r + '" ' + 'data-src="' + img_j_11_23_pro_r + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_87 += '</div></div>'
+
+            var trial87 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_87,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial87)
+
+            const img_n_9_front_ls= '620513_stimuli_20200513_0037/N_9_Front_LS.jpg'
+            let html_str_88 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_88 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_88 += '<p>Which face is one of the six target faces?</p>'
+            html_str_88 += '<img src ="' + img_n_9_front_ls + '" ' + 'data-src="' + img_n_9_front_ls + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_88 += '</div></div>'
+
+            var trial88 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_88,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial88)
+
+            const img_b12_noisy_frontal_hs= '620513_stimuli_20200513_0037/B12_Noisy_frontal_HS.jpg'
+            let html_str_89 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_89 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_89 += '<p>Which face is one of the six target faces?</p>'
+            html_str_89 += '<img src ="' + img_b12_noisy_frontal_hs + '" ' + 'data-src="' + img_b12_noisy_frontal_hs + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_89 += '</div></div>'
+
+            var trial89 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_89,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial89)
+
+            const img_m_12_front_n_hs= '620513_stimuli_20200513_0037/M_12_Front_N_HS.jpg'
+            let html_str_90 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_90 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_90 += '<p>Which face is one of the six target faces?</p>'
+            html_str_90 += '<img src ="' + img_m_12_front_n_hs + '" ' + 'data-src="' + img_m_12_front_n_hs + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_90 += '</div></div>'
+
+            var trial90 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_90,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial90)
+
+            const img_d12_noisy_frontal_hs= '620513_stimuli_20200513_0037/D12_Noisy_Frontal_HS.jpg'
+            let html_str_91 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_91 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_91 += '<p>Which face is one of the six target faces?</p>'
+            html_str_91 += '<img src ="' + img_d12_noisy_frontal_hs + '" ' + 'data-src="' + img_d12_noisy_frontal_hs + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_91 += '</div></div>'
+
+            var trial91 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_91,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial91)
+
+            const img_z_11_23_pro_r= '620513_stimuli_20200513_0037/Z_11_23_Pro_R.jpg'
+            let html_str_92 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_92 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_92 += '<p>Which face is one of the six target faces?</p>'
+            html_str_92 += '<img src ="' + img_z_11_23_pro_r + '" ' + 'data-src="' + img_z_11_23_pro_r + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_92 += '</div></div>'
+
+            var trial92 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_92,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial92)
+
+            const img_n_10_13_l_pro_dark= '620513_stimuli_20200513_0037/N_10_13_L_Pro_dark.jpg'
+            let html_str_93 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_93 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_93 += '<p>Which face is one of the six target faces?</p>'
+            html_str_93 += '<img src ="' + img_n_10_13_l_pro_dark + '" ' + 'data-src="' + img_n_10_13_l_pro_dark + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_93 += '</div></div>'
+
+            var trial93 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_93,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial93)
+
+            const img_b9_noisy_frontal_ls= '620513_stimuli_20200513_0037/B9_Noisy_frontal_LS.jpg'
+            let html_str_94 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_94 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_94 += '<p>Which face is one of the six target faces?</p>'
+            html_str_94 += '<img src ="' + img_b9_noisy_frontal_ls + '" ' + 'data-src="' + img_b9_noisy_frontal_ls + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_94 += '</div></div>'
+
+            var trial94 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_94,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial94)
+
+            const img_m_9_front_n_ls= '620513_stimuli_20200513_0037/M_9_Front_N_LS.jpg'
+            let html_str_95 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_95 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_95 += '<p>Which face is one of the six target faces?</p>'
+            html_str_95 += '<img src ="' + img_m_9_front_n_ls + '" ' + 'data-src="' + img_m_9_front_n_ls + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_95 += '</div></div>'
+
+            var trial95 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_95,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial95)
+
+            const img_j_9_n_frontal_50= '620513_stimuli_20200513_0037/J_9_N_Frontal_50.jpg'
+            let html_str_96 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_96 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_96 += '<p>Which face is one of the six target faces?</p>'
+            html_str_96 += '<img src ="' + img_j_9_n_frontal_50 + '" ' + 'data-src="' + img_j_9_n_frontal_50 + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_96 += '</div></div>'
+
+            var trial96 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_96,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial96)
+
+            const img_n_12_front_noisy= '620513_stimuli_20200513_0037/N_12_Front_Noisy.jpg'
+            let html_str_97 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_97 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_97 += '<p>Which face is one of the six target faces?</p>'
+            html_str_97 += '<img src ="' + img_n_12_front_noisy + '" ' + 'data-src="' + img_n_12_front_noisy + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_97 += '</div></div>'
+
+            var trial97 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_97,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial97)
+
+            const img_b10_noisy_13_pro_l= '620513_stimuli_20200513_0037/B10_Noisy_13_pro_L.jpg'
+            let html_str_98 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_98 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_98 += '<p>Which face is one of the six target faces?</p>'
+            html_str_98 += '<img src ="' + img_b10_noisy_13_pro_l + '" ' + 'data-src="' + img_b10_noisy_13_pro_l + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_98 += '</div></div>'
+
+            var trial98 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_98,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial98)
+
+            const img_n_11_23_r_pro= '620513_stimuli_20200513_0037/N_11_23_R_Pro.jpg'
+            let html_str_99 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_99 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_99 += '<p>Which face is one of the six target faces?</p>'
+            html_str_99 += '<img src ="' + img_n_11_23_r_pro + '" ' + 'data-src="' + img_b5_halflit_frontal + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_99 += '</div></div>'
+
+            var trial99 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_99,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial99)
+
+            const img_j_10_13_pro_l= '620513_stimuli_20200513_0037/J_10_13_pro_l.jpg'
+            let html_str_100 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_100 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_100 += '<p>Which face is one of the six target faces?</p>'
+            html_str_100 += '<img src ="' + img_j_10_13_pro_l + '" ' + 'data-src="' + img_j_10_13_pro_l + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_100 += '</div></div>'
+
+            var trial100 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_100,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial100)
+
+            const img_z_9_front_noisy= '620513_stimuli_20200513_0037/Z_9_Front_Noisy.jpg'
+            let html_str_101 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_101 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_101 += '<p>Which face is one of the six target faces?</p>'
+            html_str_101 += '<img src ="' + img_z_9_front_noisy + '" ' + 'data-src="' + img_z_9_front_noisy + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_101 += '</div></div>'
+
+            var trial101 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_101,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial101)
+
+            const img_d9_noisy_frontal_ls= '620513_stimuli_20200513_0037/D9_Noisy_Frontal_LS.jpg'
+            let html_str_102 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_102 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_102 += '<p>Which face is one of the six target faces?</p>'
+            html_str_102 += '<img src ="' + img_d9_noisy_frontal_ls + '" ' + 'data-src="' + img_d9_noisy_frontal_ls + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_102 += '</div></div>'
+
+            var trial102 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_102,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial102)
+
+            const img_m_10_n_13_l_pro_d= '620513_stimuli_20200513_0037/M_10_N_13_L_Pro_D.jpg'
+            let html_str_103 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_103 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_103 += '<p>Which face is one of the six target faces?</p>'
+            html_str_103 += '<img src ="' + img_m_10_n_13_l_pro_d + '" ' + 'data-src="' + img_m_10_n_13_l_pro_d + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_103 += '</div></div>'
+
+            var trial103 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_103,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial103)
+
+            const img_z_10_13_pro_l= '620513_stimuli_20200513_0037/Z_10_13_Pro_L.jpg'
+            let html_str_104 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_104 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_104 += '<p>Which face is one of the six target faces?</p>'
+            html_str_104 += '<img src ="' + img_z_10_13_pro_l + '" ' + 'data-src="' + img_z_10_13_pro_l + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_104 += '</div></div>'
+
+            var trial104 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_104,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial104)
+
+            const img_b11_noise_23_pro_r= '620513_stimuli_20200513_0037/B11_Noise_23_pro_R.jpg'
+            let html_str_105 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_105 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_105 += '<p>Which face is one of the six target faces?</p>'
+            html_str_105 += '<img src ="' + img_b11_noise_23_pro_r + '" ' + 'data-src="' + img_b11_noise_23_pro_r + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_105 += '</div></div>'
+
+            var trial105 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_105,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial105)
+
+            const img_d11_noisy_23_profile_r= '620513_stimuli_20200513_0037/D11_Noisy_23_profile_R.jpg'
+            let html_str_106 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_106 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_106 += '<p>Which face is one of the six target faces?</p>'
+            html_str_106 += '<img src ="' + img_d11_noisy_23_profile_r + '" ' + 'data-src="' + img_d11_noisy_23_profile_r + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_106 += '</div></div>'
+
+            var trial106 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_106,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial106)
+
+            const img_n_if= '620513_stimuli_20200513_0037/N_IF.jpg'
+            let html_str_107 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_107 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_107 += '<p>Which face is one of the six target faces?</p>'
+            html_str_107 += '<img src ="' + img_n_if + '" ' + 'data-src="' + img_n_if + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_107 += '</div></div>'
+
+            var trial107 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_107,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial107)
+
+            const img_z_oe= '620513_stimuli_20200513_0037/Z_OE.jpg'
+            let html_str_108 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_108 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_108 += '<p>Which face is one of the six target faces?</p>'
+            html_str_108 += '<img src ="' + img_z_oe + '" ' + 'data-src="' + img_z_oe + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_108 += '</div></div>'
+
+            var trial108 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_108,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial108)
+
+            const img_d_oe= '620513_stimuli_20200513_0037/D_OE.jpg'
+            let html_str_109 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_109 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_109 += '<p>Which face is one of the six target faces?</p>'
+            html_str_109 += '<img src ="' + img_d_oe + '" ' + 'data-src="' + img_d_oe + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_109 += '</div></div>'
+
+            var trial109 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_109,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial109)
+
+            const img_m_p= '620513_stimuli_20200513_0037/M_P.jpg'
+            let html_str_110 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_110 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_110 += '<p>Which face is one of the six target faces?</p>'
+            html_str_110 += '<img src ="' + img_m_p + '" ' + 'data-src="' + img_m_p + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_110 += '</div></div>'
+
+            var trial110 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_110,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial110)
+
+            const img_j_s= '620513_stimuli_20200513_0037/J_S.jpg'
+            let html_str_111 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_111 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_111 += '<p>Which face is one of the six target faces?</p>'
+            html_str_111 += '<img src ="' + img_j_s + '" ' + 'data-src="' + img_j_s + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_111 += '</div></div>'
+
+            var trial111 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_111,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial111)
+
+            const img_d_hu= '620513_stimuli_20200513_0037/D_HU.jpg'
+            let html_str_112 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_112 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_112 += '<p>Which face is one of the six target faces?</p>'
+            html_str_112 += '<img src ="' + img_d_hu + '" ' + 'data-src="' + img_d_hu + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_112 += '</div></div>'
+
+            var trial112 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_112,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial112)
+
+            const img_b_s= '620513_stimuli_20200513_0037/B_S.jpg'
+            let html_str_113 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_113 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_113 += '<p>Which face is one of the six target faces?</p>'
+            html_str_113 += '<img src ="' + img_b_s + '" ' + 'data-src="' + img_b_s + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_113 += '</div></div>'
+
+            var trial113 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_113,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial113)
+
+            const img_d_p= '620513_stimuli_20200513_0037/D_P.jpg'
+            let html_str_114 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_114 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_114 += '<p>Which face is one of the six target faces?</p>'
+            html_str_114 += '<img src ="' + img_d_p + '" ' + 'data-src="' + img_d_p + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_114 += '</div></div>'
+
+            var trial114 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_114,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial114)
+
+            const img_z_if= '620513_stimuli_20200513_0037/Z_IF.jpg'
+            let html_str_115 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_115 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_115 += '<p>Which face is one of the six target faces?</p>'
+            html_str_115 += '<img src ="' + img_z_if + '" ' + 'data-src="' + img_z_if + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_115 += '</div></div>'
+
+            var trial115 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_115,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial115)
+
+            const img_j_if= '620513_stimuli_20200513_0037/J_IF.jpg'
+            let html_str_116 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_116 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_116 += '<p>Which face is one of the six target faces?</p>'
+            html_str_116 += '<img src ="' + img_j_if + '" ' + 'data-src="' + img_j_if + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_116 += '</div></div>'
+
+            var trial116 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_116,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial116)
+
+            const img_m_oe= '620513_stimuli_20200513_0037/M_OE.jpg'
+            let html_str_117 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_117 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_117 += '<p>Which face is one of the six target faces?</p>'
+            html_str_117 += '<img src ="' + img_m_oe + '" ' + 'data-src="' + img_m_oe + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_117 += '</div></div>'
+
+            var trial117 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_117,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial117)
+
+            const img_b_p= '620513_stimuli_20200513_0037/B_P.jpg'
+            let html_str_118 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_118 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_118 += '<p>Which face is one of the six target faces?</p>'
+            html_str_118 += '<img src ="' + img_b_p + '" ' + 'data-src="' + img_b_p + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_118 += '</div></div>'
+
+            var trial118 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_118,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial118)
+
+            const img_m_hu= '620513_stimuli_20200513_0037/M_HU.jpg'
+            let html_str_119 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_119 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_119 += '<p>Which face is one of the six target faces?</p>'
+            html_str_119 += '<img src ="' + img_m_hu + '" ' + 'data-src="' + img_m_hu + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_119 += '</div></div>'
+
+            var trial119 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_119,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial119)
+
+            const img_z_hu= '620513_stimuli_20200513_0037/Z_HU.jpg'
+            let html_str_120 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_120 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_120 += '<p>Which face is one of the six target faces?</p>'
+            html_str_120 += '<img src ="' + img_z_hu + '" ' + 'data-src="' + img_z_hu + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_120 += '</div></div>'
+
+            var trial120 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_120,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial120)
+
+            const img_n_s= '620513_stimuli_20200513_0037/N_S.jpg'
+            let html_str_121 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_121 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_121 += '<p>Which face is one of the six target faces?</p>'
+            html_str_121 += '<img src ="' + img_n_s + '" ' + 'data-src="' + img_n_s + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_121 += '</div></div>'
+
+            var trial121 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_121,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial121)
+
+            const img_d_if= '620513_stimuli_20200513_0037/D_IF.jpg'
+            let html_str_122 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_122 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_122 += '<p>Which face is one of the six target faces?</p>'
+            html_str_122 += '<img src ="' + img_d_if + '" ' + 'data-src="' + img_d_if + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_122 += '</div></div>'
+
+            var trial122 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_122,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial122)
+
+            const img_b_oe= '620513_stimuli_20200513_0037/B_OE.jpg'
+            let html_str_123 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_123 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_123 += '<p>Which face is one of the six target faces?</p>'
+            html_str_123 += '<img src ="' + img_b_oe + '" ' + 'data-src="' + img_b_oe + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_123 += '</div></div>'
+
+            var trial123 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_123,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial123)
+
+            const img_m_if= '620513_stimuli_20200513_0037/M_IF.jpg'
+            let html_str_124 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_124 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_124 += '<p>Which face is one of the six target faces?</p>'
+            html_str_124 += '<img src ="' + img_m_if + '" ' + 'data-src="' + img_m_if + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_124 += '</div></div>'
+
+            var trial124 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_124,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial124)
+
+            const img_n_hu= '620513_stimuli_20200513_0037/N_HU.jpg'
+            let html_str_125 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_125 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_125 += '<p>Which face is one of the six target faces?</p>'
+            html_str_125 += '<img src ="' + img_n_hu + '" ' + 'data-src="' + img_n_hu + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_125 += '</div></div>'
+
+            var trial125 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_125,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial125)
+
+            const img_j_p= '620513_stimuli_20200513_0037/J_P.jpg'
+            let html_str_126 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_126 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_126 += '<p>Which face is one of the six target faces?</p>'
+            html_str_126 += '<img src ="' + img_j_p + '" ' + 'data-src="' + img_j_p + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_126 += '</div></div>'
+
+            var trial126 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_126,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial126)
+
+            const img_m_s= '620513_stimuli_20200513_0037/M_S.jpg'
+            let html_str_127 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_127 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_127 += '<p>Which face is one of the six target faces?</p>'
+            html_str_127 += '<img src ="' + img_m_s + '" ' + 'data-src="' + img_m_s + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_127 += '</div></div>'
+
+            var trial127 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_127,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial127)
+
+            const img_n_oe= '620513_stimuli_20200513_0037/N_OE.jpg'
+            let html_str_128 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_128 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_128 += '<p>Which face is one of the six target faces?</p>'
+            html_str_128 += '<img src ="' + img_n_oe + '" ' + 'data-src="' + img_n_oe + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_128 += '</div></div>'
+
+            var trial128 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_128,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial128)
+
+            const img_b_if= '620513_stimuli_20200513_0037/B_IF.jpg'
+            let html_str_129 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_129 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_129 += '<p>Which face is one of the six target faces?</p>'
+            html_str_129 += '<img src ="' + img_b_if + '" ' + 'data-src="' + img_b_if + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_129 += '</div></div>'
+
+            var trial129 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_129,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial129)
+
+            const img_z_s= '620513_stimuli_20200513_0037/Z_S.jpg'
+            let html_str_130 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_130 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_130 += '<p>Which face is one of the six target faces?</p>'
+            html_str_130 += '<img src ="' + img_z_s + '" ' + 'data-src="' + img_z_s + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_130 += '</div></div>'
+
+            var trial130 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_130,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial130)
+
+            const img_j_hu = '620513_stimuli_20200513_0037/J_HU.jpg'
+            let html_str_131 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_131 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_131 += '<p>Which face is one of the six target faces?</p>'
+            html_str_131 += '<img src ="' + img_j_hu + '" ' + 'data-src="' + img_j_hu + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_131 += '</div></div>'
+
+            var trial131 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_131,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial131)
+
+            const img_z_p= '620513_stimuli_20200513_0037/Z_P.jpg'
+            let html_str_132 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_132 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_132 += '<p>Which face is one of the six target faces?</p>'
+            html_str_132 += '<img src ="' + img_z_p + '" ' + 'data-src="' + img_z_p + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_132 += '</div></div>'
+
+            var trial132 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_132,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial132)
+
+            const img_n_p= '620513_stimuli_20200513_0037/N_P.jpg'
+            let html_str_133 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_133 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_133 += '<p>Which face is one of the six target faces?</p>'
+            html_str_133 += '<img src ="' + img_n_p + '" ' + 'data-src="' + img_n_p + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_133 += '</div></div>'
+
+            var trial133 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_133,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial133)
+
+            const img_j_oe= '620513_stimuli_20200513_0037/J_OE.jpg'
+            let html_str_134 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_134 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_134 += '<p>Which face is one of the six target faces?</p>'
+            html_str_134 += '<img src ="' + img_j_oe + '" ' + 'data-src="' + img_j_oe + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_134 += '</div></div>'
+
+            var trial134 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_134,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial134)
+
+            const img_b_hu= '620513_stimuli_20200513_0037/B_HU.jpg'
+            let html_str_135 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_135 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_135 += '<p>Which face is one of the six target faces?</p>'
+            html_str_135 += '<img src ="' + img_b_hu + '" ' + 'data-src="' + img_b_hu + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_135 += '</div></div>'
+
+            var trial135 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_135,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial135)
+
+            const img_d_s= '620513_stimuli_20200513_0037/D_S.jpg'
+            let html_str_136 = '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 120%; background-color:#D3D3D3; height: 400; width: 600;>'
+            html_str_136 += '<div style="text-align:center; vertical-align: middle; display: inline-block; font-size: 100%; color:black; position: absolute;>'
+            html_str_136 += '<p>Which face is one of the six target faces?</p>'
+            html_str_136 += '<img src ="' + img_d_s + '" ' + 'data-src="' + img_d_s + '" ' + 'height=' + img_y + ' px width=' + img_z + 'px></img>'
+            html_str_136 += '</div></div>'
+
+            var trial136 = {
+                type: 'html-keyboard-response',
+                stimulus: html_str_136,
+                choices: ['1','2','3']
+            }
+            timeline.push(trial136)
+
+            let html_end = '<p>You have completed this experiment.</p><p>Thank you for participating.</p>'
+
+            var end_trial = {
+                type: 'html-keyboard-response',
+                stimulus: html_end,
+                choices: jsPsych.NO_KEYS
+            }
+            timeline.push(end_trial)
+
+            /* finish connection with pavlovia.org */
+            var pavlovia_finish = {
+                type: "pavlovia",
+                command: "finish"
+            };
+            timeline.push(pavlovia_finish);
+        
+        jsPsych.init({
+            timeline: timeline,
+            on_finish: function(data){
+               jsPsych.data.displayData();
+            },
+            exclusions: {
+                min_width: 1200,
+                min_height: 600
+            }
+        });
+    </script>
+</body>
