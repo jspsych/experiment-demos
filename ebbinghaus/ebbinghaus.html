@@ -124,7 +124,8 @@
                 },
                 // record responses relative to test position (left vs right)
                 on_finish: function(data){
-                    if ( data.test_pos > 0 ) {
+                    if ( data.test_pos < 0 ) {
+                        // if test on the left
                         if ( data.key_press == "arrowleft" ) {
                             data.test_bigger = true
                         } else if ( data.key_press == "arrowright" ) {
@@ -133,6 +134,7 @@
                             data.test_bigger = null
                         }
                     } else {
+                        // if test on the right
                         if ( data.key_press == "arrowleft" ) {
                             data.test_bigger = false
                         } else if ( data.key_press == "arrowright" ) {
