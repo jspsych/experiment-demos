@@ -5,149 +5,94 @@
   <script src="jspsych-6.3.0/plugins/jspsych-html-keyboard-response.js"></script> 
   <script src="jspsych-6.3.0/plugins/jspsych-preload.js"></script>
   <script src ="jspsych-6.3.0/plugins/jspsych-visual-search-circle.js"></script>
-  <link rel="stylesheet" href="jspsych-6.3/css/jspsych.css"></link>
+  <link rel="stylesheet" href="jspsych-6.3.0/css/jspsych.css"></link>
   <script src="visual_search_setup_EN.js"></script> 
   <meta charset="utf-8"/>
 </head>
 <body></body>
 <script>
 
-//removed the css file
-//make sure all the plugins are in the folder before you run the program
-
     var preload = {
         type: 'preload',
-        images: ['assets/images/greenL.png', 'assets/images/greenT.png', 'assets/images/redL.png', 'assets/images/redT.png', 'assets/images/blackDot.png']
+        images: foil_images.concat([target_image], [fixation]) 
     }
+    //preloading all the images we need for the experiment
 
     const factors = {
         target_present: [true, false], 
         // randomize whether or not the red T is present
-        set_size: [4, 5, 6, 7], 
+        set_size: [6, 12, 18, 24], 
         //randomize number of distractors        
     }
         
     const full_design = jsPsych.randomization.factorial(factors, repeat_trials)
-    //redefine the repeat_trails variable in the js file
 
     const block_len = Math.floor(full_design.length/block_number) 
-    // 280/10 how many trails in each block, change block_number value in js file
 
     let prompt = {
-    	type: "html-keyboard-response",
+        type: "html-keyboard-response",
         stimulus: prompt_msg
     }
 
     const welcome = {
         type: "html-keyboard-response",
-        stimulus: '<p style="color: white">Welcome to the Letters Experiment. <br>' +
-                  'There will be ' + block_number + ' blocks in this experiment. <br>' +
-                  'There will be ' + block_len + ' trials in each block. <br>'+
-                  'You will be given a chance to take a break between blocks. <br>'+ 
-                  'Press any key to start the experiment.</p>'
-                  //change messages written in the stimulus here
+        stimulus: "Welcome to the Visual Search Experiment. There will be " + block_number + " blocks in this experiment. There will be " + block_len + " trials in each block. You will be given a chance to take a break between blocks. Press any key to start the experiment."
     }
 
     //with timeline variables you define the procedure once (as a timeline) and specify a set of parameters and their values for each iteration through the timeline.
     let procedure = {
         timeline: [
             {
-                const original_object = {
                     type: 'visual-search-circle',
                     target: target_image,
-                    //variable that holds the target image
-                    foil: foil_images,
-                    //array of distractor images
+                    foil: function() {
+                        let foil_set = foil_images
+                        while ( foil_set.length < jsPsych.timelineVariable('set_size') ) {
+                            foil_set = foil_set.concat(shuffle(foil_images))
+                        }
+                        return foil_set
+                    },
                     target_present: jsPsych.timelineVariable('target_present'),
                     set_size: jsPsych.timelineVariable('set_size'),
                     target_present_key: the_present_key, 
                     target_absent_key: the_absent_key,
-                    fixation_image: circle_fixation,
-                    trial_duration: 1000
+                    fixation_image: fixation,
+                    data: {search_trial: true}
                     /*target_size:
                     fixation_size:
                     circle_diameter:
                     */
-                }
             },
-                stimuli: function(){
-                    let trial_type1 = Object.assign({}, original_object)
-                    ref_inner_disc = Object.assign(ref_inner_disc, {foil: 'letters/greenT.png'})
-                    let trial_type2 = Object.assign({}, original_object)
-                    ref_inner_disc = Object.assign(ref_inner_disc, {foil: 'letters/greenT.png', 'letters/greenL.png'})
-                    let trial_type3 = Object.assign({}, original_object)
-                    ref_inner_disc = Object.assign(ref_inner_disc, {foil: 'letters/greenT.png', 'letters/greenL.png', 'letters/redL.png'})
-
-                    let obj_array = [trial_type1, trial_type2, trial_type3]
-                return obj_array
-            },
-            choices: ['j', 'f'],
-            data: function(){
-                let t = jsPsych.data.get().filter({ref_inner_radius: ref_inner}).count() + 1 
-                let b = Math.floor(t/block_len)+1
-                const data_obj = {
-                    trial: t,
-                    block: b,
-                    }
-                    return data_obj
-            },
-            on_finish: function(data){
-                    if (target_present == true) {
-                        if ( data.key_press == 'j' ) {
-                            data.test_bigger = true
-                        } else if ( data.key_press == 'f' ) {
-                            data.test_bigger = false
-                        } else {
-                            data.test_bigger = null
-                        }
-                    } else {
-                        // if test on the right
-                        if ( data.key_press == 'j' ) {
-                            data.test_bigger = false
-                        } else if ( data.key_press == 'f' ) {
-                            data.test_bigger = true
-                        } else {
-                            data.test_bigger = null
-                        }
-                    }
-                },
             {
                 type: 'html-keyboard-response',
-                stimuli: function(){
-                        let t = jsPsych.data.get().last(1).values()[0]["trial"] // trials so far
+                stimulus: function(){
+                        let t = jsPsych.data.get().filter({search_trial: true}).count() // trials so far
                         let trial_msg = "You have completed " + t + ' of ' + full_design.length + " trials.\n\n"+
                                         "Get ready for the next trial."
-                        let cur_prompt = Object.assign({}, prompt)
-                        cur_prompt = Object.assign(cur_prompt, {content: prompt_msg + trial_msg})
-                        return [cur_prompt]
+                        return trial_msg
                 },
                 choices: jsPsych.NO_KEYS,
-                //no responses are allowed
                 trial_duration: 1000,
-                //How long to wait for the subject to make a response before ending the trial in milliseconds.
                 response_ends_trial: false
-                //If true, then the trial will end whenever the subject makes a response (assuming they make their response before the cutoff specified by the trial_duration parameter). If false, then the trial will continue until the value for trial_duration is reached. You can set this parameter to false to force the subject to view a stimulus for a fixed amount of time, even if they respond before the time is complete.
-            },
+            }, 
             // break statement
             {
                 timeline: [
-                    {
+                    { 
                         type: "html-keyboard-response",
                         stimulus: function() {
-                            let t = jsPsych.data.get().last(2).values()[0]["trial"] // trials so far
-                            let b = jsPsych.data.get().last(2).values()[0]["block"] // block
-                            const html_out = '<div style="color: white; text-align: center; vertical-align: top; display: inline-block; width: 800px; margin: auto">'+
-                                '<p>You have completed ' + (t/full_design.length * 100).toFixed(0) + '% of the trials. You are on block ' + b + ' of 10. <br>Good job! Take a break if you need to.</p>'+
-                                '<p>Press any key to continue the experiment.</p></div>'
+                            let t = jsPsych.data.get().filter({search_trial: true}).count()
+                            let b = t / block_len
+                            const html_out = 'You have completed ' + (t/full_design.length * 100).toFixed(0) + '% of the trials. You are on block ' + b + ' of 10. Good job! Take a break if you need to. Press any key to continue the experiment.'
                             return html_out
                         },
                         post_trial_gap: 1000
                     }
                 ],
                 conditional_function: function(){
-                    let t = jsPsych.data.get().last(2).values()[0]["trial"] // trials so far
+                    let t = jsPsych.data.get().filter({search_trial: true}).count() // trials so far
+                    //get all data from experiment, get data from last trial, get the values from this array, the first element of the array
                     if ( ( ( t % block_len ) == 0 ) && ( t < full_design.length ) ) {
-                        //block_len is the number of trails in each block
                         return true;
                     } else {
                         return false;
@@ -156,18 +101,31 @@
             }
         ],
         timeline_variables: full_design, 
-        //here we say how many trails are gonnna happen
         randomize_order: true
-        //If we want to randomize the order of the trials, we can set randomize_order to true
     }
 
     jsPsych.init({
-        timeline: [welcome, procedure],
+        timeline: [welcome, prompt, procedure],
         on_finish: function() {
-            jsPsych.data.get().localSave('csv','letters_data.csv');
-            //Returns the data collection of all data generated by the experiment.
+            jsPsych.data.get().localSave('csv','visual_search_data.csv');
         }
     });
+    // shuffle any input array
+    function shuffle(array) {
+        // define three variables
+        let cur_idx = array.length, tmp_val, rand_idx;
+        // While there remain elements to shuffle...
+        while (0 !== cur_idx) {
+            // Pick a remaining element...
+            rand_idx = Math.floor(Math.random() * cur_idx);
+            cur_idx -= 1;
+            // And swap it with the current element.
+            tmp_val = array[cur_idx];
+            array[cur_idx] = array[rand_idx];
+            array[rand_idx] = tmp_val;
+        }
+        return array;
+    }
 </script>
 
 </html>
