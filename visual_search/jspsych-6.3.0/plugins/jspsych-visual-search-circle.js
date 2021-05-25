@@ -103,6 +103,35 @@ jsPsych.plugins["visual-search-circle"] = (function() {
 
   plugin.trial = function(display_element, trial) {
 
+    // possible stimulus locations on the circle 
+    /*function shuffle(array) {
+      var currentIndex = array.length, temporaryValue, randomIndex;
+
+      //While there remain elements to shuffle...
+      while (0 !== currentIndex) {
+
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        // And swap it with the current element.
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+      }
+
+      return array;
+    }
+
+    var xcord = [-2, -1, 0, 1, 2];
+    var ycord = [-2, -1, 0, 1, 2];
+    
+    var display_locs = [];
+    display_locs.push([
+      shuffle(xcord),
+      shuffle(ycord)
+    ]);*/
+
     // circle params
     var diam = trial.circle_diameter; // pixels
     var radi = diam / 2;

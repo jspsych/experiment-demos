@@ -12,17 +12,28 @@
 <body></body>
 <script>
 
+    let target_images = []
+
+    if (experiment_type == 'conjunction') {
+        target_images.push.apply(target_images, conjunction_target)
+    } else if (experiment_type == 'shape') {
+        target_images.push.apply(target_images, shape_target)
+    } else {
+        target_images.push.apply(target_images, colour_target)
+    }
+
     var preload = {
         type: 'preload',
-        images: foil_images.concat([target_image], [fixation]) 
+        images: foil_images.concat(target_images, [fixation]) 
     }
     //preloading all the images we need for the experiment
 
     const factors = {
-        target_present: [true, false], 
+        target_present: target_present, 
         // randomize whether or not the red T is present
-        set_size: [6, 12, 18, 24], 
+        set_size: set_size, 
         //randomize number of distractors        
+        target: target_images
     }
         
     const full_design = jsPsych.randomization.factorial(factors, repeat_trials)
@@ -44,7 +55,7 @@
         timeline: [
             {
                     type: 'visual-search-circle',
-                    target: target_image,
+                    target: jsPsych.timelineVariable('target'),
                     foil: function() {
                         let foil_set = foil_images
                         while ( foil_set.length < jsPsych.timelineVariable('set_size') ) {
@@ -62,6 +73,7 @@
                     fixation_size:
                     circle_diameter:
                     */
+                    //these values should be in the setup file
             },
             {
                 type: 'html-keyboard-response',
@@ -91,7 +103,6 @@
                 ],
                 conditional_function: function(){
                     let t = jsPsych.data.get().filter({search_trial: true}).count() // trials so far
-                    //get all data from experiment, get data from last trial, get the values from this array, the first element of the array
                     if ( ( ( t % block_len ) == 0 ) && ( t < full_design.length ) ) {
                         return true;
                     } else {
