@@ -1,18 +1,33 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="UTF-8">
+    <meta name="description" content="jsPsych Test NCMLab">
+    <meta name="keywords" content="HTML, CSS, JavaScript">
+    <meta name="author" content="Jason Steffener, NCMLab">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questionnaire: BDI</title>
     <script src="jsPsych/jspsych.js"></script>
+    <script src="jspsych/plugins/jspsych-fullscreen.js"></script>
     <script src="jsPsych/plugins/jspsych-survey-multi-choice.js"></script>
-    <script src="BeckDepIndex.js"></script>
+    <script src="assets/bdi_setup_eng.js"></script>
     <link rel="stylesheet" href="jsPsych/css/jspsych.css">
+    <link href="CSS/LikertQuestionnaires.css" rel="stylesheet">
+    <style>
+    input[type="radio"] {height: 35px; width: 35px; vertical-align: middle;}
+  </style>
 
   </head>
   <body></body>
   <script>
 
+
+
   var multi_choice_block = {
     type: 'survey-multi-choice',
     questions: items,
+     // The instructions are also in the JS file
+    preamble: "<h1>"+title+"</h1>"+instructions,
     on_finish: function(data){
       var Sum = 0;
       var count = 0;

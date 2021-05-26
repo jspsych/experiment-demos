@@ -1,8 +1,12 @@
 # This is a selection of questionnaires.
 
+## Organization
+This folder is organized so that all of the questionnaire setup files are in the *assets* folder
+
 Each questionnaire requires two files:
 ## a javascipt NAME_setup_eng.js 
-- This contains multiple parts stored as javascript (JS) variables. Each unique scale is made by building this file. This separates the code (in the HTNL file described below) and the JS file. This also facilitates language translation of questionnaires.
+_ These are the files in the *assets* folder
+- This contains multiple parts stored as javascript (JS) variables. Each unique scale is made by building this file. This separates the code (in the HTML file described below) and the JS file. This also facilitates language translation of questionnaires.
 - title
 - scale
 - if this is a Likert type questionnaires, these are the values used. There can be as many scales as needed for the questionnaire
@@ -15,3 +19,6 @@ Each questionnaire requires two files:
 ## an html NAME.html file 
 - There is one HTML file for each questionnaire. This file is created with minor modifications from the BLANK.html file. This file contains the presentation of the questionnaire and provides all scoring of the questionnaire. The responses to all questions and the total score are saved as output. 
 - The only required modification is to change the last <script> impoirt line to the JS file name above.
+
+### The BDI
+The BDI scale is slightly different because it does not use likert type questions. It therefore uses the *jspsych-survey-multi-choice* plugin.
