@@ -1,13 +1,14 @@
-var title = "Stait/Trait Anxiety Index"
+var title = "Stait-Trait Anxiety Index"
 
 var scale01 = [
-    "Almost always",
-    "Often",
+    "Almost never",
     "Sometimes",
-    "Almost never"
+    "Often",
+    "Almost always"
   ]
 
-var ReverseScoreDirection = [false, true, false, true, true, false, false, false, false, false, true, true, false, false, true, false, true, true, false, true]
+// var ReverseScoreDirection = [false, true, false, true, true, false, false, false, false, false, true, true, false, false, true, false, true, true, false, true]
+var ReverseScoreDirection = [true, false, true, false, false, true, true, false, false, true, false, false, true, true, false, true, false, false, true, false]
 
 var items = [
     {prompt: "I feel pleasant.", labels: scale01},
