@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="jspsych/jspsych.js"></script>
+    <script src="jspsych/plugins/jspsych-html-keyboard-response.js"></script>
+    <link rel="stylesheet" href="jspsych/css/jspsych.css">
+    <script src="StairClass.js"></script>
+  </head>
+  <body></body>
+  <script>
+    // Create a staircase object. Below are the defaults
+    // Current=1, MinValue=1, MaxValue=10, MaxReversals=5,
+    // MaxTrials=40, StepSize=1, NUp=3, NDown=1, FastStart=true) 
+  let stair1 = new Stair(1,1,10,5,40,1,3,1,true);
+
+  var trial = {
+      type: 'html-keyboard-response',
+      stimulus: function()
+        {var text = 'Press "r" for correct, "c" for incorrect. The current load is: '+stair1.Current + ', N Trials: '+stair1.TrialCount
+        return text},
+      choices: ['r','c'],
+      // after each trial check to see if the answer was correct.
+      // pass the response accuracy (true/false) to the staircase object
+      // to update it
+      on_finish: function() {
+      var data = jsPsych.data.get().last(1).values()[0];
+        if(jsPsych.pluginAPI.compareKeys(data.response,'r')){
+          stair1.Decide(true)
+        }
+        else {
+          stair1.Decide(false)
+        }
+      }
+    }
+  // Display the Reversal List and the average value
+  var debrief_block = {
+      type: "html-keyboard-response",
+      stimulus: function() {
+        return "The Reversals are: "+stair1.ReversalList+"The mean Reversal is : "+stair1.CalculateAverage()
+      }
+    }
+
+
+  // Use a loop functioj to keep presenting trials until the finish flag in the staircase object is TRUE
+  var loop_node = {
+    timeline: [trial],
+    loop_function: function(data){
+      return (! stair1.Finished)
+    }
+    
+  }
+
+  jsPsych.init({
+    timeline: [loop_node, debrief_block],
+    on_finish: function(){ jsPsych.data.displayData(); },
+    default_iti: 200
+  });
+
+  </script>
+</html>
