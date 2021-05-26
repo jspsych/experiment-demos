@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="jsPsych/jspsych.js"></script>
+    <script src="jsPsych/plugins/jspsych-survey-multi-choice.js"></script>
+    <script src="BeckDepIndex.js"></script>
+    <link rel="stylesheet" href="jsPsych/css/jspsych.css">
+
+  </head>
+  <body></body>
+  <script>
+
+  var multi_choice_block = {
+    type: 'survey-multi-choice',
+    questions: items,
+    on_finish: function(data){
+      var Sum = 0;
+      var count = 0;
+      // score the test        
+      // extract the responses as an array 
+      var temp = Object.entries(jsPsych.data.getLastTrialData().values()[0].response)
+      // cycle over the items in the questionnaire
+      for (var i = 0; i < items.length; i++) {
+        // What was the response for this question?
+        var ResponseText = temp[i][1]
+        // find the index of this response in the original items
+        Sum += items[i].options.indexOf(temp[i][1])
+      }
+            // search the items for these values
+      data.Sum = Sum
+    }
+  }
+
+  jsPsych.init({
+    timeline: [multi_choice_block],
+    on_finish: function() {
+      jsPsych.data.displayData();
+    }
+  });
+
+
+  </script>
+</html>
