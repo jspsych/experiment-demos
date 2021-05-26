@@ -1,7 +1,8 @@
 This is a selection of questionnaires.
 
 Each questionnaire requires two files:
-- a javascipt NAME_setup_eng.js file which contains multiple parts stored as javascript (JS) variables. Each unique scale is made by building this file. This separates the code (in the HTNL file described below) and the JS file. This also facilitates language translation of questionnaires.
+* a javascipt NAME_setup_eng.js 
+- This contains multiple parts stored as javascript (JS) variables. Each unique scale is made by building this file. This separates the code (in the HTNL file described below) and the JS file. This also facilitates language translation of questionnaires.
 - title
 - scale
 - if this is a Likert type questionnaires, these are the values used. There can be as many scales as needed for the questionnaire
