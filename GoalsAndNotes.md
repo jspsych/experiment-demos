@@ -38,12 +38,15 @@ Matrix Reasoning
 
 Done and need to test:
 Baddeley Gramattical Reasoning Task
+
+AES
 CFS - Cognitive flexibility scale
 CFI - Cognitive flexibility index
 STAI
 PANAS
 Beck Depression Index
-CUDIT-R
+CUDITR
+
 
 
 
