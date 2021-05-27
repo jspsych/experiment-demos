@@ -164,7 +164,7 @@ function MakeAdaptiveStimulus(Load, LastTrialStimulus, LastTrialProbe)
 	}
 
 function PadLetters(Letters)
-	{
+	{ // This takes the letter list and pads it with stars expecting a 3-by-3 grid
 		switch (Letters.length) {
 			case 1:
 				Stimulus = '****'+Letters+'****';

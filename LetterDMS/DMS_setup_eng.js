@@ -29,34 +29,40 @@ var ITITime = 1000
 // the countdown time, which is 3 seconds.
 var InterBlockTime = 3000
 // TO DO ++++++
-// This is a delay component for use after instructions and before the first Block and at the
-// the end before the thank you screen
-//ShortDelayTime = 30
+// This is a delay component for use after instructions and before the first Block 
+var WaitOnTime = 5000
 
+var ProbeColor = 'blue'
 
 
 // ===================================================
 // BLOCK BASED PARAMETERS
 // How many trials per block
-var NTrialsPerBlock = 6;
+var NTrialsPerBlock = 6
 // The number of blocks to run
-NumberOfBlocks = 5
+var NumberOfBlocks = 5
 // ===================================================
 // ADAPTIVE VERSION PARAMETERS
 var MaxTrials = 50
-var MaxReversals = 10
+var MaxReversals = 20
+var StartValue = 1
+var MinValue = 1
+var MaxValue = 9
+var MaxReversals = 20
+var MaxTrials = 60
+var StepSize = 1
+var NUp = 3
+var NDown = 1
+var FastStart = true
+
 // ===================================================
 var instructions = ['<p>Press [LEFT] if the letter WAS in the set.<br>Press [RIGHT] if the letter WAS NOT in the set.<br>',
 	'<p>You will NOT receive feedback after each trial.</p>',
-	'Remember that the letters to study will be in white and CAPITALIZED.',
-	'The test letter will be in blue and will be lowercase.',
-	'Try to respond as quickly and as accurately as possible.',
-	'Press the any key to begin.']
+	'Remember that the letters to study will be in white and CAPITALIZED. The test letter will be in blue and will be lowercase.',
+	'Try to respond as quickly and as accurately as possible. Press next to begin.']
 
 
-
-
-// The follopwing are stimulus lists that are carefully selected to be counterbalanced for 
+// The following are stimulus lists that are carefully selected to be counterbalanced for 
 // probe type and to have six trials per block and minimal proactive interference from 
 // previous trials
 

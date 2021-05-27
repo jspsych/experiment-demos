@@ -12,12 +12,14 @@
     <script src="jspsych/plugins/jspsych-image-keyboard-response.js"></script>
     <script src="jspsych/plugins/jspsych-fullscreen.js"></script>
     <script src="jspsych/plugins/jspsych-instructions.js"></script>    
-    <script src="Setup_EN.js"></script>
+    <script src="DMS_setup_eng.js"></script>
     <script src="StairClass.js"></script>
     <script src="DMS_functions.js"></script>
     <link href="jspsych/css/jspsych.css" rel="stylesheet" type="text/css">
     <style>
       .stimulus { font-size: 45; }
+      .background {color:  [150, 150, 150]}
+      .instruct {font-size:  20;}
       .jspsych-html-keyboard-response-stimulus {font-size: 45;}
       .jspsych-display-element {
         font-family: 'Open Sans', 'Arial', sans-serif;
@@ -47,7 +49,7 @@
     //constructor(Current=1, MinValue=1, MaxValue=9, MaxReversals=5,
     //    MaxTrials=40, StepSize=1, NUp=3, NDown=1, FastStart=true) 
     
-    let stair1 = new Stair(1,1,9,7,50,1,3,1,true);
+    let stair1 = new Stair(StartValue,MinValue,MaxValue,MaxReversals,MaxTrials,StepSize,NUp,NDown,FastStart);
     let stimList = new StimulusList();
 
     // Make experiment run in full screen mode
@@ -60,7 +62,8 @@
     var Instructions = {
        type: 'instructions',
        pages: instructions,
-       show_clickable_nav: true
+       show_clickable_nav: true,
+       css_classes: 'instruct'
     }
 
     // Keep track of how many trials have been presented.
@@ -108,10 +111,11 @@
     var Probe = {
       type: 'html-keyboard-response',
       stimulus: function() {
-        return stimList.CurrentProbe
+        return '<p style="color:'+ProbeColor+'">'+stimList.CurrentProbe+'</p>'
         //return StimulusLetters
       },
       choices: KeyboardChoices,
+      trial_duration: ProbeOnTime,
       on_finish: function(data){
         // NEED TO UPDATE THIS BASED ON TEH ADAPTIVE NATURE OF THE TRIALS
         // This puts the stimulus letters on the same line as the trial response
@@ -134,7 +138,7 @@
           stair1.Decide(false)
         }
         /* If the ESCAPE key is pressed the current timeline is ended and the thank you screen is shown */
-        if (data.key_press == 27) {jsPsych.end();}
+        if (data.response == 27) {jsPsych.end();}
 
       }
     }
@@ -147,6 +151,15 @@
       on_finish: function(data){
         data.trialType = "fixation"
       }
+    } 
+
+    var WaitTime = {
+      // Each trial also has its own specific cue which occurs BEFORE the stimulus presentation
+      // The cue itself is actually made in the setup file and not here. This could be changed if desired
+      type: 'html-keyboard-response',
+      stimulus: '<p style="color:black">+</p>',
+      choices: jsPsych.NO_KEYS,
+      trial_duration: WaitOnTime,
     } 
 
     var test_procedure = {
@@ -178,7 +191,9 @@
       }
     }
 
-    //timeline.push(Instructions)
+    timeline.push(Instructions)
+    timeline.push(WaitTime)
+    timeline.push(CountdownTimer())
     timeline.push(loop_node)
     //timeline.push(test_procedure)
     timeline.push(debrief_block)
@@ -188,6 +203,7 @@
     jsPsych.init({
         experiment_width: 600,
         timeline: timeline,
+        minimum_valid_rt: 100,
         on_finish: function() {
           jsPsych.data.get().localSave('csv','DMSMydata.csv');
         }

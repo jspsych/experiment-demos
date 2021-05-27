@@ -37,7 +37,7 @@
 
     class Stair {
   		constructor(Current=1, MinValue=1, MaxValue=9, MaxReversals=5,
-  			MaxTrials=40, StepSize=1, NUp=3, NDown=1, FastStart=true) 
+  			MaxTrials=40, StepSize=1, NUp=3, NDown=1, FastStart=true, MaxTime=420) 
   		{
   			this.Current = Current; // what is the current value
   			this.TrialCount = 0; // How many trials have been completed
@@ -58,6 +58,7 @@
   			this.CurrentDirection = 1; // What direction are we heading? 1 increasing, -1 decreasing
   			this.Finished = false; // If any of the stopping conditions are met this is set to true
   			this.ReversalCount = 0; // the number of reversals
+  			this.MaxTime= MaxTime; // This is the maximal amount of time that the staircase can last (IN SECONDS)
 
   		}
   		findDirection() {
