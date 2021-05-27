@@ -14,8 +14,8 @@
     <script src="jspsych/plugins/jspsych-instructions.js"></script>    
     <script src="jspsych/plugins/jspsych-survey-likert.js"></script>
     <link href="jspsych/css/jspsych.css" rel="stylesheet" type="text/css">
-    <link href="LikertQuestionnaires.css" rel="stylesheet">
-    <script src="CUDIT-R.js"></script> 
+    <link href="CSS/LikertQuestionnaires.css" rel="stylesheet">
+    <script src="assets/CUDITR_setup_eng.js"></script> 
   <style>
     input[type="radio"] {height: 35px; width: 35px; vertical-align: middle;}
   </style>
@@ -32,8 +32,8 @@
         type: 'survey-likert',
         // the items are taken from teh import JS file
         questions: items,
-        // The instructions are also in teh JS file
-        preamble: instructions,
+        // The instructions are also in the JS file
+        preamble: "<h1>"+title+"</h1>"+instructions,
         on_finish: function(data){
           // The responses to each question on a likert scale are stored in an Object
           // cycle over the object and find the key and values for each

@@ -1,6 +1,6 @@
 var title = "Positive and Negative Affect Schedule (PANAS)"
 
-var scale = [
+var scale01 = [
     "Very slightly or not at all",
     "A little",
     "Moderately",
@@ -12,26 +12,26 @@ var scale = [
 var ReverseScoreDirection = [false]
 
 var items = [
-    {prompt: "Interested", labels: scale},
-    {prompt: "Distressed", labels: scale},
-    {prompt: "Excited", labels: scale},
-    {prompt: "Upset", labels: scale},
-    {prompt: "Strong", labels: scale},
-    {prompt: "Guilty", labels: scale},
-    {prompt: "Scared", labels: scale},
-    {prompt: "Hostile", labels: scale},
-    {prompt: "Enthusiastic", labels: scale},
-    {prompt: "Proud", labels: scale},
-    {prompt: "Irritable", labels: scale},
-    {prompt: "Alert", labels: scale},
-    {prompt: "Ashamed", labels: scale},
-    {prompt: "Inspired", labels: scale},
-    {prompt: "Nervous", labels: scale},
-    {prompt: "Determined", labels: scale},
-    {prompt: "Attentive", labels: scale},
-    {prompt: "Jittery", labels: scale},
-    {prompt: "Active", labels: scale},
-    {prompt: "Afraid", labels: scale},
+    {prompt: "Interested", labels: scale01},
+    {prompt: "Distressed", labels: scale01},
+    {prompt: "Excited", labels: scale01},
+    {prompt: "Upset", labels: scale01},
+    {prompt: "Strong", labels: scale01},
+    {prompt: "Guilty", labels: scale01},
+    {prompt: "Scared", labels: scale01},
+    {prompt: "Hostile", labels: scale01},
+    {prompt: "Enthusiastic", labels: scale01},
+    {prompt: "Proud", labels: scale01},
+    {prompt: "Irritable", labels: scale01},
+    {prompt: "Alert", labels: scale01},
+    {prompt: "Ashamed", labels: scale01},
+    {prompt: "Inspired", labels: scale01},
+    {prompt: "Nervous", labels: scale01},
+    {prompt: "Determined", labels: scale01},
+    {prompt: "Attentive", labels: scale01},
+    {prompt: "Jittery", labels: scale01},
+    {prompt: "Active", labels: scale01},
+    {prompt: "Afraid", labels: scale01},
   ]
 
 var instructions = 'This scale consists of a number of words that describe different feelings and emotions. Indicate to what extent you feel this way right now, that is, at the present moment.'
