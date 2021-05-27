@@ -7,6 +7,8 @@ These tests are then run and the user takes the tests.
 
 
 
+MAKE SURE TO STATE WHAT THE REAL LIFE IMPLICATIONS 
+are of each of the tasks. What is the purpose of each task?
 QUESTIONNAIRES
 CPT
 
@@ -25,7 +27,7 @@ IMTDMT -- Immediate & Delayed Memory Task (IMT/DMT)
  * Participants view a steady stream of 5-digit (default) numbers and are asked to click the Mouse button if the current target number is identical to the one before it.
 Letter Memory 
 Listening Span Task
-Picture-Story Task
+Picture-Story Task **
 Sptial Relations
 Spatial Process
 Spatial Reconstructing
