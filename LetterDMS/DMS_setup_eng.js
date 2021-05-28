@@ -18,11 +18,11 @@ var KeyboardChoices = ['arrowleft', 'arrowright'];
 var ResponseMapping = [true, false];
 
 // Timings of the different trial phases in MILLISECONDS
-var StimOnTime = 2500
-var RetOnTime = 3500
+var StimOnTime = 250
+var RetOnTime = 350
 var ProbeOnTime = 5000
 // This is the intertrial interval. 
-var ITITime = 1000
+var ITITime = 100
 
 // This is the time between blocks. Note that between each block of trials there
 // is also the 3-2-1 countdown. Therefore, the full interblock interval is this value PLUS 
@@ -43,20 +43,19 @@ var NTrialsPerBlock = 6
 var NumberOfBlocks = 5
 // ===================================================
 // ADAPTIVE VERSION PARAMETERS
-var MaxTrials = 50
-var MaxReversals = 20
+var MaxTrials = 10
+var MaxReversals = 3
 var StartValue = 1
 var MinValue = 1
 var MaxValue = 9
-var MaxReversals = 20
-var MaxTrials = 60
 var StepSize = 1
 var NUp = 3
 var NDown = 1
 var FastStart = true
 
 // ===================================================
-var instructions = ['<p>Press [LEFT] if the letter WAS in the set.<br>Press [RIGHT] if the letter WAS NOT in the set.<br>',
+var instructions = ['This is the Verbal Delayed Match to Sample Task',
+	'<p>Press [LEFT] if the letter WAS in the set.<br>Press [RIGHT] if the letter WAS NOT in the set.<br>',
 	'<p>You will NOT receive feedback after each trial.</p>',
 	'Remember that the letters to study will be in white and CAPITALIZED. The test letter will be in blue and will be lowercase.',
 	'Try to respond as quickly and as accurately as possible. Press next to begin.']

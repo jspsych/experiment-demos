@@ -1,3 +1,39 @@
+class AdaptiveStimulusList {
+  // This class is made to keep track of the stimuli and probes used in the previous trials
+  constructor(CurrentStim='', PreviousStim=[], CurrentProbe='', PreviousProbe=[], CurrentCorrect = false)
+  {
+    // keep track of the current trial and make an array of all
+    this.CurrentStim = CurrentStim;
+    this.PreviousStim = [];
+    this.CurrentProbe = CurrentProbe;
+    this.PreviousProbe = [];
+    this.CurrentCorrect = CurrentCorrect;
+
+  }
+  // return the current stimulus
+  getCurrentStim() {return this.CurrentStim}
+  // return the stimulus from teh previous trial
+  getLastStim() {return this.PreviousStim[this.PreviousStim.length - 1]}
+
+  getLastProbe() {return this.PreviousProbe[this.PreviousProbe.length - 1]}
+
+  getCurrentCorrect() {return this.CurrentCorrect}
+  // update the current stim and add it to the array of stimuli
+  addStim(newStim) {
+    this.CurrentStim = newStim;
+    this.PreviousStim.push(this.CurrentStim);
+  }
+// update the current probe and add it to the array of probes
+  addProbe(newProbe) {
+    this.CurrentProbe = newProbe;
+    this.PreviousProbe.push(this.CurrentProbe);
+  }
+  addCorrect(newCorrect) {
+    this.CurrentCorrect = newCorrect
+  }
+}
+
+
 function PutLettersInGrid(LetterList,NRows,NCols, width=600, height=300, FontSize=40)
 	{
 		var count = 0;
@@ -195,3 +231,46 @@ function PadLetters(Letters)
 		}
 		return Stimulus
 	}
+
+
+   function CreateDMSList5(DMSCapacity)
+ 		{
+      temp = parseFloat(DMSCapacity)
+      Limit = Number((temp).toFixed(0))
+      if (Limit > 9){
+          Limit = 9
+      }
+      else if (Limit < 5){
+      	Limit = 5
+      }
+      switch (Limit) {
+      	case 5:
+      		Loads = [1,3,4,5,6];
+      		break;
+      	case 6:
+      		Loads = [1,3,5,6,7];
+      		break;
+      	case 7:
+      		Loads = [1,3,6,7,8];
+      		break;
+      	case 8:
+      		Loads = [1,3,6,8,9];
+      		break;
+      	case 9:
+      		Loads = [1,3,6,8,9];
+       }
+      return Loads
+    }
+
+   	function CreateDMSItemList(Loads)
+   	{
+   		// This variable describes how many trials there are in the setup file
+   		var NTrialsPerLoadInList = 6
+   		for (var i = 0; i < 6; i++)
+   			{
+   				temp = Loads[i]
+   				List = [...Array(NTrialsPerLoadInList).keys()];
+   				List = List + (temp - 1)*NTrialsPerLoadInList
+
+   			}
+   	}
