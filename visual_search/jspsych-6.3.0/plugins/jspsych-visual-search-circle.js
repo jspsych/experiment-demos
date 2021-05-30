@@ -24,6 +24,12 @@ jsPsych.plugins["visual-search-circle"] = (function() {
     name: 'visual-search-circle',
     description: '',
     parameters: {
+      usegrid: {
+        type: jsPsych.plugins.parameterType.BOOL,
+        pretty_name: 'Use grid',
+        default: true,
+        description: 'Place items on a grid?'
+      },
       target: {
         type: jsPsych.plugins.parameterType.IMAGE,
         pretty_name: 'Target',
@@ -103,35 +109,6 @@ jsPsych.plugins["visual-search-circle"] = (function() {
 
   plugin.trial = function(display_element, trial) {
 
-    // possible stimulus locations on the circle 
-    /*function shuffle(array) {
-      var currentIndex = array.length, temporaryValue, randomIndex;
-
-      //While there remain elements to shuffle...
-      while (0 !== currentIndex) {
-
-        // Pick a remaining element...
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex -= 1;
-
-        // And swap it with the current element.
-        temporaryValue = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
-      }
-
-      return array;
-    }
-
-    var xcord = [-2, -1, 0, 1, 2];
-    var ycord = [-2, -1, 0, 1, 2];
-    
-    var display_locs = [];
-    display_locs.push([
-      shuffle(xcord),
-      shuffle(ycord)
-    ]);*/
-
     // circle params
     var diam = trial.circle_diameter; // pixels
     var radi = diam / 2;
@@ -145,18 +122,65 @@ jsPsych.plugins["visual-search-circle"] = (function() {
 
     // fixation location
     var fix_loc = [Math.floor(paper_size / 2 - trial.fixation_size[0] / 2), Math.floor(paper_size / 2 - trial.fixation_size[1] / 2)];
+    
+    var possible_display_locs = trial.set_size;  
+    
+    let display_locs = [];
+  
+    if (true) {
 
-    // possible stimulus locations on the circle
-    var display_locs = [];
-    var possible_display_locs = trial.set_size;
-    var random_offset = Math.floor(Math.random() * 360);
-    for (var i = 0; i < possible_display_locs; i++) {
-      display_locs.push([
-        Math.floor(paper_size / 2 + (cosd(random_offset + (i * (360 / possible_display_locs))) * radi) - hstimw),
-        Math.floor(paper_size / 2 - (sind(random_offset + (i * (360 / possible_display_locs))) * radi) - hstimh)
-      ]);
+      const num_pos = Math.ceil(Math.sqrt(possible_display_locs))
+      //square root the number of possible display locations
+
+      const step = 2 / (num_pos - 1)
+      //distance between each location
+      console.log(step, num_pos)
+
+      let full_locs = []
+      for (let x = -1; x <= 1; x+=step) {
+        //x is between -1 and 1, increase by value of step each time
+        for (let y = -1; y <= 1; y+=step) {
+          //y is between -1 and 1, increase by value of step each time
+          full_locs.push([
+            Math.floor(paper_size / 2 + (x * radi) - hstimw),
+            //x coord
+            Math.floor(paper_size / 2 + (y * radi) - hstimh)
+            //y coord
+          ]);
+        }
+      }
+
+      full_locs = shuffle(full_locs)
+      display_locs = full_locs.slice(0, possible_display_locs);
+
+      /*for (let x = -1; x <= 1; x+=step) {
+        let jitter = ((stimh + stimw) / 2) * 0.2
+        let random_angle = Math.floor(Math.random() * 360);
+        let rand_x = Math.floor(paper_size / 2 + (cosd(random_offset + (i * (360 / possible_display_locs))) * radi) - hstimw)
+        let rand_y = Math.floor(paper_size / 2 - (sind(random_offset + (i * (360 / possible_display_locs))) * radi) - hstimh)
+        display_locs.push([rand_x, rand_y]);
+      }*/
+
+    } else {
+
+      // possible stimulus locations on the circle
+      var random_offset = Math.floor(Math.random() * 360);
+      for (var i = 0; i < possible_display_locs; i++) {
+        display_locs.push([
+          Math.floor(paper_size / 2 + (cosd(random_offset + (i * (360 / possible_display_locs))) * radi) - hstimw),
+          Math.floor(paper_size / 2 - (sind(random_offset + (i * (360 / possible_display_locs))) * radi) - hstimh)
+        ]);
+      }
+/*
+      for (var i = 0; i < possible_display_locs; i++) {
+        let jitter = ((stimh + stimw) / 2) * 0.2
+        let random_angle = Math.floor(Math.random() * 360);
+        let rand_x = Math.floor(paper_size / 2 + (cosd(random_offset + (i * (360 / possible_display_locs))) * radi) - hstimw)
+        let rand_y = Math.floor(paper_size / 2 - (sind(random_offset + (i * (360 / possible_display_locs))) * radi) - hstimh)
+        display_locs.push([rand_x, rand_y]);
+      */
     }
-
+    
     // get target to draw on
     display_element.innerHTML += '<div id="jspsych-visual-search-circle-container" style="position: relative; width:' + paper_size + 'px; height:' + paper_size + 'px"></div>';
     var paper = display_element.querySelector("#jspsych-visual-search-circle-container");
@@ -284,5 +308,24 @@ jsPsych.plugins["visual-search-circle"] = (function() {
     return Math.sin(num / 180 * Math.PI);
   }
 
+  // shuffle any input array
+  function shuffle(array) {
+    // define three variables
+    let cur_idx = array.length, tmp_val, rand_idx;
+
+    // While there remain elements to shuffle...
+    while (0 !== cur_idx) {
+      // Pick a remaining element...
+      rand_idx = Math.floor(Math.random() * cur_idx);
+      cur_idx -= 1;
+
+      // And swap it with the current element.
+      tmp_val = array[cur_idx];
+      array[cur_idx] = array[rand_idx];
+      array[rand_idx] = tmp_val;
+    }
+    return array;
+  }
+  
   return plugin;
 })();
