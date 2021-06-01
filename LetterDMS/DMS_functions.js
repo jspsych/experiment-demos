@@ -232,11 +232,24 @@ function PadLetters(Letters)
 		return Stimulus
 	}
 
+  class BlockStimulusList {
+  // This class is made to keep track of the stimuli and probes used in the previous trials
+  constructor(InputStimulusList = [], CognCap = 0, StimulusList = [], Loads = [])
+  {
+    // keep track of the current trial and make an array of all
+    this.InputStimulusList = InputStimulusList;
+   	this.CognCap = CognCap;
+    this.Loads = []
+		this.StimulusList = []
+  }
 
-   function CreateDMSList5(DMSCapacity)
+  CreateDMSList5()
  		{
-      temp = parseFloat(DMSCapacity)
-      Limit = Number((temp).toFixed(0))
+ 			var Loads = []
+      var temp = parseFloat(this.CognCap)
+      console.log(temp)
+      var Limit = Number((temp).toFixed(0))
+      console.log(Limit)
       if (Limit > 9){
           Limit = 9
       }
@@ -259,18 +272,31 @@ function PadLetters(Letters)
       	case 9:
       		Loads = [1,3,6,8,9];
        }
-      return Loads
+      this.Loads = Loads
     }
 
-   	function CreateDMSItemList(Loads)
+  CreateDMSItemList()
    	{
+   		// Make a function that runs at the beginning of the DMS block based version. It takes as inpout just the CognCap. 
+ 			// It then identifies the loads required. Then it extracts the corresponding rows from the list. It therefore 
+ 			// shortens the selected list accordingly.
+
    		// This variable describes how many trials there are in the setup file
    		var NTrialsPerLoadInList = 6
-   		for (var i = 0; i < 6; i++)
-   			{
-   				temp = Loads[i]
-   				List = [...Array(NTrialsPerLoadInList).keys()];
-   				List = List + (temp - 1)*NTrialsPerLoadInList
-
-   			}
+   		var TrialList = []
+   		for (var i = 0; i < this.Loads.length; i++)
+   		{
+   				// What is the current load
+   				var temp = this.Loads[i]
+   				for (var j = 0; j < 54; j++)
+   				{
+   					if (temp == this.InputStimulusList[j]['Load'])
+   					{
+   						console.log(this.InputStimulusList[j]['Load'])
+   						TrialList.push(this.InputStimulusList[j])
+   					}
+   				}	
+   		}		
+   			this.TrialList = TrialList
    	}
+}

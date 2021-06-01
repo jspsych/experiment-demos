@@ -37,6 +37,18 @@
     // ADD 3-2-1 COUNTDOWN BEFORE THE START OF EACH LOAD BLOCK
   /* create timeline */
     var timeline = [];
+    
+    // In order to dynamically create a list of trials a class is used.
+    // This class simply starts with the total list of trials and only extracts the trials to use
+    // for five blocks of six trials using the provided cognitive capacity value.
+    // This process can be enhance to have different numbers of trials per load and a
+    // different number of load blocks. In that case it would also need to make sure that there are 
+    // enough trials provided in the setup file.
+    let TrialList = new BlockStimulusList(DMSLetterBehaviorList001, 7.3)
+    TrialList.CreateDMSList5()
+    TrialList.CreateDMSItemList()
+
+
     // Make experiment run in full screen mode
     // Note, that the fullscreen plugin needs to imported above
     timeline.push({
@@ -47,7 +59,7 @@
     var Instructions = {
        type: 'instructions',
        pages: instructions,
-       show_clickable_nav: true
+       show_clickable_nav: true,
     }
 
     var ThankYou = {
@@ -59,8 +71,6 @@
     // After a certain count present a long duration ITI
     var count = 0;
 
-
-      //trial_duration: 100
     
     var Stimulus = {
       type: 'html-keyboard-response',
@@ -162,11 +172,11 @@
       // Make sure this order is correct: fixation cue and then the stimulus
       // Otherwise the scoring will not make any sense
       timeline: [Stimulus, Retention, Probe, if_node, Fix],
-      timeline_variables: DMSLetterBehaviorList001,
+      timeline_variables: TrialList.TrialList, // This variable needs to be updated according to the loads to use
       randomize_order: false  
     };
     
-    //timeline.push(Instructions)
+    timeline.push(Instructions)
     timeline.push(test_procedure)
     timeline.push(ThankYou)
     /* start the experiment */
