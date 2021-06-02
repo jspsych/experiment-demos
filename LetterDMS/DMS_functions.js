@@ -54,19 +54,19 @@ function CountdownTimer(MillisecondsPerNumber = 1000)
 	{
     var Three = {
       type: 'html-keyboard-response',
-      stimulus: '<p>3</p>',
+      stimulus: '<p style="font-size:'+FontSize+'px">3</p>',
       choices: jsPsych.NO_KEYS,
       trial_duration: MillisecondsPerNumber,
       }
     var Two = {
       type: 'html-keyboard-response',
-      stimulus: '<p>2</p>',
+      stimulus: '<p style="font-size:'+FontSize+'px">2</p>',
       choices: jsPsych.NO_KEYS,
       trial_duration: MillisecondsPerNumber,
       }
     var One = {
       type: 'html-keyboard-response',
-      stimulus: '<p>1</p>',
+      stimulus: '<p style="font-size:'+FontSize+'px">1</p>',
       choices: jsPsych.NO_KEYS,
       trial_duration: MillisecondsPerNumber,
       }

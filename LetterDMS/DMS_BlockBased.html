@@ -22,7 +22,7 @@
       .jspsych-html-keyboard-response-stimulus {font-size: 45;}
       .jspsych-display-element {
         font-family: 'Open Sans', 'Arial', sans-serif;
-        font-size: 72px;
+        font-size: 36px;
         line-height: 0.85em;
       }
       table.a {
@@ -94,8 +94,8 @@
       // Each trial also has its own specific cue which occurs BEFORE the stimulus presentation
       // The cue itself is actually made in the setup file and not here. This could be changed if desired
       type: 'html-keyboard-response',
-      //stimulus: '<p style="color:black">+</p>',
-      stimulus: '+',
+      stimulus: '<p style="font-size:'+FontSize+'px; color:black">+</p>',
+      //stimulus: '+',
       choices: jsPsych.NO_KEYS,
       trial_duration: RetOnTime,
       on_finish: function(data){
@@ -108,7 +108,8 @@
       type: 'html-keyboard-response',
       stimulus: function() {
         var ProbeLetter = jsPsych.timelineVariable("ProbeLetter")
-        return ProbeLetter
+        return '<p style="color:'+ProbeColor+'; font-size:'+FontSize+'px">'+ProbeLetter+'</p>'
+        
         //return StimulusLetters
       },
       choices: KeyboardChoices,
@@ -137,7 +138,7 @@
         console.log('Got here')
       },
       type: 'html-keyboard-response',
-      stimulus: '<p style="color:blue">+</p>',
+      stimulus: '<p style="font-size:'+FontSize+'px; color:'+ProbeColor+'">+</p>',
       choices: jsPsych.NO_KEYS,
       trial_duration: InterBlockTime,
       on_finish: function(data){
@@ -163,7 +164,7 @@
 
     var Fix = {
       type: 'html-keyboard-response',
-      stimulus: '<p style="color:blue">+</p>',
+      stimulus: '<p style="font-size:'+FontSize+'px; color:'+ProbeColor+'">+</p>',
       choices: jsPsych.NO_KEYS,
       trial_duration: ITITime,
       on_finish: function(data){

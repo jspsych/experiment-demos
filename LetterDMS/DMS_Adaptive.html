@@ -23,7 +23,7 @@
       .jspsych-html-keyboard-response-stimulus {font-size: 45;}
       .jspsych-display-element {
         font-family: 'Open Sans', 'Arial', sans-serif;
-        font-size: 72px;
+        font-size: 36px;
         line-height: 0.85em;
       }
       table.a {
@@ -100,7 +100,7 @@
       // Each trial also has its own specific cue which occurs BEFORE the stimulus presentation
       // The cue itself is actually made in the setup file and not here. This could be changed if desired
       type: 'html-keyboard-response',
-      stimulus: '<p style="color:black">+</p>',
+      stimulus: '<p style="font-size:'+FontSize+'px; color:black">+</p>',
       choices: jsPsych.NO_KEYS,
       trial_duration: RetOnTime,
       on_finish: function(data){
@@ -111,8 +111,7 @@
     var Probe = {
       type: 'html-keyboard-response',
       stimulus: function() {
-        return '<p style="color:'+ProbeColor+'">'+stimList.CurrentProbe+'</p>'
-        //return StimulusLetters
+        return '<p style="color:'+ProbeColor+'; font-size:'+FontSize+'px">'+stimList.CurrentProbe+'</p>'
       },
       choices: KeyboardChoices,
       trial_duration: ProbeOnTime,
@@ -145,7 +144,7 @@
 
     var Fix = {
       type: 'html-keyboard-response',
-      stimulus: '<p style="color:blue">+</p>',
+      stimulus: '<p style="font-size:'+FontSize+'px; color:'+ProbeColor+'">+</p>',
       choices: jsPsych.NO_KEYS,
       trial_duration: ITITime,
       on_finish: function(data){
@@ -157,7 +156,7 @@
       // Each trial also has its own specific cue which occurs BEFORE the stimulus presentation
       // The cue itself is actually made in the setup file and not here. This could be changed if desired
       type: 'html-keyboard-response',
-      stimulus: '<p style="color:black">+</p>',
+      stimulus: '<p style="font-size:'+FontSize+'px; color:black">+</p>',
       choices: jsPsych.NO_KEYS,
       trial_duration: WaitOnTime,
     } 
@@ -181,7 +180,7 @@
         stimulus: "Thank you",
         on_finish(data) {
           data.Capacity = stair1.CalculateAverage(),
-          console.log(CreateDMSList5(data.Capacity))
+          console.log(data.Capacity)
         }
     };
 

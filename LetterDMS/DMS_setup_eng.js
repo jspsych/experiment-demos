@@ -8,7 +8,7 @@
 
 var AllowableLetters = "BCDFGHJKLMNPQRSTVXYZ";
 
-var FullScreenMode = false;
+var FullScreenMode = true;
 
 var FontSize = 72;
 
@@ -18,11 +18,11 @@ var KeyboardChoices = ['arrowleft', 'arrowright'];
 var ResponseMapping = [true, false];
 
 // Timings of the different trial phases in MILLISECONDS
-var StimOnTime = 250
-var RetOnTime = 350
+var StimOnTime = 2500
+var RetOnTime = 3500
 var ProbeOnTime = 5000
 // This is the intertrial interval. 
-var ITITime = 100
+var ITITime = 1000
 
 // This is the time between blocks. Note that between each block of trials there
 // is also the 3-2-1 countdown. Therefore, the full interblock interval is this value PLUS 
@@ -43,8 +43,8 @@ var NTrialsPerBlock = 6
 var NumberOfBlocks = 5
 // ===================================================
 // ADAPTIVE VERSION PARAMETERS
-var MaxTrials = 10
-var MaxReversals = 3
+var MaxTrials = 50
+var MaxReversals = 15
 var StartValue = 1
 var MinValue = 1
 var MaxValue = 9
