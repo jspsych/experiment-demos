@@ -5,5 +5,5 @@ Thumbs.db
 /.project
 /.tern-project
 site/
-/Questionnaires/BackgroundPapers/
-/Questionnaires/ToAdd/
+Questionnaires/BackgroundPapers/
+Questionnaires/ToAdd/
