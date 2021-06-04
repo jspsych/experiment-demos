@@ -26,7 +26,6 @@ var items = [
 	{prompt: "I have the self-confidence necessary to try different ways of behaving. ", labels: scale01}
 	]
 
-
 var instructions = "The following statements deal with your beliefs and feelings about your own behavior. Read each statement and respond by circling the number that best represents your agreement with each statement. "
 
 var reference = "Martin, M. M., & Rubin, R. B. (1995). A New Measure of Cognitive Flexibility. Psychological Reports, 76(2), 623–626. doi:10.2466/pr0.1995.76.2.623 "
