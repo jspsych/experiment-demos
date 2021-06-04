@@ -22,7 +22,7 @@ _ These are the files in the *assets* folder
 - The only required modification is to change the last <script> impoirt line to the JS file name above.
 
 ## There are also two other support files.the
-- One is the *questionnaire_fsetup_eng.js* file. This contains general parameters that will affect all questionnires. Currently it contains two parameters: 
+- One is the *questionnaire_setup_eng.js* file. This contains general parameters that will affect all questionnires. Currently it contains two parameters: 
 -- the number of questions per page
 -- the width of the questions on the screen
 
