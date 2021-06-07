@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="description" content="jsPsych Test NCMLab">
+    <meta name="keywords" content="HTML, CSS, JavaScript">
+    <meta name="author" content="Jason Steffener, NCMLab">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questionnaire: BDI</title>
+    <script src="jsPsych/jspsych.js"></script>
+    <script src="jspsych/plugins/jspsych-fullscreen.js"></script>
+    <script src="jsPsych/plugins/jspsych-survey-multi-choice.js"></script>
+    <link rel="stylesheet" href="jsPsych/css/jspsych.css">
+    <link href="CSS/LikertQuestionnaires.css" rel="stylesheet">
+    <script src="questionnaire_setup_eng.js"></script>    
+    <script src="questionnaire_functions.js"></script>
+    <script src="assets/bdi_setup_eng.js"></script>
+    <style>
+    input[type="radio"] {height: 35px; width: 35px; vertical-align: middle;}
+  </style>
+
+  </head>
+  <body></body>
+  <script>
+
+  // Break item list into pages
+  itemPages = MakePagesOfItems(items, QPerPage)
+  console.log(items)
+  console.log(itemPages[0].questions)
+  var multi_choice_block = {
+    type: 'survey-multi-choice',
+    questions: items,//Pages[0].questions,
+    // The instructions are also in the JS file
+    preamble: "<h1>"+title+"</h1>"+instructions,
+    on_finish: function(data){
+      var Sum = 0;
+      var count = 0;
+      // score the test        
+      // extract the responses as an array 
+      var temp = Object.entries(jsPsych.data.getLastTrialData().values()[0].response)
+      // cycle over the items in the questionnaire
+      for (var i = 0; i < items.length; i++) {
+        // What was the response for this question?
+        var ResponseText = temp[i][1]
+        // find the index of this response in the original items
+        Sum += items[i].options.indexOf(temp[i][1])
+      }
+            // search the items for these values
+      data.Sum = Sum
+    }
+  }
+  // Make a procedure which allows the questions to be timeline variables.
+  var procedure = {
+      timeline: [multi_choice_block],
+  }
+  
+  var timeline = []  
+  // add the pages of the questionnaire to the timeline
+  timeline.push(procedure)
+        
+  jsPsych.init({
+    timeline: [timeline],
+    on_finish: function() {
+      jsPsych.data.displayData();
+    }
+  });
+
+
+  </script>
+</html>
