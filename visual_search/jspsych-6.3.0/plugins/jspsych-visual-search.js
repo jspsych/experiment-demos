@@ -1,6 +1,6 @@
 /**
  *
- * jspsych-visual-search-circle
+ * jspsych-visual-search
  * Josh de Leeuw
  *
  * display a set of objects, with or without a target, equidistant from fixation
@@ -12,23 +12,29 @@
  *
  **/
 
-jsPsych.plugins["visual-search-circle"] = (function() {
+jsPsych.plugins["visual-search"] = (function() {
 
   var plugin = {};
 
-  jsPsych.pluginAPI.registerPreload('visual-search-circle', 'target', 'image');
-  jsPsych.pluginAPI.registerPreload('visual-search-circle', 'foil', 'image');
-  jsPsych.pluginAPI.registerPreload('visual-search-circle', 'fixation_image', 'image');
+  jsPsych.pluginAPI.registerPreload('visual-search', 'target', 'image');
+  jsPsych.pluginAPI.registerPreload('visual-search', 'foil', 'image');
+  jsPsych.pluginAPI.registerPreload('visual-search', 'fixation_image', 'image');
 
   plugin.info = {
-    name: 'visual-search-circle',
+    name: 'visual-search',
     description: '',
     parameters: {
       usegrid: {
         type: jsPsych.plugins.parameterType.BOOL,
         pretty_name: 'Use grid',
-        default: true,
+        default: false,
         description: 'Place items on a grid?'
+      },
+      jitter_ratio: {
+        type: jsPsych.plugins.parameterType.FLOAT,
+        pretty_name: 'jitter',
+        default: 0.0,
+        description: 'The distance to jitter the image as ratio of image size (average of x and y).'
       },
       target: {
         type: jsPsych.plugins.parameterType.IMAGE,
@@ -77,7 +83,7 @@ jsPsych.plugins["visual-search-circle"] = (function() {
       circle_diameter: {
         type: jsPsych.plugins.parameterType.INT,
         pretty_name: 'Circle diameter',
-        default: 250,
+        default: 500,
         description: 'The diameter of the search array circle in pixels.'
       },
       target_present_key: {
@@ -117,6 +123,7 @@ jsPsych.plugins["visual-search-circle"] = (function() {
     // stimuli width, height
     var stimh = trial.target_size[0];
     var stimw = trial.target_size[1];
+    const jitter = ((stimh + stimw) / 2) * trial.jitter_ratio
     var hstimh = stimh / 2;
     var hstimw = stimw / 2;
 
@@ -124,10 +131,10 @@ jsPsych.plugins["visual-search-circle"] = (function() {
     var fix_loc = [Math.floor(paper_size / 2 - trial.fixation_size[0] / 2), Math.floor(paper_size / 2 - trial.fixation_size[1] / 2)];
     
     var possible_display_locs = trial.set_size;  
-    
+     
     let display_locs = [];
-  
-    if (true) {
+
+    if (trial.usegrid) {
 
       const num_pos = Math.ceil(Math.sqrt(possible_display_locs))
       //square root the number of possible display locations
@@ -153,37 +160,31 @@ jsPsych.plugins["visual-search-circle"] = (function() {
       full_locs = shuffle(full_locs)
       display_locs = full_locs.slice(0, possible_display_locs);
 
-      /*for (let x = -1; x <= 1; x+=step) {
-        let jitter = ((stimh + stimw) / 2) * 0.2
+      for (let i=0; i < display_locs.length; i++) {
         let random_angle = Math.floor(Math.random() * 360);
-        let rand_x = Math.floor(paper_size / 2 + (cosd(random_offset + (i * (360 / possible_display_locs))) * radi) - hstimw)
-        let rand_y = Math.floor(paper_size / 2 - (sind(random_offset + (i * (360 / possible_display_locs))) * radi) - hstimh)
-        display_locs.push([rand_x, rand_y]);
-      }*/
+        let rand_x = Math.floor(cosd(random_angle) * jitter)
+        let rand_y = Math.floor(sind(random_angle) * jitter)
+        display_locs[i][0] += rand_x 
+        display_locs[i][1] += rand_y
+      }
 
     } else {
 
       // possible stimulus locations on the circle
       var random_offset = Math.floor(Math.random() * 360);
       for (var i = 0; i < possible_display_locs; i++) {
+        let vec_jitter = Math.sign(Math.random() * 2 - 1) * jitter
         display_locs.push([
-          Math.floor(paper_size / 2 + (cosd(random_offset + (i * (360 / possible_display_locs))) * radi) - hstimw),
-          Math.floor(paper_size / 2 - (sind(random_offset + (i * (360 / possible_display_locs))) * radi) - hstimh)
+          Math.floor(paper_size / 2 + (cosd(random_offset + (i * (360 / possible_display_locs))) * (radi + vec_jitter)) - hstimw),
+          Math.floor(paper_size / 2 - (sind(random_offset + (i * (360 / possible_display_locs))) * (radi + vec_jitter)) - hstimh)
         ]);
       }
-/*
-      for (var i = 0; i < possible_display_locs; i++) {
-        let jitter = ((stimh + stimw) / 2) * 0.2
-        let random_angle = Math.floor(Math.random() * 360);
-        let rand_x = Math.floor(paper_size / 2 + (cosd(random_offset + (i * (360 / possible_display_locs))) * radi) - hstimw)
-        let rand_y = Math.floor(paper_size / 2 - (sind(random_offset + (i * (360 / possible_display_locs))) * radi) - hstimh)
-        display_locs.push([rand_x, rand_y]);
-      */
     }
     
+
     // get target to draw on
-    display_element.innerHTML += '<div id="jspsych-visual-search-circle-container" style="position: relative; width:' + paper_size + 'px; height:' + paper_size + 'px"></div>';
-    var paper = display_element.querySelector("#jspsych-visual-search-circle-container");
+    display_element.innerHTML += '<div id="jspsych-visual-search-container" style="position: relative; width:' + paper_size + 'px; height:' + paper_size + 'px"></div>';
+    var paper = display_element.querySelector("#jspsych-visual-search-container");
 
     // check distractors - array?
     if(!Array.isArray(trial.foil)){
@@ -205,6 +206,7 @@ jsPsych.plugins["visual-search-circle"] = (function() {
       jsPsych.pluginAPI.setTimeout(function() {
         // after wait is over
         show_search_array();
+        paper.innerHTML += "<img src='"+trial.fixation_image+"' style='position: absolute; top:"+fix_loc[0]+"px; left:"+fix_loc[1]+"px; width:"+trial.fixation_size[0]+"px; height:"+trial.fixation_size[1]+"px;'></img>";
       }, trial.fixation_duration);
     }
 

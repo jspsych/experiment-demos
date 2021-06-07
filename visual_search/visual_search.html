@@ -4,7 +4,7 @@
   <script src="jspsych-6.3.0/jspsych.js"></script>
   <script src="jspsych-6.3.0/plugins/jspsych-html-keyboard-response.js"></script> 
   <script src="jspsych-6.3.0/plugins/jspsych-preload.js"></script>
-  <script src ="jspsych-6.3.0/plugins/jspsych-visual-search-circle.js"></script>
+  <script src ="jspsych-6.3.0/plugins/jspsych-visual-search.js"></script>
   <link rel="stylesheet" href="jspsych-6.3.0/css/jspsych.css"></link>
   <script src="visual_search_setup_EN.js"></script> 
   <meta charset="utf-8"/>
@@ -38,11 +38,18 @@
         
     const full_design = jsPsych.randomization.factorial(factors, repeat_trials)
 
+    const prac_design = jsPsych.randomization.factorial(factors, 1)
+
     const block_len = Math.floor(full_design.length/block_number) 
 
     let prompt = {
         type: "html-keyboard-response",
-        stimulus: prompt_msg
+        stimulus: prompt_msg + '<img src="assets/images/greenT.png" alt="Picture" width="50" height="50">'
+    }
+
+	let prac_prompt = {
+        type: "html-keyboard-response",
+        stimulus: "There will be 16 practice trials before the experiment begins. Press any key to start."
     }
 
     const welcome = {
@@ -50,73 +57,80 @@
         stimulus: "Welcome to the Visual Search Experiment. There will be " + block_number + " blocks in this experiment. There will be " + block_len + " trials in each block. You will be given a chance to take a break between blocks. Press any key to start the experiment."
     }
 
-    //with timeline variables you define the procedure once (as a timeline) and specify a set of parameters and their values for each iteration through the timeline.
-    let procedure = {
-        timeline: [
-            {
-                    type: 'visual-search-circle',
-                    target: jsPsych.timelineVariable('target'),
-                    foil: function() {
-                        let foil_set = foil_images
-                        while ( foil_set.length < jsPsych.timelineVariable('set_size') ) {
-                            foil_set = foil_set.concat(shuffle(foil_images))
-                        }
-                        return foil_set
-                    },
-                    target_present: jsPsych.timelineVariable('target_present'),
-                    set_size: jsPsych.timelineVariable('set_size'),
-                    target_present_key: the_present_key, 
-                    target_absent_key: the_absent_key,
-                    fixation_image: fixation,
-                    data: {search_trial: true}
-                    /*target_size:
-                    fixation_size:
-                    circle_diameter:
-                    */
-                    //these values should be in the setup file
-            },
-            {
-                type: 'html-keyboard-response',
-                stimulus: function(){
-                        let t = jsPsych.data.get().filter({search_trial: true}).count() // trials so far
-                        let trial_msg = "You have completed " + t + ' of ' + full_design.length + " trials.\n\n"+
-                                        "Get ready for the next trial."
-                        return trial_msg
-                },
-                choices: jsPsych.NO_KEYS,
-                trial_duration: 1000,
-                response_ends_trial: false
-            }, 
-            // break statement
-            {
-                timeline: [
-                    { 
-                        type: "html-keyboard-response",
-                        stimulus: function() {
-                            let t = jsPsych.data.get().filter({search_trial: true}).count()
-                            let b = t / block_len
-                            const html_out = 'You have completed ' + (t/full_design.length * 100).toFixed(0) + '% of the trials. You are on block ' + b + ' of 10. Good job! Take a break if you need to. Press any key to continue the experiment.'
-                            return html_out
-                        },
-                        post_trial_gap: 1000
-                    }
-                ],
-                conditional_function: function(){
-                    let t = jsPsych.data.get().filter({search_trial: true}).count() // trials so far
-                    if ( ( ( t % block_len ) == 0 ) && ( t < full_design.length ) ) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                }
-            }
-        ],
-        timeline_variables: full_design, 
-        randomize_order: true
-    }
+    const full_procedure = make_procedure(full_design, false)
+    const prac_procedure = make_procedure(prac_design, true)
+
+    function make_procedure(design, is_practice = false) {
+
+	    //with timeline variables you define the procedure once (as a timeline) and specify a set of parameters and their values for each iteration through the timeline.
+	    let procedure = {
+	        timeline: [
+	            {
+	                    type: 'visual-search',
+	                    target: jsPsych.timelineVariable('target'),
+	                    foil: function() {
+	                        let foil_set = foil_images
+	                        while ( foil_set.length < jsPsych.timelineVariable('set_size') ) {
+	                            foil_set = foil_set.concat(shuffle(foil_images))
+	                        }
+	                        return foil_set
+	                    },
+	                    target_present: jsPsych.timelineVariable('target_present'),
+	                    set_size: jsPsych.timelineVariable('set_size'),
+	                    target_present_key: the_present_key, 
+	                    target_absent_key: the_absent_key,
+	                    fixation_image: fixation,
+	                    data: {practice_trial: is_practice}
+	                    /*target_size:
+	                    fixation_size:
+	                    circle_diameter:
+	                    */
+	                    //these values should be in the setup file
+	            },
+	            {
+	                type: 'html-keyboard-response',
+	                stimulus: function(){
+	                        let t = jsPsych.data.get().filter({practice_trial: is_practice}).count() // trials so far
+	                        let trial_msg = "You have completed " + t + ' of ' + design.length + " trials.\n\n"+
+	                                        "Get ready for the next trial."
+	                        return trial_msg
+	                },
+	                choices: jsPsych.NO_KEYS,
+	                trial_duration: 1000,
+	                response_ends_trial: false
+	            }, 
+	            // break statement
+	            {
+	                timeline: [
+	                    { 
+	                        type: "html-keyboard-response",
+	                        stimulus: function() {
+	                            let t = jsPsych.data.get().filter({practice_trial: is_practice}).count()
+	                            let b = t / block_len
+	                            const html_out = 'You have completed ' + (t/design.length * 100).toFixed(0) + '% of the trials. You are on block ' + b + ' of 10. Good job! Take a break if you need to. Press any key to continue the experiment.'
+	                            return html_out
+	                        },
+	                        post_trial_gap: 1000
+	                    }
+	                ],
+	                conditional_function: function(){
+	                    let t = jsPsych.data.get().filter({practice_trial: is_practice}).count() // trials so far
+	                    if ( ( ( t % block_len ) == 0 ) && ( t < design.length ) ) {
+	                        return true;
+	                    } else {
+	                        return false;
+	                    }
+	                }
+	            }
+	        ],
+	        timeline_variables: design, 
+	        randomize_order: true
+	    }
+	    return procedure
+	}
 
     jsPsych.init({
-        timeline: [welcome, prompt, procedure],
+        timeline: [welcome, prompt, prac_prompt, prac_procedure, full_procedure],
         on_finish: function() {
             jsPsych.data.get().localSave('csv','visual_search_data.csv');
         }

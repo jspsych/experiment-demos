@@ -5,9 +5,7 @@ const repeat_trials = 10; // how many times to repeat each trial type
                                                  
 const block_number = 10; // how many blocks to include in the experiment 
 
-const prompt_msg = "Keep staring at the black dot in the center of the screen.\n\n"+
-                   "Use the j and f keys to indicate "+
-                   "whether or not the red T is present. If it is present press j. If not press f.\n\n"
+const prompt_msg = "Keep staring at the black dot in the center of the screen. Use the j and f keys to indicate whether or not the target is present. If it is present press j. If not press f. Below you will see an example of the target image." 
                                                   // message to display before each trial.
                                                   // note: '\n\n' is needed at the end of each line 
                                                   // because prompt is displayed using the psychophysics plugin
