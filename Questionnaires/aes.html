@@ -15,6 +15,9 @@
     <script src="jspsych/plugins/jspsych-survey-likert.js"></script>
     <link href="jspsych/css/jspsych.css" rel="stylesheet" type="text/css">
     <link href="CSS/LikertQuestionnaires.css" rel="stylesheet">
+    
+    <script src="questionnaire_setup_eng.js"></script>
+    <script src="questionnaire_functions.js"></script>
     <script src="assets/aes_setup_eng.js"></script> 
   <style>
     input[type="radio"] {height: 35px; width: 35px; vertical-align: middle;}
@@ -23,20 +26,28 @@
   <script>
 
     // How many options are there in the scale?
-    var ScaleSize = scale01.length
-    
+    var ScaleSize = scale01.length;
+
+    // Break item list into pages
+    itemPages = MakePagesOfItems(items, QPerPage)
+
+    // By defining the sum and missed questions counters here, outside of other variables they have a larger scope. 
+    // That means that each page of the scale adds to these variables. Therefore, the results from the last page have 
+    // the correct complete values calculated across all pages of the questionnaire.
+    var Sum = 0
+    var MissedQuestions = 0
     // Prepare the questionnaire
     var Test = {
         type: 'survey-likert',
-        // the items are taken from teh import JS file
-        questions: items,
+        // the items are taken from the import JS file
+        timeline: itemPages,
         // The instructions are also in the JS file
-        preamble: "<h1>"+title+"</h1>"+instructions,
+        preamble: "<h2>"+title+"</h2>"+instructions,
         on_finish: function(data){
           // The responses to each question on a likert scale are stored in an Object
           // cycle over the object and find the key and values for each
-          var Sum = 0;
-          var MissedQuestions = 0
+//          var Sum = 0;
+          
           var count = 0;
           // cycle over each entry in teh object that holds the likert scale and responses
           for (const [key, value] of Object.entries(jsPsych.data.getLastTrialData().values()[0].response)) 
@@ -69,15 +80,21 @@
           data.NumberMissedQuestions = MissedQuestions
         }
     };
+    // Make a procedure which allows the questions to be timeline variables.
+    var procedure = {
+        timeline: [Test],
+        }
+    var timeline = []
+    // add the pages of the questionnaire to the timeline
+    timeline.push(procedure)
 
-
-    var timeline = [];
-    timeline.push(Test)
     jsPsych.init({
-        experiment_width: 600,
+        experiment_width: PageWidth,
         timeline: timeline,
             on_finish: function() {
                 jsPsych.data.displayData();
+                var D = jsPsych.data.get().last(2)
+                console.log(D)
                 //jsPsych.data.get().localSave('csv','test.csv');
       }
     })
