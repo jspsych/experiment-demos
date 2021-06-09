@@ -1,7 +1,7 @@
 
 var FullScreenMode = false;
 var TextFontSize = "30px";
-var StimulusFontSize = "30px";
+var StimulusFontSize = "45px";
 
 var ResponseChoiceTrue = 37 // Left arrow
 var ResponseChoiceFalse = 39 // right arrow
@@ -10,7 +10,7 @@ var FeedbackLength = 400; // This is in milliseconds
 var PracticeRepeats = 1
 var TestRepeats = 1
 
-function PutIntoTable(top='top', middle='mid', width=600, height=300) {
+function PutIntoTable(top='top', middle='mid', width=600, height=200) {
       return '<table border="0" width="'+width+'"><tr height="'+height+'"><td>'+top+'</td></tr><tr height="'+height+'"><td><div style="font-size:'+StimulusFontSize+';">'+middle+'</div></td></tr><tr height="'+height+'"><td valign="bottom"><img src="assets/TrueFalseArrows.png"></td></tr></table>';
     }
 
