@@ -1,3 +1,8 @@
+// This variablke affects the distance between the center of 
+// the screen and the high and low line
+
+var ScreenSpacing = 300
+
 var NFlankers = 2;
 
 var flankersR = '';
@@ -6,16 +11,19 @@ var flankersL = '';
 
 var flankersN = '';
 
-for (i = 0; i < NFlankers; i++) {
+for (i = 0; i < NFlankers; i++) 
+   {
+	// the following are the codes for the specific arrows and star to use
+	// https://www.fileformat.info/info/unicode/char/2190/index.htm
       flankersR += "\u2192";
       flankersL += "\u2190";
-      flankersNo+= "\u2014";
+      flankersN += "\u2014";
     }
 
 var FontSize = 45
 
 
-function PutIntoTable(top='top', middle='mid', bottom='bot', width=600, height=300) {
+function PutIntoTable(top='top', middle='mid', bottom='bot', width=600, height=ScreenSpacing) {
       return '<table margin-left="auto" margin-right="auto" border="0" width="'+width+'"><tr height="'+height+'"><td>'+top+'</td></tr><tr height="'+height+'"><td><div style="font-size:'+FontSize+'px;">'+middle+'</div></td></tr> <tr height="'+height+'"><td>'+bottom+'</td></tr></table>';
     }
 
