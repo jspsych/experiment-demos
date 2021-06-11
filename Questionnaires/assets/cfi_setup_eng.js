@@ -1,4 +1,4 @@
-var title = "Conitive Flexibility Index" 
+var title = "Cognitive Flexibility Index" 
 
 var scale01 = [
 	"Strongly disagree",

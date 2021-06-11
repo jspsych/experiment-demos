@@ -10,11 +10,12 @@
     <script src="jsPsych/jspsych.js"></script>
     <script src="jspsych/plugins/jspsych-fullscreen.js"></script>
     <script src="jsPsych/plugins/jspsych-survey-multi-choice.js"></script>
+    <script src="assets/LawtonIADL.js"></script>
     <link rel="stylesheet" href="jsPsych/css/jspsych.css">
     <link href="CSS/LikertQuestionnaires.css" rel="stylesheet">
-    <script src="questionnaire_setup_eng.js"></script>    
+        <script src="questionnaire_setup_eng.js"></script>    
     <script src="questionnaire_functions.js"></script>
-    <script src="assets/bdi_setup_eng.js"></script>
+
     <style>
     input[type="radio"] {height: 35px; width: 35px; vertical-align: middle;}
   </style>
@@ -23,39 +24,20 @@
   <body></body>
   <script>
 
-  // Break item list into pages
+  itemPages = MakePagesOfItemsMCSurvey(items, 2)
   
-  itemPages = MakePagesOfItemsMCSurvey(items, QPerPage)
-
+  
   var multi_choice_block = {
     type: 'survey-multi-choice',
     timeline: itemPages,
-    // The instructions are also in the JS file
+     // The instructions are also in the JS file
     preamble: "<h1>"+title+"</h1>"+instructions,
-    //on_finish: function(data){
-    //  var Sum = 0;
-    //  var count = 0;
-      // score the test        
-      // extract the responses as an array 
-    //  var temp = Object.entries(jsPsych.data.getLastTrialData().values()[0].response)
-      // cycle over the items in the questionnaire
-    //  for (var i = 0; i < items.length; i++) {
-        // What was the response for this question?
-    //    var ResponseText = temp[i][1]
-        // find the index of this response in the original items
-    //    Sum += items[i].options.indexOf(temp[i][1])
-    //  }
-            // search the items for these values
-    //  data.Sum = Sum
-    //}
   }
-  // Make a procedure which allows the questions to be timeline variables.
+
   var procedure = {
       timeline: [multi_choice_block],
   }
-  
 
-        
   jsPsych.init({
     timeline: [procedure],
     on_finish: function() {
