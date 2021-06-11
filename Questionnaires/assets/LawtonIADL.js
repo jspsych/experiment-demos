@@ -4,6 +4,7 @@ var instructions = ""
 
 var reference = ""
 
+var ReverseScoreDirection = [false]
 
 var items = [
   {
@@ -14,6 +15,7 @@ var items = [
 		"Answers telephone, but does not dial",
 		"Does not use telephone at all"
     ], 
+    values: [1, 1, 1, 0],
     required:true
   },
   {
@@ -24,6 +26,7 @@ var items = [
 		"Needs to be accompanied on any shopping trip",
 		"Completely unable to shop"
 	    ],
+	  values: [1, 0, 0, 0],
     required: true
   },
   {
@@ -34,6 +37,7 @@ var items = [
 		"Heats and serves prepared meals or prepares meals but does not maintain adequate diet",
 		"Needs to have meals prepared and served"
 		],
+		values: [1, 0, 0, 0],
   	required: true
   },
   {
@@ -45,6 +49,7 @@ var items = [
 		"Needs help with all home maintenance tasks",
 		"Does not participate in any housekeeping tasks"
 		],
+		values: [1, 1, 1, 1, 0],
  	required: true
   },
   {
@@ -54,6 +59,7 @@ var items = [
 		"Launders small items, rinses socks, stockings, etc",
 		"All laundry must be done by others"
 		],
+		values: [1, 1, 0],
   	required: true
   },
   {
@@ -65,6 +71,7 @@ var items = [
 		"Travel limited to taxi or automobile with assistance of another",
 		"Does not travel at all"
 		],
+		values: [1, 1, 1, 0, 0],
   	required: true
   },
   {
@@ -74,6 +81,7 @@ var items = [
 		"Takes responsibility if medication is prepared in advance in separate dosages",
 		"Is not capable of dispensing own medication"
 		],
+		values: [1, 0, 0],
   	required: true
   },
   {
@@ -83,6 +91,7 @@ var items = [
 		"Manages day-to-day purchases, but needs help with banking, major purchases, etc",
 		"Incapable of handling money"
 		],
+		values: [1, 1, 0],
   	required: true
   }  
  ]
