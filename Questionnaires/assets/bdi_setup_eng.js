@@ -4,6 +4,7 @@ var instructions = "This questionnaire consists of 21 groups of statements. Plea
 
 var reference = ""
 
+var values = [0, 1, 2, 3]
 
 var items = [
   {
@@ -197,4 +198,13 @@ var items = [
   	required: true
   }
   ]
+
+// Notes:
+//  1-10____________________These ups and downs are considered normal
+//  11-16___________________ Mild mood disturbance
+//  17-20___________________Borderline clinical depression
+//  21-30___________________Moderate depression
+//  31-40___________________Severe depression
+//  over 40__________________Extreme depression 
+
 
