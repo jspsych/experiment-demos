@@ -18,3 +18,6 @@ const experiment_type = 'conjunction' //can also take the value 'shape' and 'col
 
 const the_present_key = 'j'
 const the_absent_key = 'f'
+
+const stimw = 1
+const stimh = 1

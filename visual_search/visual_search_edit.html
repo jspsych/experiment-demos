@@ -60,6 +60,11 @@
     const full_procedure = make_procedure(full_design, false)
     const prac_procedure = make_procedure(prac_design, true)
 
+
+    let diag_img = Math.sqrt(stimw ** 2 + stimh ** 2)
+	let circle_circum = Math.max(set_size) * diag_img
+	let circle_diam = circle_circum / Math.pi
+
     function make_procedure(design, is_practice = false) {
 
 	    //with timeline variables you define the procedure once (as a timeline) and specify a set of parameters and their values for each iteration through the timeline.
@@ -81,11 +86,7 @@
 	                    target_absent_key: the_absent_key,
 	                    fixation_image: fixation,
 	                    data: {practice_trial: is_practice}
-	                    /*target_size:
-	                    fixation_size:
-	                    circle_diameter:
-	                    */
-	                    //these values should be in the setup file
+	                    circle_diameter: circle_diam
 	            },
 	            {
 	                type: 'html-keyboard-response',
