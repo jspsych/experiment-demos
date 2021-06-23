@@ -4,7 +4,7 @@
   <script src="jspsych-6.3.0/jspsych.js"></script>
   <script src="jspsych-6.3.0/plugins/jspsych-html-keyboard-response.js"></script> 
   <script src="jspsych-6.3.0/plugins/jspsych-preload.js"></script>
-  <script src ="jspsych-6.3.0/plugins/jspsych-visual-search.js"></script>
+  <script src ="jspsych-6.3.0/plugins/jspsych-visual-search-circle.js"></script>
   <link rel="stylesheet" href="jspsych-6.3.0/css/jspsych.css"></link>
   <script src="visual_search_setup_EN.js"></script> 
   <meta charset="utf-8"/>
@@ -14,6 +14,7 @@
 
     let target_images = []
 
+    //based on experiment type we will use differnt targets and distractors
     if (experiment_type == 'conjunction') {
         target_images.push.apply(target_images, conjunction_target)
     } else if (experiment_type == 'shape') {
@@ -22,12 +23,12 @@
         target_images.push.apply(target_images, colour_target)
     }
 
+    //preloading all the images we need for the experiment
     var preload = {
         type: 'preload',
         images: foil_images.concat(target_images, [fixation]) 
     }
-    //preloading all the images we need for the experiment
-
+    
     const factors = {
         target_present: target_present, 
         // randomize whether or not the red T is present
@@ -57,6 +58,15 @@
         stimulus: "Welcome to the Visual Search Experiment. There will be " + block_number + " blocks in this experiment. There will be " + block_len + " trials in each block. You will be given a chance to take a break between blocks. Press any key to start the experiment."
     }
 
+    let use_diam = circle_diam
+
+    if (circle_diam <= 0) {
+        //define circle diameter based on stimw and stimh
+        let diag_img = Math.sqrt(stimw ** 2 + stimh ** 2) 
+        let circle_circum = diag_img * set_size.reduce( function(a,b) {return Math.max(a,b) } ) 
+        use_diam = circle_circum / Math.PI
+    }
+
     const full_procedure = make_procedure(full_design, false)
     const prac_procedure = make_procedure(prac_design, true)
 
@@ -66,7 +76,7 @@
 	    let procedure = {
 	        timeline: [
 	            {
-	                    type: 'visual-search',
+	                    type: 'visual-search-circle',
 	                    target: jsPsych.timelineVariable('target'),
 	                    foil: function() {
 	                        let foil_set = foil_images
@@ -80,12 +90,9 @@
 	                    target_present_key: the_present_key, 
 	                    target_absent_key: the_absent_key,
 	                    fixation_image: fixation,
-	                    data: {practice_trial: is_practice}
-	                    /*target_size:
-	                    fixation_size:
-	                    circle_diameter:
-	                    */
-	                    //these values should be in the setup file
+	                    data: {practice_trial: is_practice},
+	                    circle_diameter: use_diam,
+                        target_size: [stimh, stimw]
 	            },
 	            {
 	                type: 'html-keyboard-response',

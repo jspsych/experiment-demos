@@ -20,7 +20,9 @@ This depends on the timing parameters chosen and the response time of the partic
 The results file contains information about accuracy, key pressed, response time, number of items in the array, and if the target is present.
 
 # Experimental Set-up
-There is a setup file which allows the researcher to modify all instructions, target, fixation, stimulus size, distractors, types of trails, input keys, number of blocks and number of trials for task.
+There is a setup file which allows the researcher to modify all instructions, target, fixation, stimulus size, distractors, types of trails, input keys, number of blocks and number of trials for task. Also keep in mind that the value for the visual search circle diameter can be calculated based on the stimulus size by default, however if the researcher wishes to not use this calculation, they can set the value of circle_diam to greater than 0.
+
+The reseacher can also change the type of experiment in the setup file. By default it is set to conjunction however, the experiment can be run based on target shape or colour instead.
 
 # Stimuli
 The stimuli in this experiment are the distractor images (green L and red T) and or the target image (green T). The number of distractors and the type of distractors will be randomized in each trial. Also whether or not the target image is present will also be randomized in each trial.

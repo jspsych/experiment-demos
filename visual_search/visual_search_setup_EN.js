@@ -16,8 +16,12 @@ const foil_images = ['assets/images/greenL.png', 'assets/images/redT.png']
 const fixation = 'assets/images/blackDot.png' //fixation
 const experiment_type = 'conjunction' //can also take the value 'shape' and 'colour'
 
+//keys to press
 const the_present_key = 'j'
 const the_absent_key = 'f'
 
-const stimw = 1
-const stimh = 1
+//stimulus size
+const stimw = 25
+const stimh = 25
+
+const circle_diam = 0 //if set at 0, circle diameter will be calculated based stimulus width and height
