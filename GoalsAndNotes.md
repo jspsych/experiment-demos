@@ -57,6 +57,8 @@ Stroop Color/Word
 
 
 JATOS
+Can I make jsPsych task that simply presents buttons on the screen. Dependingon which button is pressed will determine which task to present via JATOS.
+
 
 
 GENRAL NOTES
