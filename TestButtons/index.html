@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="description" content="jsPsych Stroop: Color Task">
+    <meta name="keywords" content="HTML, CSS, JavaScript">
+    <meta name="author" content="Jason Steffener, NCMLab">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stroop: Color</title>
+    <script src="jspsych/jspsych.js"></script>
+    <script src="jspsych/plugins/jspsych-html-keyboard-response.js"></script>
+    <script src="jspsych/plugins/jspsych-image-keyboard-response.js"></script>
+    <script src="jspsych/plugins/jspsych-fullscreen.js"></script>
+     <script src="jspsych/plugins/jspsych-instructions.js"></script>
+    <link href="jspsych/css/jspsych.css" rel="stylesheet" type="text/css">
+    
+  </head>
+  <script>
+
+//From the Experiment Factory Repository 
+var response_grid =
+'<div class = numbox>' +
+'<p>What were the numbers <b>in reverse order</b>?<br>(When you are ready to lock in your answer, press ENTER)</p>' +
+'<button id = button_1 class = "square num-button" onclick = "recordClick(this)"><div class = content><div class = numbers>1</div></div></button>' +
+'<button id = button_2 class = "square num-button" onclick = "recordClick(this)"><div class = content><div class = numbers>2</div></div></button>' +
+'<button id = button_3 class = "square num-button" onclick = "recordClick(this)"><div class = content><div class = numbers>3</div></div></button>' +
+'<button id = button_4 class = "square num-button" onclick = "recordClick(this)"><div class = content><div class = numbers>4</div></div></button>' +
+'<button id = button_5 class = "square num-button" onclick = "recordClick(this)"><div class = content><div class = numbers>5</div></div></button>' +
+'<button id = button_6 class = "square num-button" onclick = "recordClick(this)"><div class = content><div class = numbers>6</div></div></button>' +
+'<button id = button_7 class = "square num-button" onclick = "recordClick(this)"><div class = content><div class = numbers>7</div></div></button>' +
+'<button id = button_8 class = "square num-button" onclick = "recordClick(this)"><div class = content><div class = numbers>8</div></div></button>' +
+'<button id = button_9 class = "square num-button" onclick = "recordClick(this)"><div class = content><div class = numbers>9</div></div></button>' +
+'<button class = clear_button id = "ClearButton" onclick = "clearResponse()">Clear</button>'+
+'<p><u><b>Current Answer:</b></u></p><div id=echoed_txt style="font-size: 30px; color:blue;"><b></b></div></div>' 
+
+
+//response screen
+var bds_response_screen = {
+type: 'html-keyboard-response',
+stimulus: response_grid,
+choices: [13],
+	on_finish: function(data){
+		var curans = response;
+		var corans = bds_correct_ans;
+		if(JSON.stringify(curans) === JSON.stringify(corans)) {
+			var gotItRight = 1;
+			staircaseChecker[staircaseIndex] = 1;
+		} else {
+			var gotItRight = 0;
+			staircaseChecker[staircaseIndex] = 0;
+		}
+		response = []; //clear the response for the next trial
+		staircaseIndex += 1; //update the staircase index
+		console.log(staircaseChecker);
+		
+		jsPsych.data.addDataToLastTrial({
+			designation: 'BDS-RESPONSE',
+			span: currentSpan, 
+			answer: curans,
+			correct: corans,
+			was_correct: gotItRight,
+			spanHistory: spanHistory
+		});
+	}	
+};
+
+var timeline = [];
+timeline.push(bds_response_screen)
+
+jsPsych.init({
+	timeline: timeline,
+	//preload_audio: loadSounds(),
+	on_finish: saveData
+});
+
+</script>
+</body>
+</html>
