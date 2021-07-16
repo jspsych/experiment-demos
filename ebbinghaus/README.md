@@ -20,17 +20,18 @@ There is a setup file which allows the researcher to modify the experiment param
 The stimuli are grayscale filled discs generated using the jspsych-psychophysics plugin.
 
 # Modifiable Parameters
-Number of repetitions
-Colors of the inner and outer discs
-Fixation point color
-Test and reference inner disc sizes
-Test and reference outer disc sizes
-Distance between inner and outer discs
-Distance of each disc group from fixation
-Prompt message shown before each trial 
-Message telling participants to press any key to continue.
-Message telling participants how many trials they have completed. 
-Message shown during breaks between blocks.
+* Number of repetitions
+* Colors of the inner and outer discs
+* Fixation point color
+* Test and reference inner disc sizes
+* Test and reference outer disc sizes
+* Distance between inner and outer discs
+* Distance of each disc group from fixation
+* Welcome message shown in the beginning of the experiment.
+* Prompt message shown before each trial 
+* Message telling participants to press any key to continue.
+* Message telling participants how many trials they have completed. 
+* Message shown during breaks between blocks.
 
 
 
