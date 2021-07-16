@@ -17,3 +17,17 @@ const prompt_msg = "Keep staring at the cross in the center of the screen.\n\n"+
                                                   // message to display before each trial.
                                                   // note: '\n\n' is needed at the end of each line 
                                                   // because prompt is displayed using the psychophysics plugin
+
+// note that words that begin with $ will be replaced with variable values when the code is run
+const welcome_msg = "<p style="color: white">Welcome to the Size Judgment Experiment. <br>" +
+                    "There will be $BLOCK_NUM blocks in this experiment. <br>" +
+                    "There will be $BLOCK_LEN trials in each block. <br>"+
+                    "You will be given a chance to take a break between blocks. <br>"+ 
+                    "Press any key to start the experiment.</p>"
+
+const any_key_msg = "Press any key to continue."
+
+const trial_msg = "You have completed $TRIAL of $EXP_LEN trials. Get ready for the next!"
+
+const break_msg = "<p>You have completed $PERCENT% of the trials. You are on block $BLOCK of $BLOCK_NUM. <br>Good job! Take a break if you need to.</p>"+
+                  "<p>Press any key to continue the experiment.</p></div>"

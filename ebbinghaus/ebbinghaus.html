@@ -44,7 +44,7 @@
     var prompt = {
         obj_type: 'text',
         startX: 0,
-        startY: 200,
+        startY: 300,
         content: prompt_msg,
         font: "20px 'Arial'",
         text_color: 'white',
@@ -53,14 +53,10 @@
 
     const welcome = {
         type: "html-keyboard-response",
-        stimulus: '<p style="color: white">Welcome to the Ebbinghaus Experiment. <br>' +
-                  'There will be ' + block_number + ' blocks in this experiment. <br>' +
-                  'There will be ' + block_len + ' trials in each block. <br>'+
-                  'You will be given a chance to take a break between blocks. <br>'+ 
-                  'Press any key to start the experiment.</p>'
+        stimulus: welcome_msg.replace("$BLOCK_LEN", block_len).replace("$BLOCK_NUM", block_number)
     }
 
-    const first_msg = "Press any key to continue."
+    const first_msg = any_key_msg
     let first_prompt = Object.assign({}, prompt)
     first_prompt = Object.assign(first_prompt, {content: prompt_msg + first_msg})
     const first_prompt_trial = { type: 'psychophysics', stimuli: [cross, first_prompt] }
@@ -105,6 +101,9 @@
                         )
                         obj_array.push(test_outer_disc)
                     }
+                    let cur_prompt = Object.assign({}, prompt)
+                    cur_prompt = Object.assign(cur_prompt, {content: prompt_msg})
+                    obj_array.push(cur_prompt)
                     return(obj_array)
                 },
                 choices: ["ArrowLeft", "ArrowRight"],
@@ -149,11 +148,9 @@
                 type: 'psychophysics',
                 stimuli: function(){
                         let t = jsPsych.data.get().last(1).values()[0]["trial"] // trials so far
-                        let trial_msg = "You have completed " + t + ' of ' + full_design.length + " trials.\n\n"+
-                                        "Get ready for the next trial."
                         let cur_prompt = Object.assign({}, prompt)
-                        cur_prompt = Object.assign(cur_prompt, {content: prompt_msg + trial_msg})
-                        return [cross, cur_prompt]
+                        cur_prompt = Object.assign(cur_prompt, {content: prompt_msg + trial_msg.replace("$TRIAL", t).replace("$EXP_LEN", full_design.length)})
+                        return [cur_prompt, cross]
                 },
                 choices: jsPsych.NO_KEYS,
                 trial_duration: 1000,
@@ -168,8 +165,7 @@
                             let t = jsPsych.data.get().last(2).values()[0]["trial"] // trials so far
                             let b = jsPsych.data.get().last(2).values()[0]["block"] // block
                             const html_out = '<div style="color: white; text-align: center; vertical-align: top; display: inline-block; width: 800px; margin: auto">'+
-                                '<p>You have completed ' + (t/full_design.length * 100).toFixed(0) + '% of the trials. You are on block ' + b + ' of 10. <br>Good job! Take a break if you need to.</p>'+
-                                '<p>Press any key to continue the experiment.</p></div>'
+                                break_msg.replace("$PERCENT", (t/full_design.length * 100).toFixed(0)).replace("$BLOCK",b).replace("$BLOCK_NUM", block_number)
                             return html_out
                         },
                         post_trial_gap: 1000
