@@ -45,17 +45,17 @@
 
     let prompt = {
         type: "html-keyboard-response",
-        stimulus: prompt_msg + '<br><img src="assets/images/greenT.png" alt="Picture" width="50" height="50">'
+        stimulus: prompt_msg + '<br><br><img src="assets/images/greenT.png" alt="Picture" width="50" height="50">'
     }
 
 	let prac_prompt = {
         type: "html-keyboard-response",
-        stimulus: "There will be 16 practice trials before the experiment begins. Press any key to start."
+        stimulus: prac_msg.replace("$PRAC_LEN", prac_design.length)
     }
 
     const welcome = {
         type: "html-keyboard-response",
-        stimulus: "Welcome to the Visual Search Experiment. There will be " + block_number + " blocks in this experiment. There will be " + block_len + " trials in each block. You will be given a chance to take a break between blocks. Press any key to start the experiment."
+        stimulus: welcome_msg.replace("$BLOCK_NUM", block_number).replace("$BLOCK_LEN", block_len)
     }
 
     let use_diam = circle_diam
@@ -137,7 +137,7 @@
 	}
 
     jsPsych.init({
-        timeline: [welcome, prompt, prac_prompt, prac_procedure, full_procedure],
+        timeline: [preload, welcome, prompt, prac_prompt, prac_procedure, full_procedure],
         on_finish: function() {
             jsPsych.data.get().localSave('csv','visual_search_data.csv');
         }

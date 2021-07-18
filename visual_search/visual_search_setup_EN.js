@@ -5,10 +5,6 @@ const repeat_trials = 10; // how many times to repeat each trial type
                                                  
 const block_number = 10; // how many blocks to include in the experiment 
 
-const prompt_msg = "Keep staring at the black dot in the center of the screen. Use the j and f keys to indicate whether or not the target is present. If it is present press j. If not press f. Below you will see an example of the target image." 
-                                                  // message to display before each trial.
-                                                  // note: '\n\n' is needed at the end of each line 
-                                                  // because prompt is displayed using the psychophysics plugin
 const conjunction_target = ['assets/images/greenT.png', 'assets/images/greenT.png'] 
 const shape_target = ['assets/images/greenS.png', 'assets/images/redS.png']
 const colour_target = ['assets/images/blueL.png', 'assets/images/blueT.png']
@@ -25,3 +21,14 @@ const stimw = 25
 const stimh = 25
 
 const circle_diam = 0 //if set at 0, circle diameter will be calculated based stimulus width and height
+
+const prompt_msg = "Keep staring at the black dot in the center of the screen. <br>" +
+                   "Use the j and f keys to indicate whether or not the target is present. <br>" +
+                   "<strong>If the target is present press j. If not press f.</strong><br>"+
+                   "Below you will see an example of the target image." 
+
+const prac_msg = "There will be $PRAC_LEN practice trials before the experiment begins. Press any key to start."
+
+const welcome_msg = "<strong>Welcome to the Visual Search Experiment.</strong><br>"+ 
+                    "There will be $BLOCK_NUM blocks in this experiment. There will be $BLOCK_LEN trials in each block.<br>"+
+                    "You will have the opportunity to take a break between blocks. Press any key to start the experiment."
