@@ -32,3 +32,8 @@ const prac_msg = "There will be $PRAC_LEN practice trials before the experiment 
 const welcome_msg = "<strong>Welcome to the Visual Search Experiment.</strong><br>"+ 
                     "There will be $BLOCK_NUM blocks in this experiment. There will be $BLOCK_LEN trials in each block.<br>"+
                     "You will have the opportunity to take a break between blocks. Press any key to start the experiment."
+
+const trial_msg = "You have completed $T of $DESIGN.LENGTH trials. Get ready for the next trial."
+
+const block_msg = 'You have completed $TRIALS % of the trials. You are on block $B of 10. Good job! Take a break if you need to. Press any key to continue the experiment.'
+

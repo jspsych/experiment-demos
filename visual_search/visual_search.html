@@ -98,9 +98,8 @@
 	                type: 'html-keyboard-response',
 	                stimulus: function(){
 	                        let t = jsPsych.data.get().filter({practice_trial: is_practice}).count() // trials so far
-	                        let trial_msg = "You have completed " + t + ' of ' + design.length + " trials.\n\n"+
-	                                        "Get ready for the next trial."
-	                        return trial_msg
+	                        let trial_ms = trial_msg.replace("$T", t).replace("$DESIGN.LENGTH", design.length)
+	                    	return trial_ms
 	                },
 	                choices: jsPsych.NO_KEYS,
 	                trial_duration: 1000,
@@ -114,7 +113,7 @@
 	                        stimulus: function() {
 	                            let t = jsPsych.data.get().filter({practice_trial: is_practice}).count()
 	                            let b = t / block_len
-	                            const html_out = 'You have completed ' + (t/design.length * 100).toFixed(0) + '% of the trials. You are on block ' + b + ' of 10. Good job! Take a break if you need to. Press any key to continue the experiment.'
+	                            const html_out = block_msg.replace("$TRIALS", (t/design.length * 100).toFixed(0)).replace("$B", b)
 	                            return html_out
 	                        },
 	                        post_trial_gap: 1000
