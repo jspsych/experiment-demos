@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="jspsych-6.3.0/jspsych.js"></script>
+  <script src="jspsych-6.3.0/plugins/jspsych-html-keyboard-response.js"></script> 
+  <script src="jspsych-6.3.0/plugins/jspsych-preload.js"></script>
+  <script src ="jspsych-6.3.0/plugins/jspsych-visual-search-circle.js"></script>
+  <link rel="stylesheet" href="jspsych-6.3.0/css/jspsych.css"></link>
+  <script src="visual_search_setup_EN.js"></script> 
+  <meta charset="utf-8"/>
+</head>
+<body></body>
+<script>
+
+    let target_images = []
+
+
+    //based on experiment type we will use differnt targets and distractors
+    if (experiment_type == 'conjunction') {
+        target_images.push.apply(target_images, conjunction_target)
+    } else if (experiment_type == 'shape') {
+        target_images.push.apply(target_images, shape_target)
+    } else {
+        target_images.push.apply(target_images, colour_target)
+    }
+
+    let prompt_targets = '<br><br>'
+    const unique_targets = [...new Set(target_images) ]
+
+    for (const img of unique_targets) {
+     	prompt_targets += '<span style="padding-right:$IMG_Wpx"><img src="$IMG_FILE" alt="Picture" width=$IMG_Wpx, height=$IMG_Hpx></span>'
+     	prompt_targets = prompt_targets.replace("$IMG_FILE", img).replace("$IMG_W", stimw*2).replace("$IMG_H", stimh*2)
+    }
+
+    //preloading all the images we need for the experiment
+    var preload = {
+        type: 'preload',
+        images: foil_images.concat(target_images, [fixation]) 
+    }
+    
+    const factors = {
+        target_present: target_present, 
+        // randomize whether or not the red T is present
+        set_size: set_size, 
+        //randomize number of distractors        
+        target: target_images
+    }
+        
+    const full_design = jsPsych.randomization.factorial(factors, repeat_trials)
+
+    const prac_design = jsPsych.randomization.factorial(factors, 1)
+
+    const block_len = Math.floor(full_design.length/block_number)
+
+    let prompt = {
+        type: "html-keyboard-response",
+        stimulus: prompt_msg + prompt_targets
+    }
+
+	let prac_prompt = {
+        type: "html-keyboard-response",
+        stimulus: prac_msg.replace("$PRAC_LEN", prac_design.length)
+    }
+
+    const welcome = {
+        type: "html-keyboard-response",
+        stimulus: welcome_msg.replace("$BLOCK_NUM", block_number).replace("$BLOCK_LEN", block_len)
+    }
+
+    let use_diam = circle_diam
+
+    if (circle_diam <= 0) {
+        //define circle diameter based on stimw and stimh
+        let diag_img = Math.sqrt(stimw ** 2 + stimh ** 2) 
+        let circle_circum = diag_img * set_size.reduce( function(a,b) {return Math.max(a,b) } ) 
+        use_diam = circle_circum / Math.PI
+    }
+
+    const full_procedure = make_procedure(full_design, false)
+    const prac_procedure = make_procedure(prac_design, true)
+
+    function make_procedure(design, is_practice = false) {
+
+	    //with timeline variables you define the procedure once (as a timeline) and specify a set of parameters and their values for each iteration through the timeline.
+	    let procedure = {
+	        timeline: [
+	            {
+	                    type: 'visual-search-circle',
+	                    target: jsPsych.timelineVariable('target'),
+	                    foil: function() {
+	                        let foil_set = foil_images
+	                        while ( foil_set.length < jsPsych.timelineVariable('set_size') ) {
+	                            foil_set = foil_set.concat(shuffle(foil_images))
+	                        }
+	                        return foil_set
+	                    },
+	                    target_present: jsPsych.timelineVariable('target_present'),
+	                    set_size: jsPsych.timelineVariable('set_size'),
+	                    target_present_key: the_present_key, 
+	                    target_absent_key: the_absent_key,
+	                    fixation_image: fixation,
+	                    data: {practice_trial: is_practice},
+	                    circle_diameter: use_diam,
+                        target_size: [stimh, stimw]
+	            },
+	            {
+	                type: 'html-keyboard-response',
+	                stimulus: function(){
+	                        let t = jsPsych.data.get().filter({practice_trial: is_practice}).count() // trials so far
+	                        let trial_ms = trial_msg.replace("$T", t).replace("$DESIGN.LENGTH", design.length)
+	                    	return trial_ms
+	                },
+	                choices: jsPsych.NO_KEYS,
+	                trial_duration: 1000,
+	                response_ends_trial: false
+	            }, 
+	            // break statement
+	            {
+	                timeline: [
+	                    { 
+	                        type: "html-keyboard-response",
+	                        stimulus: function() {
+	                            let t = jsPsych.data.get().filter({practice_trial: is_practice}).count()
+	                            let b = t / block_len
+	                            const html_out = block_msg.replace("$TRIALS", (t/design.length * 100).toFixed(0)).replace("$B", b)
+	                            return html_out
+	                        },
+	                        post_trial_gap: 1000
+	                    }
+	                ],
+	                conditional_function: function(){
+	                    let t = jsPsych.data.get().filter({practice_trial: is_practice}).count() // trials so far
+	                    if ( ( ( t % block_len ) == 0 ) && ( t < design.length ) ) {
+	                        return true;
+	                    } else {
+	                        return false;
+	                    }
+	                }
+	            }
+	        ],
+	        timeline_variables: design, 
+	        randomize_order: true
+	    }
+	    return procedure
+	}
+
+    jsPsych.init({
+        timeline: [preload, welcome, prompt, prac_prompt, prac_procedure, full_procedure],
+        on_finish: function() {
+            jsPsych.data.get().localSave('csv','visual_search_data.csv');
+        }
+    });
+    // shuffle any input array
+    function shuffle(array) {
+        // define three variables
+        let cur_idx = array.length, tmp_val, rand_idx;
+        // While there remain elements to shuffle...
+        while (0 !== cur_idx) {
+            // Pick a remaining element...
+            rand_idx = Math.floor(Math.random() * cur_idx);
+            cur_idx -= 1;
+            // And swap it with the current element.
+            tmp_val = array[cur_idx];
+            array[cur_idx] = array[rand_idx];
+            array[rand_idx] = tmp_val;
+        }
+        return array;
+    }
+</script>
+
+</html>
