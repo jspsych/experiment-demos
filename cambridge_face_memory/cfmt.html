@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="jspsych-6.3/jspsych.js"></script>
+  <script src="jspsych-6.3/jspsych-psychophysics/jspsych-psychophysics.js"></script>
+  <script src="jspsych-6.3/plugins/jspsych-html-keyboard-response.js"></script>
+  <script src="jspsych-6.3/plugins/jspsych-preload.js"></script>
+  <link rel="stylesheet" href="jspsych-6.3/css/jspsych.css"></link>
+  <script src="cfmt_setup_EN.js"></script> 
+  <meta charset="utf-8"/>
+</head>
+<body style="background: rgb(128, 128, 128); font-size: 20px;">
+	<script>
+    timeline = [];
+
+    let key_list = []
+		if (img_category == 'cars') {
+			key_list = key_list.concat(cars_key_list)
+		} else {
+			key_list = key_list.concat(faces_key_list)
+		}
+
+    let image_html = '<img src= "$IMG_ID" height=$IMG_H px style="margin: 0; padding: 0; vertical-align:top; '
+    if (inverted) {
+    	image_html += 'transform: webkit-transform: scaleY(-1); transform: scaleY(-1);'
+    }
+    image_html += '"></img>'
+
+    let preload_list = []
+
+		let prac_learn = new Array(key_list[0].length)
+		let prac_probe = new Array(key_list[0].length)
+		
+		// loop over the practice image sets
+		for ( i = 0; i < key_list[0].length; i++ )  {
+			prac_learn[i] = []
+			prac_probe[i] = []
+			// loop over the views 
+			for (v = 0; v < key_list[0][i].length; v++ ) {
+				prac_learn[i].push(
+					{
+						stimulus: img_path + img_category + '_prac_' + String(i+1).padStart(2, '0') + '_' + String(v+1).padStart(2, '0') + '_single.jpg'
+					}
+				)
+				preload_list.push(img_path + img_category + '_prac_' + String(i+1).padStart(2, '0') + '_' + String(v+1).padStart(2, '0') + '_triplet.jpg')
+
+				prac_probe[i].push(
+					{
+						stimulus: img_path + img_category + '_prac_' + String(i+1).padStart(2, '0') + '_' + String(v+1).padStart(2, '0') + '_triplet.jpg',
+						correct_key: key_list[0][i][v]
+					}
+				)
+				preload_list.push(img_path + img_category + '_prac_' + String(i+1).padStart(2, '0') + '_' + String(v+1).padStart(2, '0') + '_triplet.jpg')
+			}
+		}
+
+		let part01_learn = new Array(key_list[1].length)
+		let part01_probe = new Array(key_list[1].length)
+
+		// loop over the part1 image sets
+		for ( i = 0; i < key_list[1].length; i++ )  {
+			part01_learn[i] = []
+			part01_probe[i] = []
+			// loop over the views
+			for (v = 0; v < key_list[1][i].length; v++ ) {
+				part01_learn[i].push(
+					{
+						stimulus: img_path + img_category + '_part01_' + String(i+1).padStart(2, '0') + '_' + String(v+1).padStart(2, '0') + '_single.jpg'
+					}
+				)
+				preload_list.push(img_path + img_category + '_part01_' + String(i+1).padStart(2, '0') + '_' + String(v+1).padStart(2, '0') + '_single.jpg')
+
+				part01_probe[i].push(
+					{
+						stimulus: img_path + img_category + '_part01_' + String(i+1).padStart(2, '0') + '_' + String(v+1).padStart(2, '0') + '_triplet.jpg',
+						correct_key: key_list[1][i][v]
+					}
+				)
+				preload_list.push(img_path + img_category + '_part01_' + String(i+1).padStart(2, '0') + '_' + String(v+1).padStart(2, '0') + '_triplet.jpg')
+			}
+		}
+
+		// generate part 2
+		// note that this produces one long list across triplet identities
+		let part02_probe = []
+		// loop over the part1 image sets
+		for ( i = 0; i < key_list[2].length; i++ )  {
+			part02_probe.push(
+				{
+					stimulus: img_path + img_category + '_part02_' + String(i+1).padStart(2, '0') + '_triplet.jpg',
+					correct_key: key_list[2][i]
+				}
+			)
+			preload_list.push(img_path + img_category + '_part02_' + String(i+1).padStart(2, '0') + '_triplet.jpg')
+		}
+
+		// generate part 3
+		// note that this produces one long list across triplet identities
+		let part03_probe = []
+
+		// loop over the part1 image sets
+		for ( i = 0; i < key_list[3].length; i++ )  {
+			part03_probe.push(
+				{
+					stimulus: img_path + img_category + '_part03_' + String(i+1).padStart(2, '0') + '_triplet.jpg',
+					correct_key: key_list[3][i]
+				}
+			)
+			preload_list.push(img_path + img_category + '_part03_' + String(i+1).padStart(2, '0') + '_triplet.jpg')
+		}
+
+		const prac_proc = create_procedure(prac_learn, prac_probe, "practice", image_height, prac_prompt_msg, place_h, randomize_ID, randomize_view)
+		const part01_proc = create_procedure(part01_learn, part01_probe, "easy", image_height, part01_prompt_msg, place_h, randomize_ID, randomize_view, part01_btw_msg)
+		
+		const part02_proc = {
+			timeline: [ 
+				{ 
+    			type: 'html-keyboard-response',
+    			choices: ['1', '2', '3'],
+    			prompt: part02_prompt_msg.replaceAll("${IMG_CAT}", place_h),
+    			stimulus_height: image_height,
+    			stimulus: function () {
+  					out_html = image_html.replaceAll("$IMG_ID", jsPsych.timelineVariable('stimulus', true)).replaceAll("$IMG_H", image_height)
+  					return out_html
+  				},
+    			data: {
+						type_of_trial: 'medium-probe',
+						correct_key: jsPsych.timelineVariable('correct_key')
+    			}
+    		}
+			],
+			timeline_variables: part02_probe,
+	    randomize_order: randomize_ID
+		}
+		const part03_proc = {
+			timeline: [ 
+				{ 
+    			type: 'html-keyboard-response',
+    			choices: ['1', '2', '3'],
+    			prompt: part03_prompt_msg.replaceAll("${IMG_CAT}", place_h),
+    			stimulus_height: image_height,
+    			stimulus: function () {
+  					out_html = image_html.replaceAll("$IMG_ID", jsPsych.timelineVariable('stimulus', true)).replaceAll("$IMG_H", image_height)
+  					return out_html
+  				},
+    			data: {
+						type_of_trial: 'difficult-probe',
+						correct_key: jsPsych.timelineVariable('correct_key')
+    			}
+    		}
+			],
+			timeline_variables: part03_probe,
+	    randomize_order: randomize_ID
+		}
+
+		// make preload event
+		let preload = {
+      type: 'preload',
+      images: preload_list
+    }
+
+		// make review and instruction events
+
+    const prac_prep ={
+      type: 'html-keyboard-response',
+      stimulus: prac_prep_msg.replaceAll("${IMG_CAT}", place_h),
+      choices: jsPsych.ALL_KEYS,
+      data: {
+  			type_of_trial: 'instructions',
+  			correct_key: ''
+    	}
+    }
+
+    const part01_prep ={
+      type: 'html-keyboard-response',
+      stimulus: part01_prep_msg.replaceAll("${IMG_CAT}", place_h),
+      choices: jsPsych.ALL_KEYS,
+      data: {
+  			type_of_trial: 'instructions',
+  			correct_key: ''
+    	}
+    }
+
+		const review_prep = {
+      type: 'html-keyboard-response',
+      stimulus: review_prep_msg.replaceAll("${REV_DUR}", review_duration/1000).replaceAll("${IMG_CAT}", place_h),
+      choices: jsPsych.ALL_KEYS,
+      data: {
+  			type_of_trial: 'instructions',
+  			correct_key: ''
+    	}
+    }
+
+		const part02_review = {
+      type: 'html-keyboard-response',
+      choices: jsPsych.NO_KEYS,
+      prompt: review_prompt_msg.replaceAll("${REV_DUR}", review_duration/1000).replaceAll("${IMG_CAT}", place_h),
+      trial_duration: review_duration,
+      stimulus: function () {
+				out_html = image_html.replaceAll("$IMG_ID", img_path + img_category + '_part02_review.jpg').replaceAll("$IMG_H", review_height)
+				return out_html
+			},
+			data: {
+  			type_of_trial: 'medium-learn',
+  			correct_key: ''
+    	}
+    }
+
+		const part02_prep = {
+      type: 'html-keyboard-response',
+      choices: jsPsych.ALL_KEYS,
+      stimulus: part02_prep_msg.replaceAll("${IMG_CAT}", place_h),
+      data: {
+  			type_of_trial: 'instructions',
+  			correct_key: ''
+    	}
+    }
+
+		const part03_review = {
+      type: 'html-keyboard-response',
+      choices: jsPsych.NO_KEYS,
+      prompt: review_prompt_msg.replaceAll("${REV_DUR}", review_duration/1000).replaceAll("${IMG_CAT}", place_h),
+      trial_duration: review_duration,
+      stimulus: function () {
+				out_html = image_html.replaceAll("$IMG_ID", img_path + img_category + '_part03_review.jpg').replaceAll("$IMG_H", review_height)
+				return out_html
+			},
+			data: {
+  			type_of_trial: 'difficult-learn',
+  			correct_key: ''
+    	}
+    }
+
+		timeline = timeline.concat(preload, prac_prep, prac_proc)
+		timeline = timeline.concat(part01_proc)
+		timeline = timeline.concat([review_prep, part02_review, part02_prep, part02_proc])
+		timeline = timeline.concat([part03_review, part03_proc])
+
+	  jsPsych.init({
+	      timeline: timeline,
+	      on_finish: function () {
+	      const display_element = jsPsych.getDisplayElement();
+	      display_element.innerHTML = '<p>You have completed the experiment. Thank you for participating!</p>'
+	      jsPsych.data.get().localSave('csv','mydata.csv');
+	  	}
+	  })
+
+		function create_procedure(learn_list, probe_list, label, image_height, prompt, img_cat, randomize_ID=false, randomize_view=false, instructions=null) {
+			let out_tl = []
+			let id_order = Array.from(Array(probe_list.length).keys())
+			if ( randomize_ID ) {
+				id_order = jsPsych.randomization.shuffle(id_order)
+			}
+			for ( const i of id_order )  {	
+				// only add learn_list if it is longer than zero
+				if ( learn_list.length > 0 ) {
+					if ( instructions ) {
+						const pre_instructions ={
+			      	type: 'html-keyboard-response',
+			      	stimulus: instructions.replaceAll("${IMG_CAT}", img_cat),
+			      	choices: jsPsych.ALL_KEYS,
+				      data: {
+			      		type_of_trial: 'instructions',
+			      		correct_key: ''
+			      	}
+	    			}
+    				out_tl.push(pre_instructions)
+    			}
+					const learn_procedure = {
+						timeline: [ 
+							{ 
+								type: 'html-keyboard-response',
+					      choices: jsPsych.NO_KEYS,
+					      prompt: prompt[0].replaceAll("${IMG_CAT}", img_cat),
+					      trial_duration: learn_duration,
+					      stimulus_height: image_height,
+					      stimulus: function () {
+  								out_html = image_html.replaceAll("$IMG_ID", jsPsych.timelineVariable('stimulus', true)).replaceAll("$IMG_H", image_height)
+  								return out_html
+  							},
+					      data: {
+      						type_of_trial: label + '-learn',
+      						correct_key: ''
+		      			}
+					    }
+				    ],
+				    timeline_variables: learn_list[i],
+				    randomize_order: randomize_view
+			  	}
+			  	out_tl.push(learn_procedure)
+			  }	
+		  	const probe_procedure = {
+						timeline: [ 
+							{ 
+		      			type: 'html-keyboard-response',
+		      			choices: ['1', '2', '3'],
+		      			prompt: prompt[prompt.length-1].replaceAll("${IMG_CAT}", img_cat),
+		      			stimulus_height: image_height,
+		      			stimulus: function () {
+  								out_html = image_html.replaceAll("$IMG_ID", jsPsych.timelineVariable('stimulus', true)).replaceAll("$IMG_H", image_height)
+  								return out_html
+  							},
+		      			data: {
+      						type_of_trial: label + '-probe',
+      						correct_key: jsPsych.timelineVariable('correct_key')
+		      			}
+		      		}
+      			],
+      			timeline_variables: probe_list[i],
+				    randomize_order: randomize_view
+		  	}
+		  	out_tl.push(probe_procedure)
+	  	}
+	  	return out_tl	
+		}
+  </script>
+</body>
