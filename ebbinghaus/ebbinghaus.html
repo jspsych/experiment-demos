@@ -188,6 +188,8 @@
     jsPsych.init({
         timeline: [welcome, first_prompt_trial, procedure],
         on_finish: function() {
+            const display_element = jsPsych.getDisplayElement();
+            display_element.innerHTML = '<p>You have completed the experiment. Thank you for participating!</p>'
             jsPsych.data.get().localSave('csv','ebbinghaus_data.csv');
         }
     });
