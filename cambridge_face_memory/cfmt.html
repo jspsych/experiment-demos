@@ -6,10 +6,11 @@
   <script src="jspsych-6.3/plugins/jspsych-html-keyboard-response.js"></script>
   <script src="jspsych-6.3/plugins/jspsych-preload.js"></script>
   <link rel="stylesheet" href="jspsych-6.3/css/jspsych.css"></link>
+  <link rel="stylesheet" href="cfmt.css"></link>
   <script src="cfmt_setup_EN.js"></script> 
   <meta charset="utf-8"/>
 </head>
-<body style="background: rgb(128, 128, 128); font-size: 20px;">
+<body>
 	<script>
     timeline = [];
 
@@ -128,7 +129,14 @@
 			      image_inverted: inverted,
 						type_of_trial: 'medium-probe',
 						correct_key: jsPsych.timelineVariable('correct_key')
-    			}
+    			},
+    			on_finish: function(data){
+          	if ( data.response == data.correct_key ) {
+          		data.response_correct = true 
+          	} else {
+          		data.response_correct = false
+          	}
+          }
     		}
 			],
 			timeline_variables: part02_probe,
@@ -150,7 +158,14 @@
 			      image_inverted: inverted,
 						type_of_trial: 'difficult-probe',
 						correct_key: jsPsych.timelineVariable('correct_key')
-    			}
+    			},
+    			on_finish: function(data){
+          	if ( data.response == data.correct_key ) {
+          		data.response_correct = true 
+          	} else {
+          		data.response_correct = false
+          	}
+          }
     		}
 			],
 			timeline_variables: part03_probe,
@@ -253,12 +268,12 @@
 		timeline = timeline.concat([part03_review, part03_proc])
 
 	  jsPsych.init({
-	      timeline: timeline,
-	      on_finish: function () {
-	      const display_element = jsPsych.getDisplayElement();
-	      display_element.innerHTML = '<p>You have completed the experiment. Thank you for participating!</p>'
-	      jsPsych.data.get().localSave('csv','mydata.csv');
-	  	}
+      timeline: timeline,
+      on_finish: function () {
+      	const display_element = jsPsych.getDisplayElement();
+      	display_element.innerHTML = '<p>You have completed the experiment. Thank you for participating!</p>'
+      	jsPsych.data.get().localSave('csv','cfmt_data.csv');
+  		}
 	  })
 
 		function create_procedure(learn_list, probe_list, label, image_height, prompt, img_cat, randomize_ID=false, randomize_view=false, instructions=null) {
@@ -325,7 +340,14 @@
 				      		image_inverted: inverted,
       						type_of_trial: label + '-probe',
       						correct_key: jsPsych.timelineVariable('correct_key')
-		      			}
+		      			},
+    						on_finish: function(data){
+          				if ( data.response == data.correct_key ) {
+          					data.response_correct = true 
+          				} else {
+          					data.response_correct = false
+          				}
+          			}
 		      		}
       			],
       			timeline_variables: probe_list[i],

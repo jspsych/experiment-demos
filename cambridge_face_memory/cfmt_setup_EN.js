@@ -1,4 +1,4 @@
-const img_category = 'cars'
+const img_category = 'faces'
 const inverted = false
 
 const place_h = img_category.slice(0, -1) // place holder for the singular form of the category name
@@ -34,7 +34,7 @@ const review_prep_msg = 'Next you will review the same six ${IMG_CAT}s for ${REV
 const review_prompt_msg = '<p>Review the ${IMG_CAT}s (${REV_DUR} seconds)</p>'
 
 const part02_prep_msg = '<p>Now your memory of these ${IMG_CAT}s will be tested. In the remaining trials, the correct answer can be any of the six ${IMG_CAT}s.</p>' + 
-                        '<p>The incorrect ${IMG_CAT}s are sometimes very similar to the target ${IMG_CAT}s, so be sure to look at each face prior to answering.</p>' +
+                        '<p>The incorrect ${IMG_CAT}s are sometimes very similar to the target ${IMG_CAT}s, so be sure to look at each ${IMG_CAT} prior to answering.</p>' +
                         '<p>Press any key to begin.</p>'
 
 const part02_prompt_msg = '<p>Which ${IMG_CAT} is one of the six target ${IMG_CAT}s?</p>'
