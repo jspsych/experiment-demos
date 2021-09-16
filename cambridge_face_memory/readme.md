@@ -1,7 +1,7 @@
 # Cambridge Face Memory Test
-Stimuli provided by Brad Duchaine, from his original 2006 paper and from Dennett et al. (2012).  
+Stimuli provided by Brad Duchaine, from his original 2006 paper and from the 2012 paper by Dennett et al.  
 
-Original jsPsych implementation written in 2019 by Andreja Stajduhar. 
+First jsPsych implementation written in 2019 by Andreja Stajduhar. 
 
 Heavily modified for easier parameterization and readability by Peter J. Kohler in 2021. 
 
