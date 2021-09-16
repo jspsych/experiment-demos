@@ -1,5 +1,5 @@
 # Visual Search Task
-Script copyright: 06-17-2021 Keshav Pabbi, Kohler Visual Neuroscience Lab
+written by Keshav Pabbi and Peter J. Kohler
 
 # Background
 This is an implementation of the classic visual search task from Treisman and Gelade (1980). 
