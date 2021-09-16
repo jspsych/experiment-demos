@@ -21,7 +21,7 @@ Finally, the user can use masked versions of the face images, as in this study e
 The first level of the CFMT involves showing six target identities (faces, masked faces or cars) from three different viewpoints (right, front, left) for 3 seconds each. Participants are then asked to identify the identity they have previously seen from a choice of three (3-alternative forced choice task). The second level involves simultaneous refresher of the six identities from one (frontal) viewpoint followed by testing from novel viewpoints and lighting conditions. The third (difficult) level is similar to the second level but includes test images with added visual noise. A short practice level precedes the first level. 
 
 # Duration
-Less than five minutes
+5-10 minutes
 
 # Results File Information
 Beyond the standard data saved by the plugins (stimulus, rt, response, etc.), the following parameters are stored:
