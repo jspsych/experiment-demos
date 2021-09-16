@@ -1,5 +1,5 @@
 # Visual Search Task
-written by Keshav Pabbi and Peter J. Kohler, 2021
+written in 2021 by Keshav Pabbi and Peter J. Kohler, Kohler Visual Neuroscience Lab, York University
 
 # Background
 This is an implementation of the classic visual search task from Treisman and Gelade (1980). 
