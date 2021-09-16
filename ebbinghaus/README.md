@@ -1,5 +1,5 @@
 # Ebbinghaus experiment
-03-13-2021 Kohler Visual Neuroscience Laboratory, York University
+Written in 2021 by Peter J. Kohler, Kohler Visual Neuroscience Laboratory, York University
 
 # Background
 This is an implementation of an experiment to measure the Ebbinghaus effect. The Experiment uses jspsych version 6.3 and the jspsych-psychophysics plugin which is currently available [here](https://github.com/kurokida/jspsych-psychophysics/releases).
