@@ -1,5 +1,5 @@
 # Cambridge Face Memory Test
-Stimuli provided by Brad Duchaine, from his original 2016 paper. 
+Stimuli provided by Brad Duchaine, from his original 2006 paper and from Dennett et al. (2012).  
 
 Original jsPsych implementation written in 2019 by Andreja Stajduhar. 
 
