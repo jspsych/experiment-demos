@@ -19,7 +19,7 @@ const prompt_msg = "Keep staring at the cross in the center of the screen.\n\n"+
                                                   // because prompt is displayed using the psychophysics plugin
 
 // note that words that begin with $ will be replaced with variable values when the code is run
-const welcome_msg = "<p style="color: white">Welcome to the Size Judgment Experiment. <br>" +
+const welcome_msg = "Welcome to the Size Judgment Experiment. <br>" +
                     "There will be $BLOCK_NUM blocks in this experiment. <br>" +
                     "There will be $BLOCK_LEN trials in each block. <br>"+
                     "You will be given a chance to take a break between blocks. <br>"+ 
