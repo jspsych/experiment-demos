@@ -1,16 +1,14 @@
-// This variablke affects the distance between the center of 
+// This variable affects the distance between the center of
 // the screen and the high and low line
 
 var ScreenSpacing = 300
-
+// how many flankers should be on either side of the central arrow
 var NFlankers = 2;
-
+// define the flankers as empty strings
 var flankersR = '';
-
 var flankersL = '';
-
 var flankersN = '';
-
+// append to the empty strings the different number of flankers
 for (i = 0; i < NFlankers; i++) 
    {
 	// the following are the codes for the specific arrows and star to use
@@ -19,10 +17,10 @@ for (i = 0; i < NFlankers; i++)
       flankersL += "\u2190";
       flankersN += "\u2014";
     }
-
+//
 var FontSize = 45
 
-
+// format the stimuli on teh screen. This uses the fontsize specified above
 function PutIntoTable(top='top', middle='mid', bottom='bot', width=600, height=ScreenSpacing) {
       return '<table margin-left="auto" margin-right="auto" border="0" width="'+width+'"><tr height="'+height+'"><td>'+top+'</td></tr><tr height="'+height+'"><td><div style="font-size:'+FontSize+'px;">'+middle+'</div></td></tr> <tr height="'+height+'"><td>'+bottom+'</td></tr></table>';
     }
@@ -48,15 +46,20 @@ var position = ["high","low"];
 var count = 0;
 var ANT = [];
 
+// The test procedure in the HTML specifies how many times to repeat the stimuli presentation
 for(var i=0; i<3; i++) { // cycle over flanker type
 	for (var j = 0; j < 2; j++) { // cycle over central arrow directions
 		for (var k = 0; k < 5; k++) { // cycle over cue types
 			for (var m = 0; m < 2; m++) { // cycle over stimulus position
+				// Set up all the stimuli
 				ANT[count] = {};
-				ANT[count].flanker = flankers[i];
-				ANT[count].centralArrow = centralArrow[j];
-				ANT[count].fixation = fixation[k];
-				ANT[count].position = position[m];
+				ANT[count].flanker = flankers[i]; // left/right/neutral
+				ANT[count].centralArrow = centralArrow[j]; // right/left
+				ANT[count].fixation = fixation[k]; //upper/lower/both/center/none
+				ANT[count].position = position[m]; // upper/lower
+				// 	THE FOLLOWING NEEDS TO BE CHECKED AND CONFIRMED
+
+				// Define what is considered correct and incorrect for each trial
 				if (j==0) {ANT[count].correct = 'right'}
 				if (j==1) {ANT[count].correct = 'left'}
 				// map the stim to the type

@@ -105,9 +105,9 @@
       },
       choices: jsPsych.NO_KEYS,
       trial_duration: 300,
-      on_finish: function(data){
-        data.trialType = "fixation"
-      }
+      //on_finish: function(data){
+      //  data.trialType = "fixation"
+      //}
       
     } 
 
@@ -118,6 +118,9 @@
       timeline_variables: ANT,
       sample: {
         type: 'fixed-repetitions',
+        // "fixed-repetitons": Repeat each item in the timeline variables size times, in a random order.
+        // Unlike using the repetitons parameter, this method allows for consecutive trials to use the same
+        // timeline variable set.
         size: 1, 
       }
     };
