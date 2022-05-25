@@ -9,6 +9,8 @@ These tests are then run and the user takes the tests.
 
 MAKE SURE TO STATE WHAT THE REAL LIFE IMPLICATIONS 
 are of each of the tasks. What is the purpose of each task?
+
+
 QUESTIONNAIRES
 CPT
 
@@ -23,13 +25,18 @@ Arrow flanker << In the examples folder
 Arrow flanker ABCD
 
 Attentional Network Task << First draft done
-
 LetterDMS
+
+
 IMTDMT -- Immediate & Delayed Memory Task (IMT/DMT)
  * Participants view a steady stream of 5-digit (default) numbers and are asked to click the Mouse button if the current target number is identical to the one before it.
 Letter Memory 
 Listening Span Task
+
 Picture-Story Task **
+
+Picture-Story Task
+
 Sptial Relations
 Spatial Process
 Spatial Reconstructing
@@ -43,6 +50,7 @@ Matrix Reasoning
 Done and need to test:
 Baddeley Gramattical Reasoning Task
 
+
 AES - Apathy Evaluation Scale 
 CFS - Cognitive flexibility scale
 CFI - Cognitive flexibility index
@@ -55,6 +63,11 @@ DMS - adaptive
 
 
 
+
+
+
+
+
 Done, tested, released
 Stroop Color
 Stroop Word
@@ -62,6 +75,10 @@ Stroop Color/Word
 
 
 JATOS
+
+Can I make jsPsych task that simply presents buttons on the screen. Dependingon which button is pressed will determine which task to present via JATOS.
+
+
 
 
 GENRAL NOTES
