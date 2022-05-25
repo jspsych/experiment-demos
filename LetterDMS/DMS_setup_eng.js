@@ -34,7 +34,6 @@ var WaitOnTime = 5000
 
 var ProbeColor = 'blue'
 
-
 // ===================================================
 // BLOCK BASED PARAMETERS
 // How many trials per block
@@ -52,8 +51,13 @@ var StepSize = 1
 var NUp = 3
 var NDown = 1
 var FastStart = true
-
 // ===================================================
+
+
+MaxTrials = 5
+StimOnTime = 250
+RetOnTime = 250
+
 var instructions = ['This is the Verbal Delayed Match to Sample Task',
 	'<p>Press [LEFT] if the letter WAS in the set.<br>Press [RIGHT] if the letter WAS NOT in the set.<br>',
 	'<p>You will NOT receive feedback after each trial.</p>',
