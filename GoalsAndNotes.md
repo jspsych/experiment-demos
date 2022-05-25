@@ -23,8 +23,8 @@ Arrow flanker << In the examples folder
 Arrow flanker ABCD
 
 Attentional Network Task << First draft done
-    Need to add instructions and make sure the blocks are correct
 
+LetterDMS
 IMTDMT -- Immediate & Delayed Memory Task (IMT/DMT)
  * Participants view a steady stream of 5-digit (default) numbers and are asked to click the Mouse button if the current target number is identical to the one before it.
 Letter Memory 
