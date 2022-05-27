@@ -11,12 +11,13 @@
     <script src="jspsych/plugins/jspsych-html-keyboard-response.js"></script>
     <script src="jspsych/plugins/jspsych-image-keyboard-response.js"></script>
     <script src="jspsych/plugins/jspsych-fullscreen.js"></script>
-    <script src="jspsych/plugins/jspsych-instructions.js"></script>    
+    <script src="jspsych/plugins/jspsych-instructions.js"></script>
     <script src="ANT_Setup_EN.js"></script>
     <link href="jspsych/css/jspsych.css" rel="stylesheet" type="text/css">
+
     <style>
-      .stimulus { font-size: 45; }
-      .jspsych-html-keyboard-response-stimulus {font-size: 45;}
+      .stimulus { font-size: FontSize; }
+      .jspsych-html-keyboard-response-stimulus {font-size: FontSize;}
       .jspsych-display-element {
         font-family: 'Open Sans', 'Arial', sans-serif;
         font-size: 72px;
@@ -42,21 +43,13 @@
     /* create timeline */
 
     var timeline = [];
-    // create the flankers
-    // the number of flanking arrows is adjustable
-    var NFlankers = 3;
-    var flankersR = '';
-    var flankersL = '';
-    for (i = 0; i < NFlankers; i++) {
-      flankersR += ">";
-      flankersL += "<";
-    }
+
   //https://www.webnots.com/keyboard-shortcuts-for-asterisk-symbol/
     var Stim = {
       type: 'html-keyboard-response',
       stimulus: function()
-      { // The stimulus is mae based on the conditions laid out in the ANT 
-        // variable read from teh setup file.
+      { // The stimulus is based on the conditions laid out in the ANT
+        // variable read from the setup file.
         // Recall that the ANT variable is an array of objects. 
         // The object contains everything there is know about this trial.
         // Read how this trial will be made
@@ -66,17 +59,13 @@
         
         // make the stimulus for this trial
         var stim = flanker + centralArrow + flanker
-        // set the stimulus up in its position on the screen
-        if (position == 'high')
-        {stim = PutIntoTable(stim, '+',' ')}
-        else {stim = PutIntoTable(' ','+',stim)}
         return stim
       },
       choices: KeyboardChoices,
       on_finish: function(data, correct){
-        // find the correct response fpor this trial
+        // find the correct response for this trial
         var correct = jsPsych.timelineVariable("correct", true)
-        // in the list of allowable key presses, what is the index of wehat was pressed?
+        // in the list of allowable key presses, what is the index of what was pressed?
         var ResponseIndex = KeyboardChoices.indexOf(data.response)
         //console.log(ResponseMapping[ResponseIndex])
         
@@ -85,7 +74,7 @@
           else {data.correct = 0}
         /* If the ESCAPE key is pressed the current timeline is ended and the thank you screen is shown */
         if (data.key_press == 27) {jsPsych.end();}
-
+        // What data to write to the output data file
         data.flankerType = jsPsych.timelineVariable("flankerType", true);
         data.cuePos = jsPsych.timelineVariable("cuePos", true);
         data.cueType = jsPsych.timelineVariable("cueType", true);
@@ -104,7 +93,7 @@
         return stim
       },
       choices: jsPsych.NO_KEYS,
-      trial_duration: 300,
+      trial_duration: FixationDuration,
       //on_finish: function(data){
       //  data.trialType = "fixation"
       //}
@@ -125,6 +114,25 @@
       }
     };
     timeline.push(test_procedure)
+
+    /* define debrief */
+    var debrief_block = {
+      type: 'html-keyboard-response',
+        stimulus: function() {
+
+        var trials = jsPsych.data.get().filter({trialType: 'trial'});
+        var correct_trials = trials.filter({correct: true});
+        var accuracy = Math.round(correct_trials.count() / trials.count() * 100);
+        var rt = Math.round(correct_trials.select('rt').mean());
+
+        return `<p>You responded correctly on ${accuracy}% of the trials.</p>
+          <p>Your average response time was ${rt}ms.</p>
+          <p>Press any key to complete the experiment. Thank you!</p>`;
+
+      }
+    };
+    timeline.push(debrief_block);
+
     /* start the experiment */
     //jatos.onLoad(function() {
     jsPsych.init({
