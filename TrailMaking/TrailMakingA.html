@@ -12,7 +12,7 @@
     <script src="jspsych/dist/plugin-image-keyboard-response.js"></script>
     <script src="jspsych/dist/plugin-fullscreen.js"></script>
     <script src="jspsych/dist/plugin-instructions.js"></script>
-    <script src="jspsych/dist/plugin-sketchpad_JASON.js"></script>
+    <script src="plugin-sketchpad_JASON.js"></script>
     
     <script src="TrailMaking_Setup_EN.js"></script>
     
@@ -29,19 +29,18 @@
       }
     });
 
-  	/* create timeline */
-    var timeline = [];
-    
+
+
     var trial = {
       type: jsPsychSketchpad,
       prompt: '<p>Draw an apple!</p>',
-      prompt_location: 'abovecanvas',
+      prompt_location: 'JASON',
       canvas_width: 300,
       canvas_height: 300,
       canvas_border_width: 2,
       save_final_image: true
     }
-    jsPsych.run([trial])
+    jsPsych.run([ trial])
 
     //});
   </script>

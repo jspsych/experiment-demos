@@ -304,6 +304,11 @@ var jsPsychSketchpad = (function (jspsych) {
               if (this.params.prompt_location == "belowbutton") {
                   display_html = timer_html + canvas_html + finish_button_html + this.params.prompt;
               }
+              if (this.params.prompt_location == "JASON") {
+                  display_html = timer_html  + canvas_html + finish_button_html + this.params.prompt;
+              }
+
+
           }
           else {
               display_html = timer_html + canvas_html + finish_button_html;
