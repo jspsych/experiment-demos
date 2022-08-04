@@ -235,6 +235,25 @@ var jsPsychSketchpad = (function (jspsych) {
           this.init_display();
           this.setup_event_listeners();
           this.add_background_color();
+          var Circles = [
+            {centerX:100, centerY:100,radius:15, label:'1'},
+            {centerX:170, centerY:140,radius:15, label:'2'},
+            {centerX:270, centerY:240,radius:15, label:'3'},
+            {centerX:370, centerY:340,radius:15, label:'4'},
+            {centerX:170, centerY:340,radius:15, label:'5'},
+            ]
+          for (var i = 0; i < Circles .length; i++){
+            this.add_circles(Circles[i].centerX, Circles[i].centerY,Circles[i].radius)
+            this.add_text(Circles[i].centerX, Circles[i].centerY,Circles[i].label)
+          }
+          this.Circles = Circles;
+          /*var centerX = 50;
+          var centerY = 50;
+          var radius = 15;
+          var label = '1';
+          
+          this.add_circles(centerX, centerY, radius);
+          this.add_text(centerX, centerY, label);*/
           this.add_background_image().then(() => {
               on_load();
           });
@@ -251,7 +270,8 @@ var jsPsychSketchpad = (function (jspsych) {
               canvas_html = `
         <canvas id="sketchpad-canvas" 
         width="${this.params.canvas_width}" 
-        height="${this.params.canvas_height}" 
+        height="${this.params.canvas_height}"
+        style="border:4px solid" 
         class="sketchpad-rectangle"></canvas>
       `;
           }
@@ -267,6 +287,8 @@ var jsPsychSketchpad = (function (jspsych) {
           else {
               throw new Error('`canvas_shape` parameter in sketchpad plugin must be either "rectangle" or "circle"');
           }
+
+
           let sketchpad_controls = `<div id="sketchpad-controls">`;
           sketchpad_controls += `<div id="sketchpad-color-palette">`;
           for (const color of this.params.stroke_color_palette) {
@@ -316,6 +338,8 @@ var jsPsychSketchpad = (function (jspsych) {
           this.display.innerHTML = display_html;
           this.sketchpad = this.display.querySelector("#sketchpad-canvas");
           this.ctx = this.sketchpad.getContext("2d");
+          
+
       }
       setup_event_listeners() {
           document.addEventListener("pointermove", (e) => {
@@ -430,6 +454,26 @@ var jsPsychSketchpad = (function (jspsych) {
               this.ctx.fillRect(0, 0, this.params.canvas_diameter, this.params.canvas_diameter);
           }
       }
+
+      add_text(centerX, centerY, label) {
+          //this.ctx.font = "20px Georgia";
+          this.ctx.fillStyle = 'black';
+          this.ctx.font = "20px Georgia";
+          this.ctx.textAlign = "center";
+          this.ctx.fillText(label, centerX, centerY);
+
+      }
+
+      add_circles(centerX, centerY, radius, color = 'red') {
+          // ADD CIRCLE TO THE BACKGROUND
+          this.ctx.beginPath();
+          this.ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+          this.ctx.stroke();
+          this.ctx.fillStyle = color;
+          this.ctx.fill();
+      }
+
+
       add_background_image() {
           return new Promise((resolve, reject) => {
               if (this.params.background_image !== null) {
@@ -466,6 +510,13 @@ var jsPsychSketchpad = (function (jspsych) {
           });
           this.sketchpad.releasePointerCapture(e.pointerId);
       }
+
+      measure_distance(point1, point2) {
+        var distance = Math.pow((point2[1] - point1[1]),2) + Math.pow((point2[0] - point1[0]),2)
+        distance = Math.pow(distance,0.5)
+        return distance;
+      }
+
       move_draw(e) {
           if (this.is_drawing) {
               const x = Math.round(e.clientX - this.sketchpad.getBoundingClientRect().left);
@@ -478,13 +529,20 @@ var jsPsychSketchpad = (function (jspsych) {
                   action: "move",
                   time: performance.now(),
               });
-              if (x > this.params.JASON_Loc) {
+              // Is cursor in Circle 1?
+              if (this.measure_distance([this.Circles[1].centerX, this.Circles[1].centerY],[x,y]) < 10){
+                  console.log("TRUE")
+                  this.add_circles(this.Circles[1].centerX, this.Circles[1].centerY, this.Circles[1].radius, 'green') 
+              }
+              
+
+            /*  if (x > this.params.JASON_Loc) {
                 console.log('TRUE')
               }
               else {
                 console.log("FALSE")
               }
-              
+              */
           }
       }
       end_draw(e) {
