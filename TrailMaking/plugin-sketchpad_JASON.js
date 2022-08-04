@@ -1,3 +1,5 @@
+
+
 var jsPsychSketchpad = (function (jspsych) {
   'use strict';
 
@@ -235,25 +237,17 @@ var jsPsychSketchpad = (function (jspsych) {
           this.init_display();
           this.setup_event_listeners();
           this.add_background_color();
-          var Circles = [
-            {centerX:100, centerY:100,radius:15, label:'1'},
-            {centerX:170, centerY:140,radius:15, label:'2'},
-            {centerX:270, centerY:240,radius:15, label:'3'},
-            {centerX:370, centerY:340,radius:15, label:'4'},
-            {centerX:170, centerY:340,radius:15, label:'5'},
-            ]
+
           for (var i = 0; i < Circles .length; i++){
-            this.add_circles(Circles[i].centerX, Circles[i].centerY,Circles[i].radius)
+            this.add_circles(Circles[i].centerX, Circles[i].centerY,Circles[i].radius, CircleColor)
             this.add_text(Circles[i].centerX, Circles[i].centerY,Circles[i].label)
           }
           this.Circles = Circles;
-          /*var centerX = 50;
-          var centerY = 50;
-          var radius = 15;
-          var label = '1';
-          
-          this.add_circles(centerX, centerY, radius);
-          this.add_text(centerX, centerY, label);*/
+          // define which circles have been found so far
+          this.CompletedCircle = 0;
+          // define whether the cursor is in a circle or not
+          this.InCircle = false;
+
           this.add_background_image().then(() => {
               on_load();
           });
@@ -529,10 +523,20 @@ var jsPsychSketchpad = (function (jspsych) {
                   action: "move",
                   time: performance.now(),
               });
+
               // Is cursor in Circle 1?
-              if (this.measure_distance([this.Circles[1].centerX, this.Circles[1].centerY],[x,y]) < 10){
-                  console.log("TRUE")
-                  this.add_circles(this.Circles[1].centerX, this.Circles[1].centerY, this.Circles[1].radius, 'green') 
+              if ( this.CompletedCircle < Circles .length) {
+                if (this.measure_distance([this.Circles[this.CompletedCircle].centerX, this.Circles[this.CompletedCircle].centerY],[x,y]) < radius + tolerance) {
+                  if ( GiveFeedback ) {
+                      this.add_circles(this.Circles[this.CompletedCircle].centerX, this.Circles[this.CompletedCircle].centerY, this.Circles[this.CompletedCircle].radius, CorrectCircleColor); 
+                      this.add_text(this.Circles[this.CompletedCircle].centerX, this.Circles[this.CompletedCircle].centerY, this.Circles[this.CompletedCircle].label);
+                    }
+                    console.log(this.CompletedCircle+1)
+                    if ( ~ this.InCircle ) {
+                      console.log(performance.now());
+                    }
+                    this.CompletedCircle++;
+                  }
               }
               
 

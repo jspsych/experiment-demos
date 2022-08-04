@@ -12,11 +12,12 @@
     <script src="jspsych/dist/plugin-image-keyboard-response.js"></script>
     <script src="jspsych/dist/plugin-fullscreen.js"></script>
     <script src="jspsych/dist/plugin-instructions.js"></script>
-    
-    <script src="TrailMaking_Setup_EN.js"></script>
     <script src="plugin-sketchpad_JASON.js"></script>
     
+    <script src="TrailMaking_Setup_EN.js"></script>
+    
     <link href="TrailMaking.css" rel="stylesheet">
+    <script src="jatos.js"></script>
     <style>
       .stimulus { font-size: StimulusFontSize; }
     </style>
@@ -26,21 +27,26 @@
   var jsPsych = initJsPsych({
       on_finish: () => {
         jsPsych.data.displayData();
+        jatos.endStudy(jsPsych.data.get().json());
       }
     });
-
 
 
     var trial = {
       type: jsPsychSketchpad,
       prompt: '<p>Draw an apple!</p>',
       prompt_location: 'JASON',
-      canvas_width: width,
-      canvas_height: height,
-      canvas_border_width: 1,
+      canvas_width: 500,
+      canvas_height: 500,
+      canvas_border_width: 2,
       save_final_image: true
     }
-    jsPsych.run([ trial])
+//    jsPsych.run([ trial])
+
+    jatos.onLoad(() => {
+      jatos.addAbortButton();
+      jsPsych.run(timeline);
+    });
 
     //});
   </script>
