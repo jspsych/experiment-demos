@@ -18,6 +18,8 @@ var CircleColor = 'grey'
 var CorrectCircleColor = 'blue'
 // how close to each circle thge cursor needs to be
 var tolerance = 1;
+// width of the pen
+var pen_width = 2;
 // list of circle locations and their labels
 // The order in this list is the correct and expected order
 var Circles = [
@@ -27,6 +29,16 @@ var Circles = [
     {centerX:370, centerY:340,radius:radius, label:'B'},
     {centerX:170, centerY:340,radius:radius, label:'3'},
   ]
+var OutData = [];
+for (var i = 0; i < Circles .length; i++){
+     OutData[i] = {
+        'Count':-99,
+        'Label':-99,
+        'EnterTime':-99,
+        'LeaveTime':-99,
+    };            
+}
+
 //Whether or not to change the color of the circle when response is correct
 var GiveFeedback = true;          
 /* To do: 

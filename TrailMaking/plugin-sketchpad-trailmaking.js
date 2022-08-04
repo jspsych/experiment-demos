@@ -229,6 +229,7 @@ var jsPsychSketchpad = (function (jspsych) {
           this.undo_history = [];
           this.mouse_position = { x: 0, y: 0 };
           this.draw_key_held = false;
+          this.InCircle = false;
       }
       trial(display_element, trial, on_load) {
           this.display = display_element;
@@ -242,11 +243,14 @@ var jsPsychSketchpad = (function (jspsych) {
             this.add_circles(Circles[i].centerX, Circles[i].centerY,Circles[i].radius, CircleColor)
             this.add_text(Circles[i].centerX, Circles[i].centerY,Circles[i].label)
           }
+          console.log(OutData)
           this.Circles = Circles;
+          // Make the output data structure
+          this.OutData = OutData;
           // define which circles have been found so far
           this.CompletedCircle = 0;
           // define whether the cursor is in a circle or not
-          this.InCircle = false;
+          
 
           this.add_background_image().then(() => {
               on_load();
@@ -524,18 +528,38 @@ var jsPsychSketchpad = (function (jspsych) {
                   time: performance.now(),
               });
 
-              // Is cursor in Circle 1?
+              // Is cursor in a Circle?
+
+              
               if ( this.CompletedCircle < Circles .length) {
-                if (this.measure_distance([this.Circles[this.CompletedCircle].centerX, this.Circles[this.CompletedCircle].centerY],[x,y]) < radius + tolerance) {
+                // if inside a circle
+                if (this.measure_distance([this.Circles[this.CompletedCircle].centerX, this.Circles[this.CompletedCircle].centerY],[x,y]) < radius + tolerance) 
+                {
+                  // If the flag said cursor was outside circle
+                  if ( ! this.InCircle ) {
+                    console.log("Entering a circle");
+                    console.log(this.InCircle)
+                    console.log(performance.now());
+                    this.OutData[this.CompletedCircle].Count = this.CompletedCircle;
+                    this.OutData[this.CompletedCircle].EnterTime = performance.now();
+                    this.OutData[this.CompletedCircle].Label = this.Circles[this.CompletedCircle].label;
+                    this.InCircle = true;
+                  }
                   if ( GiveFeedback ) {
                       this.add_circles(this.Circles[this.CompletedCircle].centerX, this.Circles[this.CompletedCircle].centerY, this.Circles[this.CompletedCircle].radius, CorrectCircleColor); 
                       this.add_text(this.Circles[this.CompletedCircle].centerX, this.Circles[this.CompletedCircle].centerY, this.Circles[this.CompletedCircle].label);
                     }
-                    console.log(this.CompletedCircle+1)
-                    if ( ~ this.InCircle ) {
-                      console.log(performance.now());
+                    
+                }
+                // outside a circle
+                else {
+                    if ( this.InCircle ) {
+                      console.log("Left the Circle");
+                      this.OutData[this.CompletedCircle].LeaveTime = performance.now();
+                      console.log(performance.now())
+                      this.InCircle = false;
+                      this.CompletedCircle++;
                     }
-                    this.CompletedCircle++;
                   }
               }
               
@@ -661,6 +685,7 @@ var jsPsychSketchpad = (function (jspsych) {
           clearInterval(this.timer_interval);
           const trial_data = {};
           trial_data.rt = Math.round(performance.now() - this.start_time);
+          trial_data.OutData = OutData;
           trial_data.response = response;
           if (this.params.save_final_image) {
               trial_data.png = this.sketchpad.toDataURL();
