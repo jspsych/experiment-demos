@@ -230,6 +230,8 @@ var jsPsychSketchpad = (function (jspsych) {
           this.mouse_position = { x: 0, y: 0 };
           this.draw_key_held = false;
           this.InCircle = false;
+          this.InCorrectCircle = false;
+          this.InsideWhichCircle = -99
       }
       trial(display_element, trial, on_load) {
           this.display = display_element;
@@ -247,6 +249,7 @@ var jsPsychSketchpad = (function (jspsych) {
           this.Circles = Circles;
           // Make the output data structure
           this.OutData = OutData;
+          this.ErrorCount = 0;
           // define which circles have been found so far
           this.CompletedCircle = 0;
           // define whether the cursor is in a circle or not
@@ -528,9 +531,71 @@ var jsPsychSketchpad = (function (jspsych) {
                   time: performance.now(),
               });
 
-              // Is cursor in a Circle?
-
+              // Check to see if the cursor is in ANY circle
               
+              //Make sure there are still circles to find
+              if ( this.CompletedCircle < Circles .length) 
+              {
+                // outside all circles
+                if (! this.InCircle) 
+                {
+                  // cycle over ALL circles 
+                  for (var i = 0; i < Circles .length; i++)
+                  {
+                    // check to see if the cursor enters a circle
+                    var currentDistance = this.measure_distance([this.Circles[i].centerX, this.Circles[i].centerY],[x,y])
+                    if (currentDistance < (radius + tolerance)) 
+                    {
+                      // entered a circle
+                      this.InsideWhichCircle = i;
+                      // check to see if this is the correct circle
+                      if (this.InsideWhichCircle == this.CompletedCircle)
+                      {
+                        console.log("Great job!")
+                        // record data 
+                        this.OutData[this.CompletedCircle].Count = this.CompletedCircle;
+                        this.OutData[this.CompletedCircle].EnterTime = performance.now();
+                        this.OutData[this.CompletedCircle].Label = this.Circles[this.CompletedCircle].label;
+                        if ( GiveFeedback ) 
+                        {
+                          this.add_circles(this.Circles[this.CompletedCircle].centerX, this.Circles[this.CompletedCircle].centerY, this.Circles[this.CompletedCircle].radius, CorrectCircleColor); 
+                          this.add_text(this.Circles[this.CompletedCircle].centerX, this.Circles[this.CompletedCircle].centerY, this.Circles[this.CompletedCircle].label);
+                        }
+                        
+                      }
+                      // register an error
+                      else 
+                      {
+                        this.ErrorCount++; 
+                        console.log("Wrong one")
+                      }
+                      this.InCircle = true;
+                    }
+                  }
+                }
+                // If inside a circle, check when the cursor leaves the circle
+                else 
+                {
+                  // check to see if the cursor leaves a circle
+                  currentDistance = this.measure_distance([this.Circles[this.InsideWhichCircle].centerX, this.Circles[this.InsideWhichCircle].centerY],[x,y]) 
+                  if ( currentDistance > (radius + tolerance))
+                  {
+                    // left a circle
+                    
+                    this.InCircle = false;
+                    // left the Correct circle
+                    if (this.InsideWhichCircle == this.CompletedCircle)
+                    {
+                      this.OutData[this.CompletedCircle].LeaveTime = performance.now();  
+                      this.CompletedCircle++;
+                    }
+                  }
+                }
+              }
+            
+              
+            /*
+              // Is cursor in the expected circle Circle?
               if ( this.CompletedCircle < Circles .length) {
                 // if inside a circle
                 if (this.measure_distance([this.Circles[this.CompletedCircle].centerX, this.Circles[this.CompletedCircle].centerY],[x,y]) < radius + tolerance) 
@@ -563,7 +628,7 @@ var jsPsychSketchpad = (function (jspsych) {
                   }
               }
               
-
+    */
             /*  if (x > this.params.JASON_Loc) {
                 console.log('TRUE')
               }
@@ -685,6 +750,7 @@ var jsPsychSketchpad = (function (jspsych) {
           clearInterval(this.timer_interval);
           const trial_data = {};
           trial_data.rt = Math.round(performance.now() - this.start_time);
+          trial_data.ErrorCount = this.ErrorCount;
           trial_data.OutData = OutData;
           trial_data.response = response;
           if (this.params.save_final_image) {
