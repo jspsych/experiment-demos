@@ -240,13 +240,22 @@ var jsPsychSketchpad = (function (jspsych) {
           this.init_display();
           this.setup_event_listeners();
           this.add_background_color();
-
+          this.Circles = this.convert_circles_locations(Circles, LocationsAsProportions, width, height)
           for (var i = 0; i < Circles .length; i++){
-            this.add_circles(Circles[i].centerX, Circles[i].centerY,Circles[i].radius, CircleColor)
-            this.add_text(Circles[i].centerX, Circles[i].centerY,Circles[i].label)
+            this.add_circles(Circles[i].centerX, Circles[i].centerY,Circles[i].radius, CircleColor, LocationsAsProportions, width, height)
+            this.add_text(Circles[i].centerX, Circles[i].centerY,Circles[i].label, LocationsAsProportions, width, height)
           }
-          console.log(OutData)
-          this.Circles = Circles;
+          var OutData = [];
+          for (var i = 0; i < Circles .length; i++)
+          {
+             OutData[i] = {
+                'Count':-99,
+                'Label':-99,
+                'EnterTime':-99,
+                'LeaveTime':-99,
+            };            
+          }
+
           // Make the output data structure
           this.OutData = OutData;
           this.ErrorCount = 0;
@@ -456,7 +465,7 @@ var jsPsychSketchpad = (function (jspsych) {
           }
       }
 
-      add_text(centerX, centerY, label) {
+      add_text(centerX, centerY, label, AsProp = false, WindowX = 200, WindowY = 200) {
           //this.ctx.font = "20px Georgia";
           this.ctx.fillStyle = 'black';
           this.ctx.font = "20px Georgia";
@@ -465,15 +474,29 @@ var jsPsychSketchpad = (function (jspsych) {
 
       }
 
-      add_circles(centerX, centerY, radius, color = 'red') {
+      add_circles(centerX, centerY, radius, color = 'red', AsProp = false, WindowX = 200, WindowY = 200) {
           // ADD CIRCLE TO THE BACKGROUND
           this.ctx.beginPath();
+          console.log(AsProp)
           this.ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
           this.ctx.stroke();
           this.ctx.fillStyle = color;
           this.ctx.fill();
       }
 
+      convert_circles_locations(Circles, LocationsAsProportions, WindowX, WindowY)
+      {
+        if (LocationsAsProportions)
+        {
+          for ( var i = 0; i < Circles .length; i++)
+          {
+            Circles[i].centerX = Circles[i].centerX*WindowX;
+            Circles[i].centerY = Circles[i].centerY*WindowY;
+          }
+        }
+      
+        return Circles;
+      }
 
       add_background_image() {
           return new Promise((resolve, reject) => {
@@ -551,7 +574,6 @@ var jsPsychSketchpad = (function (jspsych) {
                       // check to see if this is the correct circle
                       if (this.InsideWhichCircle == this.CompletedCircle)
                       {
-                        console.log("Great job!")
                         // record data 
                         this.OutData[this.CompletedCircle].Count = this.CompletedCircle;
                         this.OutData[this.CompletedCircle].EnterTime = performance.now();
@@ -567,7 +589,6 @@ var jsPsychSketchpad = (function (jspsych) {
                       else 
                       {
                         this.ErrorCount++; 
-                        console.log("Wrong one")
                       }
                       this.InCircle = true;
                     }
@@ -751,7 +772,7 @@ var jsPsychSketchpad = (function (jspsych) {
           const trial_data = {};
           trial_data.rt = Math.round(performance.now() - this.start_time);
           trial_data.ErrorCount = this.ErrorCount;
-          trial_data.OutData = OutData;
+          trial_data.OutData = this.OutData;
           trial_data.response = response;
           if (this.params.save_final_image) {
               trial_data.png = this.sketchpad.toDataURL();

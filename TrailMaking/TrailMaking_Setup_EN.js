@@ -6,10 +6,7 @@ var TextFontSize = "30px";
 var StimulusFontSize = '60px';
 
 var keyboard_path = "./assets/images/StroopColorsKeyboard.png";
-// canvas width
-var width = 500;
-// canvas height
-var height = 500;
+
 // size of each circle
 var radius = 25;
 // color of circle
@@ -22,22 +19,7 @@ var tolerance = 1;
 var pen_width = 2;
 // list of circle locations and their labels
 // The order in this list is the correct and expected order
-var Circles = [
-    {centerX:100, centerY:100,radius:radius, label:'1'},
-    {centerX:170, centerY:140,radius:radius, label:'A'},
-    {centerX:270, centerY:240,radius:radius, label:'2'},
-    {centerX:370, centerY:340,radius:radius, label:'B'},
-    {centerX:170, centerY:340,radius:radius, label:'3'},
-  ]
-var OutData = [];
-for (var i = 0; i < Circles .length; i++){
-     OutData[i] = {
-        'Count':-99,
-        'Label':-99,
-        'EnterTime':-99,
-        'LeaveTime':-99,
-    };            
-}
+
 
 //Whether or not to change the color of the circle when response is correct
 var GiveFeedback = true;          
