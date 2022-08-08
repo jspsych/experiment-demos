@@ -41,20 +41,31 @@
   var Wwidth = window.innerWidth 
   || document.documentElement.clientWidth
   || document.body.clientWidth; 
-  console.log(Wwidth)
+  
 
   var Wheight = window.innerHeight
   || document.documentElement.clientHeight
   || document.body.clientHeight;
-  console.log(Wheight)  
+  
+  // I need to ensure that the width to height ratio is correct
+  // The ratio for an 8.5 x 11 inch peice of paper is 0.77
+  // Find teh best ratio based on the orientation 
+  var baseRatio = 0.77
+  
+  if ( Wwidth/Wheight > 1) 
+  {
+    // landscape view
+    Wwidth = Wheight * baseRatio
+  }
+
 
   //timeline.push(enter_fullscreen)
   var trial = {
       type: jsPsychSketchpad,
       
       prompt_location: 'JASON',
-      canvas_width: width,
-      canvas_height: height,
+      canvas_width: Wwidth,
+      canvas_height: Wheight - 80,
       canvas_border_width: 1,
       stroke_width: pen_width,
       save_final_image: true,

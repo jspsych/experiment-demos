@@ -238,12 +238,15 @@ var jsPsychSketchpad = (function (jspsych) {
           this.params = trial;
           this.current_stroke_color = trial.stroke_color;
           this.init_display();
+          console.log(this.params.canvas_width)
+
+          
           this.setup_event_listeners();
           this.add_background_color();
-          this.Circles = this.convert_circles_locations(Circles, LocationsAsProportions, width, height)
+          this.Circles = this.convert_circles_locations(Circles, LocationsAsProportions, this.params.canvas_width, this.params.canvas_height)
           for (var i = 0; i < Circles .length; i++){
-            this.add_circles(Circles[i].centerX, Circles[i].centerY,Circles[i].radius, CircleColor, LocationsAsProportions, width, height)
-            this.add_text(Circles[i].centerX, Circles[i].centerY,Circles[i].label, LocationsAsProportions, width, height)
+            this.add_circles(Circles[i].centerX, Circles[i].centerY,Circles[i].radius, CircleColor, LocationsAsProportions, this.params.canvas_width, this.params.canvas_height)
+            this.add_text(Circles[i].centerX, Circles[i].centerY,Circles[i].label, LocationsAsProportions, this.params.canvas_width, this.params.canvas_height)
           }
           var OutData = [];
           for (var i = 0; i < Circles .length; i++)

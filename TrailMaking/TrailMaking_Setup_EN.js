@@ -8,7 +8,7 @@ var StimulusFontSize = '60px';
 var keyboard_path = "./assets/images/StroopColorsKeyboard.png";
 
 // size of each circle
-var radius = 25;
+var radius = 15;
 // color of circle
 var CircleColor = 'grey'
 // color of circle if correct
