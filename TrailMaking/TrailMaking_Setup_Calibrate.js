@@ -11,3 +11,4 @@ var LocationsAsProportions = true;
 var width = 800;
 // canvas height
 var height = 1000;
+tolerance = 100

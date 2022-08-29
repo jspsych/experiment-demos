@@ -535,8 +535,50 @@ var jsPsychSketchpad = (function (jspsych) {
               action: "start",
               t: Math.round(performance.now() - this.start_time),
           });
-          console.log('Screen Touch')
-          this.sketchpad.releasePointerCapture(e.pointerId);
+          console.log("Key Press")
+          //Make sure there are still circles to find
+          if ( this.CompletedCircle < Circles .length) 
+          {
+            // outside all circles
+            if (! this.InCircle) 
+            {
+              // cycle over ALL circles 
+              for (var i = 0; i < Circles .length; i++)
+              {
+                // check to see if the cursor enters a circle
+                var currentDistance = this.measure_distance([this.Circles[i].centerX, this.Circles[i].centerY],[x,y])
+                if (currentDistance < (radius + tolerance)) 
+                {
+                  // entered a circle
+                  this.InsideWhichCircle = i;
+                  // check to see if this is the correct circle
+                  if (this.InsideWhichCircle == this.CompletedCircle)
+                  {
+                    // record data 
+                    this.OutData[this.CompletedCircle].Count = this.CompletedCircle;
+                    this.OutData[this.CompletedCircle].EnterTime = performance.now();
+                    this.OutData[this.CompletedCircle].Label = this.Circles[this.CompletedCircle].label;
+                    if ( GiveFeedback ) 
+                    {
+                      this.add_circles(this.Circles[this.CompletedCircle].centerX, this.Circles[this.CompletedCircle].centerY, this.Circles[this.CompletedCircle].radius, CorrectCircleColor); 
+                      this.add_text(this.Circles[this.CompletedCircle].centerX, this.Circles[this.CompletedCircle].centerY, this.Circles[this.CompletedCircle].label);
+                      this.OutData[this.CompletedCircle].XError = this.Circles[this.CompletedCircle].centerX - x;
+                      this.OutData[this.CompletedCircle].YError = this.Circles[this.CompletedCircle].centerY - y;
+                      this.CompletedCircle++;
+                    }
+                    
+                  }
+                  
+                  
+                  this.InCircle = false;
+                  
+                }
+              }
+            }
+           }   
+
+
+        this.sketchpad.releasePointerCapture(e.pointerId);
       }
 
       measure_distance(point1, point2) {
@@ -560,64 +602,7 @@ var jsPsychSketchpad = (function (jspsych) {
 
               // Check to see if the cursor is in ANY circle
               
-              //Make sure there are still circles to find
-              if ( this.CompletedCircle < Circles .length) 
-              {
-                // outside all circles
-                if (! this.InCircle) 
-                {
-                  // cycle over ALL circles 
-                  for (var i = 0; i < Circles .length; i++)
-                  {
-                    // check to see if the cursor enters a circle
-                    var currentDistance = this.measure_distance([this.Circles[i].centerX, this.Circles[i].centerY],[x,y])
-                    if (currentDistance < (radius + tolerance)) 
-                    {
-                      // entered a circle
-                      this.InsideWhichCircle = i;
-                      // check to see if this is the correct circle
-                      if (this.InsideWhichCircle == this.CompletedCircle)
-                      {
-                        // record data 
-                        this.OutData[this.CompletedCircle].Count = this.CompletedCircle;
-                        this.OutData[this.CompletedCircle].EnterTime = performance.now();
-                        this.OutData[this.CompletedCircle].Label = this.Circles[this.CompletedCircle].label;
-                        if ( GiveFeedback ) 
-                        {
-                          this.add_circles(this.Circles[this.CompletedCircle].centerX, this.Circles[this.CompletedCircle].centerY, this.Circles[this.CompletedCircle].radius, CorrectCircleColor); 
-                          this.add_text(this.Circles[this.CompletedCircle].centerX, this.Circles[this.CompletedCircle].centerY, this.Circles[this.CompletedCircle].label);
-                        }
-                        
-                      }
-                      // register an error
-                      else 
-                      {
-                        this.ErrorCount++; 
-                      }
-                      this.InCircle = true;
-                    }
-                  }
-                }
-                // If inside a circle, check when the cursor leaves the circle
-                else 
-                {
-                  // check to see if the cursor leaves a circle
-                  currentDistance = this.measure_distance([this.Circles[this.InsideWhichCircle].centerX, this.Circles[this.InsideWhichCircle].centerY],[x,y]) 
-                  if ( currentDistance > (radius + tolerance))
-                  {
-                    // left a circle
-                    
-                    this.InCircle = false;
-                    // left the Correct circle
-                    if (this.InsideWhichCircle == this.CompletedCircle)
-                    {
-                      this.OutData[this.CompletedCircle].LeaveTime = performance.now();  
-                      this.CompletedCircle++;
-                    }
-                  }
-                }
-              }
-            
+           
               
             /*
               // Is cursor in the expected circle Circle?
@@ -769,6 +754,20 @@ var jsPsychSketchpad = (function (jspsych) {
       after_key_response(info) {
           this.end_trial(info.key);
       }
+      calculate_Error() {
+        var SumX = 0.0;
+        var SumY = 0.0;
+        var count = 0
+        for (var i of this.OutData) {
+          SumX += i.XError;
+          SumY += i.YError;
+          count += 1
+        }
+        
+        this.meanErrorX = SumX / (count + 1) 
+        this.meanErrorY = SumY / (count + 1) 
+      }
+
       end_trial(response = null) {
           this.jsPsych.pluginAPI.clearAllTimeouts();
           this.jsPsych.pluginAPI.cancelAllKeyboardResponses();
@@ -777,6 +776,8 @@ var jsPsychSketchpad = (function (jspsych) {
           trial_data.rt = Math.round(performance.now() - this.start_time);
           trial_data.ErrorCount = this.ErrorCount;
           trial_data.OutData = this.OutData;
+          
+          this.calculate_Error()
           trial_data.response = response;
           if (this.params.save_final_image) {
               trial_data.png = this.sketchpad.toDataURL();
@@ -788,6 +789,8 @@ var jsPsychSketchpad = (function (jspsych) {
           document.querySelector("#sketchpad-styles").remove();
           this.jsPsych.finishTrial(trial_data);
           this.trial_finished_handler();
+          this.meanErrorX
+          this.meanErrorY
       }
   }
   SketchpadPlugin.info = info;
