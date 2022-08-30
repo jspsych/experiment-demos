@@ -22,7 +22,7 @@ var Circles = [
 	{centerX:0.924908424908425, centerY:0.913897280966767, radius: radius, label: '11'},
 	{centerX:0.0732600732600733, centerY:0.933534743202417, radius: radius, label: 'k'},
 	{centerX:0.0567765567765568, centerY:0.486404833836858, radius: radius, label: '12'},
-{centerX:0.168498168498169, centerY:0.741691842900302, radius: radius, label: 'l'},
+	{centerX:0.168498168498169, centerY:0.741691842900302, radius: radius, label: 'l'},
 ]
 
 var LocationsAsProportions = true;
