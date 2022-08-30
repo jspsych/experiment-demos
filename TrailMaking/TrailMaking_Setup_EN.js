@@ -15,6 +15,12 @@ var CircleColor = 'white'
 var CorrectCircleColor = 'yellow'
 
 var CircleBorderWidth = 2
+
+// label for first circle
+var FirstCircleLable = 'begin'
+// label for last circle
+var LastCircleLable = 'end'
+
 // how close to each circle thge cursor needs to be
 var tolerance = 0;
 // width of the pen
