@@ -12,7 +12,7 @@ var jsPsychSketchpad = (function (jspsych) {
           
           Loc: {
               type: jspsych.ParameterType.INT,
-              default: 100,
+              default: 10000,
           },   
           canvas_shape: {
               type: jspsych.ParameterType.STRING,
@@ -194,14 +194,14 @@ var jsPsychSketchpad = (function (jspsych) {
            */
           trial_duration: {
               type: jspsych.ParameterType.INT,
-              default: null,
+              default: 1000*60*3,
           },
           /**
            * Whether to show a countdown timer for the remaining trial duration
            */
           show_countdown_trial_duration: {
               type: jspsych.ParameterType.BOOL,
-              default: false,
+              default: true,
           },
           /**
            * The html for the countdown timer.
@@ -471,9 +471,16 @@ var jsPsychSketchpad = (function (jspsych) {
       add_text(centerX, centerY, label, AsProp = false, WindowX = 200, WindowY = 200) {
           //this.ctx.font = "20px Georgia";
           this.ctx.fillStyle = 'black';
-          this.ctx.font = "20px Georgia";
+          this.ctx.font = "20px Verdana";
           this.ctx.textAlign = "center";
-          this.ctx.fillText(label, centerX, centerY);
+          // In order to center text labels in the circles, the height of the text needs to be determined
+          // This is done with the measureText built in function
+          const h = this.ctx.measureText(label);
+          // The height is determined
+          const actualHeight =
+            h.actualBoundingBoxAscent + h.actualBoundingBoxDescent;
+          // The labels are offset by half the height
+          this.ctx.fillText(label, centerX, centerY+actualHeight/2);
 
       }
 
@@ -484,6 +491,7 @@ var jsPsychSketchpad = (function (jspsych) {
           this.ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
           this.ctx.stroke();
           this.ctx.fillStyle = color;
+          this.ctx.lineWidth = 2;
           this.ctx.fill();
       }
 

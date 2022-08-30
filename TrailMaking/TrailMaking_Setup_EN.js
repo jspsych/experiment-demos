@@ -10,11 +10,13 @@ var keyboard_path = "./assets/images/StroopColorsKeyboard.png";
 // size of each circle
 var radius = 15;
 // color of circle
-var CircleColor = 'grey'
+var CircleColor = 'white'
 // color of circle if correct
-var CorrectCircleColor = 'blue'
+var CorrectCircleColor = 'yellow'
+
+var CircleBorderWidth = 2
 // how close to each circle thge cursor needs to be
-var tolerance = 1;
+var tolerance = 0;
 // width of the pen
 var pen_width = 2;
 // list of circle locations and their labels
