@@ -13,10 +13,10 @@
     <script src="jspsych/dist/plugin-fullscreen.js"></script>
     <script src="jspsych/dist/plugin-instructions.js"></script>
     <script src="jspsych/dist/plugin-fullscreen.js"></script>
+    <script src="jspsych/dist/plugin-browser-check.js"></script>
     <script src="TrailMaking_Setup_EN.js"></script>
     <script src="TrailMaking_Setup_A.js"></script>
     <script src="plugin-sketchpad-trailmaking.js"></script>
-    
     <link rel="stylesheet" href="https://unpkg.com/jspsych@7.1.2/css/jspsych.css" />
     <style>
       .stimulus { font-size: StimulusFontSize; }
@@ -29,7 +29,6 @@
         jsPsych.data.displayData();
       }
     });
-  
   timeline = [];
 
 
@@ -38,34 +37,47 @@
     fullscreen_mode: true
   }
 
-  var Wwidth = window.innerWidth 
-  || document.documentElement.clientWidth
-  || document.body.clientWidth; 
-  
+  var ScreenHeight = screen.height
+  // adjust the height to make room for the counter and the finished button
+  ScreenHeight = ScreenHeight - 80 - 80
+  var ScreenWidth = screen.width
 
-  var Wheight = window.innerHeight
-  || document.documentElement.clientHeight
-  || document.body.clientHeight;
+
+  /* Check the canvas size and adjust as needed */
+  // is suggested size SMALLER than the full screen?
+  ratio = SuggestedWidth/SuggestedHeight
+  var EnoughWidth = ScreenWidth > SuggestedWidth
+  var EnoughHeight = ScreenHeight > SuggestedHeight
   
-  // I need to ensure that the width to height ratio is correct
-  // The ratio for an 8.5 x 11 inch peice of paper is 0.77
-  // Find teh best ratio based on the orientation 
-  var baseRatio = 0.77
+  // if there is not enough height use the max and adjust the width based on the ratio
   
-  if ( Wwidth/Wheight > 1) 
-  {
-    // landscape view
-    Wwidth = Wheight * baseRatio
+  CanvasWidth = SuggestedWidth
+  CanvasHeight = SuggestedHeight
+  if ( ! EnoughWidth ) {
+    CanvasWidth = ScreenWidth
+    CanvasHeight = ScreenWidth / ratio
+  }
+
+  if ( ! EnoughHeight ) {
+    CanvasHeight = ScreenHeight
+    CanvasWidth = ScreenHeight * ratio
   }
 
 
-  //timeline.push(enter_fullscreen)
+  var trial333 = {
+    type: jsPsychBrowserCheck,
+    minimum_width: 1000,
+    minimum_height: 600
+  };
+
+  //timeline.push(trial333)
+  timeline.push(enter_fullscreen)
   var trial = {
       type: jsPsychSketchpad,
       
       prompt_location: 'JASON',
-      canvas_width: Wwidth,
-      canvas_height: Wheight - 80,
+      canvas_width: CanvasWidth,
+      canvas_height: CanvasHeight,
       canvas_border_width: 1,
       stroke_width: pen_width,
       save_final_image: true,

@@ -13,6 +13,6 @@ var Circles = [
 var LocationsAsProportions = true;
 
 // canvas width
-var width = 610;
+var SuggestedWidth = 610;
 // canvas height
-var height = 348;
+var SuggestedHeight = 348;
