@@ -13,6 +13,10 @@ var jsPsychSketchpad = (function (jspsych) {
           Loc: {
               type: jspsych.ParameterType.INT,
               default: 10000,
+          },  
+          Circles: {
+              type: jspsych.ParameterType.INT,
+              default: -99,
           },   
           canvas_shape: {
               type: jspsych.ParameterType.STRING,
@@ -238,26 +242,26 @@ var jsPsychSketchpad = (function (jspsych) {
           this.params = trial;
           this.current_stroke_color = trial.stroke_color;
           this.init_display();
-          console.log(this.params.canvas_width)
+          console.log(this.params.canvas_height)
 
           
           this.setup_event_listeners();
           this.add_background_color();
-          this.Circles = this.convert_circles_locations(Circles, LocationsAsProportions, this.params.canvas_width, this.params.canvas_height)
-          for (var i = 0; i < Circles .length; i++){
-            this.add_circles(Circles[i].centerX, Circles[i].centerY,Circles[i].radius, CircleColor, LocationsAsProportions, this.params.canvas_width, this.params.canvas_height)
-            this.add_text(Circles[i].centerX, Circles[i].centerY,Circles[i].label, LocationsAsProportions, this.params.canvas_width, this.params.canvas_height)
+          this.Circles = this.convert_circles_locations(this.params.Circles, LocationsAsProportions, this.params.canvas_width, this.params.canvas_height)
+          for (var i = 0; i < this.params.Circles .length; i++){
+            this.add_circles(this.params.Circles[i].centerX, this.params.Circles[i].centerY,this.params.Circles[i].radius, CircleColor, LocationsAsProportions, this.params.canvas_width, this.params.canvas_height)
+            this.add_text(this.params.Circles[i].centerX, this.params.Circles[i].centerY, this.params.Circles[i].label, LocationsAsProportions, this.params.canvas_width, this.params.canvas_height)
             // label the first circle
             if ( i == 0 ) {
-              this.add_text(Circles[i].centerX, Circles[i].centerY - 2*Circles[i].radius,FirstCircleLable, LocationsAsProportions, this.params.canvas_width, this.params.canvas_height)
+              this.add_text(this.params.Circles[i].centerX, this.params.Circles[i].centerY - 2*this.params.Circles[i].radius,FirstCircleLable, LocationsAsProportions, this.params.canvas_width, this.params.canvas_height)
             }
-            if ( i == Circles.length - 1) {
-              this.add_text(Circles[i].centerX, Circles[i].centerY - 2*Circles[i].radius,LastCircleLable, LocationsAsProportions, this.params.canvas_width, this.params.canvas_height)
+            if ( i == this.params.Circles.length - 1) {
+              this.add_text(this.params.Circles[i].centerX, this.params.Circles[i].centerY - 2*this.params.Circles[i].radius,LastCircleLable, LocationsAsProportions, this.params.canvas_width, this.params.canvas_height)
             }
 
           }
           var OutData = [];
-          for (var i = 0; i < Circles .length; i++)
+          for (var i = 0; i < this.params.Circles .length; i++)
           {
              OutData[i] = {
                 'Count':-99,
@@ -578,13 +582,13 @@ var jsPsychSketchpad = (function (jspsych) {
               // Check to see if the cursor is in ANY circle
               
               //Make sure there are still circles to find
-              if ( this.CompletedCircle < Circles .length) 
+              if ( this.CompletedCircle < this.params.Circles .length) 
               {
                 // outside all circles
                 if (! this.InCircle) 
                 {
                   // cycle over ALL circles 
-                  for (var i = 0; i < Circles .length; i++)
+                  for (var i = 0; i < this.params.Circles .length; i++)
                   {
                     // check to see if the cursor enters a circle
                     var currentDistance = this.measure_distance([this.Circles[i].centerX, this.Circles[i].centerY],[x,y])
