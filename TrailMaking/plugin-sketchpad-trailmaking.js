@@ -253,10 +253,10 @@ var jsPsychSketchpad = (function (jspsych) {
             this.add_text(this.params.Circles[i].centerX, this.params.Circles[i].centerY, this.params.Circles[i].label, LocationsAsProportions, this.params.canvas_width, this.params.canvas_height)
             // label the first circle
             if ( i == 0 ) {
-              this.add_text(this.params.Circles[i].centerX, this.params.Circles[i].centerY - 2*this.params.Circles[i].radius,FirstCircleLable, LocationsAsProportions, this.params.canvas_width, this.params.canvas_height)
+              this.add_text(this.params.Circles[i].centerX, this.params.Circles[i].centerY - 2*this.params.Circles[i].radius,FirstCircleLabel, LocationsAsProportions, this.params.canvas_width, this.params.canvas_height)
             }
             if ( i == this.params.Circles.length - 1) {
-              this.add_text(this.params.Circles[i].centerX, this.params.Circles[i].centerY - 2*this.params.Circles[i].radius,LastCircleLable, LocationsAsProportions, this.params.canvas_width, this.params.canvas_height)
+              this.add_text(this.params.Circles[i].centerX, this.params.Circles[i].centerY - 2*this.params.Circles[i].radius,LastCircleLabel, LocationsAsProportions, this.params.canvas_width, this.params.canvas_height)
             }
 
           }

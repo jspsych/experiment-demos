@@ -3,7 +3,7 @@
 
 var FullScreenMode = true;
 var TextFontSize = "30px";
-var StimulusFontSize = '60px';
+
 
 // size of each circle
 var radius = 15;
@@ -15,9 +15,9 @@ var CorrectCircleColor = 'yellow'
 var CircleBorderWidth = 2
 
 // label for first circle
-var FirstCircleLable = 'begin'
+var FirstCircleLabel = 'begin'
 // label for last circle
-var LastCircleLable = 'end'
+var LastCircleLabel = 'end'
 
 // how close to each circle the cursor needs to be
 var tolerance = 0;
@@ -29,6 +29,8 @@ var HeightAdj = 160;
 
 //Whether or not to change the color of the circle when response is correct
 var GiveFeedback = true;          
+// How are the circle locations specified?
+var LocationsAsProportions = true;
 
 // SETUP FOR SAMPLE OF TRAILS A 
 var SampleCirclesA = [
@@ -36,12 +38,11 @@ var SampleCirclesA = [
     {centerX:0.79672131147541, centerY:0.186781609195402, radius: radius, label: '2'},
     {centerX:0.959016393442623, centerY:0.718390804597701, radius: radius, label: '3'},
     {centerX:0.763934426229508, centerY:0.554597701149425, radius: radius, label: '4'},
-    {centerX:0.814754098360656, centerY:0.96551724137931, radius: radius, label: '5'},
-    {centerX:0.178688524590164, centerY:0.968390804597701, radius: radius, label: '6'},
+    {centerX:0.814754098360656, centerY:0.92551724137931, radius: radius, label: '5'},
+    {centerX:0.178688524590164, centerY:0.928390804597701, radius: radius, label: '6'},
     {centerX:0.168852459016393, centerY:0.376436781609195, radius: radius, label: '7'},
     {centerX:0.49016393442623, centerY:0.333333333333333, radius: radius, label: '8'}
 ]
-var LocationsAsProportions = true;
 // canvas width
 var SuggestedWidthSampleA = 610;
 // canvas height
@@ -78,7 +79,6 @@ var CirclesA = [
     {centerX:0.72, centerY:0.516363636363636, radius: radius, label: '24'},
     {centerX:0.692, centerY:0.934545454545455, radius: radius, label: '25'},
 ]
-var LocationsAsProportions = true;
 // canvas width
 var SuggestedWidthA = 850;
 // canvas height
@@ -100,7 +100,6 @@ var SampleCirclesB = [
     {centerX:0.139344262295082, centerY:0.179347826086957, radius: radius, label: '4'},
     {centerX:0.454098360655738, centerY:0.230978260869565, radius: radius, label: 'D'},
 ]
-var LocationsAsProportions = true;
 // ideal canvas size
 // canvas width
 var SuggestedWidthSampleB = 610;
@@ -137,8 +136,6 @@ var CirclesB = [
     {centerX:0.0567765567765568, centerY:0.486404833836858, radius: radius, label: '12'},
     {centerX:0.168498168498169, centerY:0.741691842900302, radius: radius, label: 'L'},
 ]
-
-var LocationsAsProportions = true;
 // canvas width
 var SuggestedWidthB = 850;
 // canvas height

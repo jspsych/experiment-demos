@@ -10,3 +10,15 @@ The participant uses a mouse or touch screen to connect the dots. When the parti
 
 
 # Modifiable Parameters
+- FullScreenMode (true)
+- TextFontSize ("30px") (text inside each circle)
+- radius (15) (size of each circle)
+- CircleColor ('white')
+- CorrectCircleColor ('yellow') (Color circle changes too when selected correctly)
+- CircleBorderWidth (2)
+- FirstCircleLabel ('begin') (label for first circle)
+- LastCircleLable ('end') (label for last circle)
+- var tolerance (0) (how close to each circle the cursor needs to be)
+- pen_width (2) (width of the pen)
+- HeightAdj (160) (Adjustment of the height allwoing room for the finished button and the timer)
+

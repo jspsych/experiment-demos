@@ -57,8 +57,10 @@
   CanvasWidthSampleB = sizes.CanvasWidth
   CanvasHeightSampleB = sizes.CanvasHeight
   
+  if ( FullScreenMode ) {
+    timeline.push(enter_fullscreen)  
+  }
   
-  timeline.push(enter_fullscreen)
   var trial_SampleA = {
       type: jsPsychSketchpad,   
       Circles: SampleCirclesA, 
@@ -142,7 +144,11 @@
   timeline.push(trialA)
   timeline.push(trial_SampleB)
   timeline.push(trialB)
-  timeline.push(exit_fullscreen)
+
+  if ( FullScreenMode ) {
+    timeline.push(exit_fullscreen)
+  }
+  
   jsPsych.run(timeline)
 
     //});
