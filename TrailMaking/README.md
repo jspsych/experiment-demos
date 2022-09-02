@@ -8,6 +8,9 @@ This tasks assesses a participant's ability to rapidly scan and sequence a serie
 # Task Description
 The participant uses a mouse or touch screen to connect the dots. When the participant enters a circle in the correct order to circle changes color. Therefore, if a participant enters a circle in the incorrect order the circle does not change color.
 
+# Duration
+A timer is set for both trials, based on current instructions.
+
 
 # Modifiable Parameters
 - FullScreenMode (true)
@@ -22,3 +25,10 @@ The participant uses a mouse or touch screen to connect the dots. When the parti
 - pen_width (2) (width of the pen)
 - HeightAdj (160) (Adjustment of the height allwoing room for the finished button and the timer)
 
+# Saved data
+The drawing for each task is automatically saved as a PNG file with the name TrialA.png or TrialB.png.
+The overall error count and total duration are saved. 
+The elapsed time is recorded as well as the time when someone entered a circle and when they left a circle. This can be used to calculate thinking time and travel time.
+
+# Special functions
+- The plugin-sketchpad has been modified for this task and is called *plugin-sketchpad-trailmaking.js*- FindCanvasSize.js which uses a sugested height/width and finds a possible size basedon the screen and orientation.

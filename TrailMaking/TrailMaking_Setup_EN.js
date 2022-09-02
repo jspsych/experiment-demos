@@ -153,24 +153,16 @@ var DurationB = 1000*60*5
 
 
 
+
+
+
+// InstructionsSampleA
+
+var InstructionsA = 'You will see numbers in circles. Please draw a line with the mouse or your finger (on a touch screen) from one number to the next, in order. Start at 1, then go to 2, then go to 3, and so on. Please try not to lift the pen as you move from one number to the next. Work as quickly and accurately as you can. When you have finished press the Finished button at the bottom.' 
+
+var InstructionsB = 'You will see numbers and letters in circles. Please draw a line with the mouse or your finger (on a touch screen) from one number to the next, in order. Start at 1, then go to 2, then go to 3, and so on. Please try not to lift the pen as you move from one number to the next. Work as quickly and accurately as you can. When you have finished press the Finished button at the bottom.'
+
 /*
-
-
-InstructionsSampleA
-
-var instructions = {“There are numbers in circles on this page. Please take the pencil and draw a line from one number"}
-to the next, in order. Start at 1 [point to the number], then go to 2 [point], then go to 3 [point], and so on.
-Please try not to lift the pen as you move from one number to the next. Work as quickly and accurately as you
-can.”
-If there is an error: “You were at number 2. What is the next number?” Wait for the subject’s response and
-say, “please start here and continue.”
-Test A: If Sample A is completed correctly. Repeat the above instructions. Start timing as soon as the
-instruction id given to begin. Stop timing when the Trail is completed, or when maximum time is reached (150
-seconds = 2.5 min). 
-
-
-
-
 Part B
 Sample B: “There are numbers and letters in circles on this page. Please take the pen and draw a line,
 alternating in order between the numbers and letters. Start at number 1 [point], then go to the first letter, A

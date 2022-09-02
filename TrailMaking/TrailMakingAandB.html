@@ -15,6 +15,7 @@
     <script src="jspsych/dist/plugin-fullscreen.js"></script>
     <script src="jspsych/dist/plugin-browser-check.js"></script>
     <script src="jspsych/dist/plugin-survey-text.js"></script>
+     <script src="jspsych/dist/plugin-instructions.js"></script>
     <script src="TrailMaking_Setup_EN.js"></script>
     <script src="FindCanvasSize.js"></script>
     <script src="plugin-sketchpad-trailmaking.js"></script>
@@ -140,6 +141,16 @@
       }
     }
 
+    var InstructionsA = {
+    type: jsPsychInstructions,
+    pages: [
+    'Welcome to the Trail Making Task. Click next to begin.',
+      InstructionsA
+    ],
+    show_clickable_nav: true
+}
+
+  timeline.push(InstructionsA)
   timeline.push(trial_SampleA)
   timeline.push(trialA)
   timeline.push(trial_SampleB)
