@@ -242,9 +242,8 @@ var jsPsychSketchpad = (function (jspsych) {
           this.params = trial;
           this.current_stroke_color = trial.stroke_color;
           this.init_display();
-          console.log(this.params.canvas_height)
-
           
+
           this.setup_event_listeners();
           this.add_background_color();
           this.Circles = this.convert_circles_locations(this.params.Circles, LocationsAsProportions, this.params.canvas_width, this.params.canvas_height)
@@ -351,7 +350,7 @@ var jsPsychSketchpad = (function (jspsych) {
               if (this.params.prompt_location == "belowbutton") {
                   display_html = timer_html + canvas_html + finish_button_html + this.params.prompt;
               }
-              if (this.params.prompt_location == "JASON") {
+              if (this.params.prompt_location == "loc") {
                   display_html = timer_html  + canvas_html + finish_button_html + this.params.prompt;
               }
 
@@ -483,7 +482,7 @@ var jsPsychSketchpad = (function (jspsych) {
       add_text(centerX, centerY, label, AsProp = false, WindowX = 200, WindowY = 200) {
           //this.ctx.font = "20px Georgia";
           this.ctx.fillStyle = 'black';
-          this.ctx.font = "20px Verdana";
+          this.ctx.font = TextFont;
           this.ctx.textAlign = "center";
           // In order to center text labels in the circles, the height of the text needs to be determined
           // This is done with the measureText built in function

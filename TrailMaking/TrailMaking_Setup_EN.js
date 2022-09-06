@@ -2,8 +2,8 @@
 
 
 var FullScreenMode = true;
-var TextFontSize = "30px";
 
+var InstructionFontSize = "40px";
 
 // size of each circle
 var radius = 15;
@@ -11,7 +11,8 @@ var radius = 15;
 var CircleColor = 'white'
 // color of circle if correct
 var CorrectCircleColor = 'yellow'
-
+// size of text inside each circle
+var TextFont = "20px Verdana";
 var CircleBorderWidth = 2
 
 // label for first circle
@@ -147,30 +148,13 @@ var DurationB = 1000*60*5
 
 
 
+var InstructionsSampleA = ['For this task you will see numbers in circles.</br> Please draw a line with the mouse or your finger (on a touch screen) from one number to the next, in order.</br> Start at 1, then go to 2, then go to 3, and so on.</br> Please try not to lift the pen as you move from one number to the next. Work as quickly and accurately as you can.</br> When you have finished press the Finished button at the bottom of the screen.', 
+    'When your line enters a correct circle it will change color, indicating that this is the next correct circle in the sequence.</br> If the circle does not change color, you have made a mistake and need to draw your line to a different circle.', 'First, you will tray a practice test. Press next to practice'];
+
+var InstructionsA = ['Now you will perform the actual test.</br> Remember, start at 1, then go to 2, then go to 3, and so on.</br> Please try not to lift the pen as you move from one number to the next. Work as quickly and accurately as you can.</br> When you have finished press the Finished button at the bottom of the screen.', 'When your line enters a correct circle it will change color, indicating that this is the next correct circle in the sequence.</br> If the circle does not change color, you have made a mistake and need to draw your line to a different circle.', 'Press next to begin.'];
 
 
+var InstructionsSampleB = ['For this task you will see numbers and letters in circles.</br> Please draw a line with the mouse or your finger (on a touch screen) from one number/letter to the next, in order.</br> Start at 1, then go to A, then go to 2, then B, and so on.</br> Please try not to lift the pen as you move from one number to the next. Work as quickly and accurately as you can.<br> When you have finished press the Finished button at the bottom of the screen.', 'When your line enters a correct circle it will change color, indicating that this is the next correct circle in the sequence.</br> If the circle does not change color, you have made a mistake and need to draw your line to a different circle.', 'First, you will try a practice test. Press next to practice'];
 
+var InstructionsB = ['Now you will perform the actual test.</br> Remember, start at 1, then go to A, then go to 2, then B, and so on.</br> Please try not to lift the pen as you move from one number to the next. Work as quickly and accurately as you can.</br> When you have finished press the Finished button at the bottom of the screen.', 'When your line enters a correct circle it will change color, indicating that this is the next correct circle in the sequence.</br> If the circle does not change color, you have made a mistake and need to draw your line to a different circle.', 'Press next to begin.'];
 
-
-
-
-
-
-// InstructionsSampleA
-
-var InstructionsA = 'You will see numbers in circles. Please draw a line with the mouse or your finger (on a touch screen) from one number to the next, in order. Start at 1, then go to 2, then go to 3, and so on. Please try not to lift the pen as you move from one number to the next. Work as quickly and accurately as you can. When you have finished press the Finished button at the bottom.' 
-
-var InstructionsB = 'You will see numbers and letters in circles. Please draw a line with the mouse or your finger (on a touch screen) from one number to the next, in order. Start at 1, then go to 2, then go to 3, and so on. Please try not to lift the pen as you move from one number to the next. Work as quickly and accurately as you can. When you have finished press the Finished button at the bottom.'
-
-/*
-Part B
-Sample B: “There are numbers and letters in circles on this page. Please take the pen and draw a line,
-alternating in order between the numbers and letters. Start at number 1 [point], then go to the first letter, A
-[point], then go to the next number, 2 [point], and then the next letter, B [point], and so on. Please try not to lift
-the pen as you move from one number or letter to the next. Work as quickly and accurately as you can.”
-If there is an error: “You were at number 2. What is the next letter?” Wait for the subject’s response and say,
-“please start here and continue.”
-Test B: If Sample B is completed correctly. Repeat the above instructions. Start timing as soon as the
-instruction id given to begin. Stop timing when the Trail is completed, or when maximum time is reached (300
-seconds = 5 min). 
-*/
