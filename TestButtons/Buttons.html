@@ -10,11 +10,24 @@
     <script src="jspsych/dist/jspsych.js"></script>
     <script src="jspsych/dist/plugin-html-keyboard-response.js"></script>
     <script src="jspsych/dist/plugin-image-keyboard-response.js"></script>
-    <script src="plugin-html-GridButton-response.js"></script>
+    <script src="plugin-html-numberpad-response.js"></script>
     <script src="jspsych/dist/plugin-fullscreen.js"></script>
      <script src="jspsych/dist/plugin-instructions.js"></script>
     
-    
+    <style>
+    .button {
+      border: none;
+      color: red;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 26px;
+      margin: 4px 2px;
+      cursor: pointer;
+    }
+    .button {background-color: #4CAF50;} /* Green */
+    </style>
   </head>
   <script>
   var jsPsych = initJsPsych({});
@@ -23,11 +36,14 @@
 
 
 var trial = {
-  type: jsPsychHtmlGridButtonResponse,
-  button_html: '<button class="jspsych-btn">%choice%</button>',
+  type: jsPsychNumberPadResponse,
+  //button_html: '<button class="jspsych-btn">%choice%</button>',
+  button_html: '<button class="button" >%choice%</button>',
   stimulus: '<p style="font-size:48px; color:red;">GREEN</p>',
-  choices: [['Red','red'], ['Green','green'], ['Blue','blue']],
-  //choices: [['Red'], ['Green']],// 'Blue'],
+  choices: ['1','2','3','4','5','6','7','8','9','0','Enter'],
+  margin_vertical: '4px',
+  response_ends_trial: false,
+  response_disables: false,
   prompt: "<p>What color is the ink?</p>"
 };
 //	<input type="number" name="age" id="age" min="1" max="10" step="2">
