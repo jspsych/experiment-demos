@@ -85,6 +85,7 @@ var jsPsychNumberPadResponse = (function (jspsych) {
           html += '<div id="jspsych-html-button-response-btngroup">';
           html += '<table class="center"><tr>';
           console.log(trial.choices.length)
+          // What to do if buttons 1 - 0 are pressed 
           for (var i = 0; i < trial.choices.length-1; i++) {
               var str = buttons[i].replace(/%choice%/g, trial.choices[i]);
               if (i == trial.choices.length-2){
@@ -160,9 +161,6 @@ var jsPsychNumberPadResponse = (function (jspsych) {
               var end_time = performance.now();
               var rt = Math.round(end_time - start_time);
               
-              
-
-              console.log(response)
               // after a valid response, the stimulus will have the CSS class 'responded'
               // which can be used to provide visual feedback that a response was recorded
               display_element.querySelector("#jspsych-html-button-response-stimulus").className +=
@@ -170,12 +168,21 @@ var jsPsychNumberPadResponse = (function (jspsych) {
               // disable all the buttons after a response
               var btns = document.querySelectorAll(".jspsych-html-button-response-button button");
               // push the response to the array 
+              // What to do if the Enter button is pressed
               if (parseInt(choice) == 10) {
                 console.log('End Trial')
                 end_trial();
               }
+              else if (parseInt(choice) == 11) {
+                console.log('BACKSPACE Trial')
+                response.button.pop();
+                document.getElementById('jspsych-html-button-response-stimulus').innerHTML = '<p>'+response.button+'</p>';
+              }
               else {
                 response.button.push(parseInt(choice)+1);
+                
+                document.getElementById('jspsych-html-button-response-stimulus').innerHTML = '<p>'+response.button+'</p>';
+                
                 response.rt = rt;
               }
               
