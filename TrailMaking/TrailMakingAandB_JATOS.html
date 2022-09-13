@@ -19,10 +19,17 @@
     <script src="TrailMaking_Setup_EN.js"></script>
     <script src="FindCanvasSize.js"></script>
     <script src="plugin-sketchpad-trailmaking.js"></script>
-    <link rel='stylesheet' type='text/css' href='default_style.css'>
+    <script src="jatos.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/jspsych@7.1.2/css/jspsych.css" />
-    
-    <link rel="stylesheet" type='text/css' href='TrailMaking.css'>
+    <link rel='stylesheet' type='text/css' href='default_style.css'>
+    <style>
+      .stimulus { font-size: StimulusFontSize; }
+      .jspsych-content {
+         max-width: 60%;
+      }
+      .jspsych-display-element {
+      font-size: 25px;
+    </style>
 
   </head>
   <script>
@@ -51,14 +58,9 @@
   sizes = FindCanvasSize(SuggestedWidthB, SuggestedHeightB, HeightAdj,0) 
   CanvasWidthB = sizes.CanvasWidth
   CanvasHeightB = sizes.CanvasHeight
-  console.log('CANVAS SIZE FOR SAMPLE A')
   sizes = FindCanvasSize(SuggestedWidthSampleA, SuggestedHeightSampleA, HeightAdj,0) 
   CanvasWidthSampleA = sizes.CanvasWidth
-  console.log(CanvasWidthSampleA)
   CanvasHeightSampleA = sizes.CanvasHeight
-
-  console.log('CANVAS SIZE FOR SAMPLE B')
-  
   sizes = FindCanvasSize(SuggestedWidthSampleB, SuggestedHeightSampleB, HeightAdj,0) 
   CanvasWidthSampleB = sizes.CanvasWidth
   CanvasHeightSampleB = sizes.CanvasHeight
@@ -70,8 +72,8 @@
   var trial_SampleA = {
       type: jsPsychSketchpad,   
       Circles: SampleCirclesA, 
-      canvas_width: 400,//CanvasWidthSampleA,
-      canvas_height: 400,//CanvasHeightSampleA,
+      canvas_width: CanvasWidthSampleA,
+      canvas_height: CanvasHeightSampleA,
       canvas_border_width: 1,
       stroke_width: pen_width,
       save_final_image: false,
@@ -167,7 +169,7 @@
     show_clickable_nav: true
   }
 
-  //timeline.push(InstructionsSampleA)
+  timeline.push(InstructionsSampleA)
   timeline.push(trial_SampleA)
   
   timeline.push(InstructionsA)
@@ -183,7 +185,13 @@
     timeline.push(exit_fullscreen)
   }
   
-  jsPsych.run(timeline)
+  //jsPsych.run(timeline)
+  jatos.onLoad(() => {
+      console.log(jatos)
+      jatos.addAbortButton();
+      jsPsych.run(timeline);
+    });
+
 
     //});
   </script>

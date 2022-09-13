@@ -12,7 +12,7 @@ var jsPsychSketchpad = (function (jspsych) {
           
           Loc: {
               type: jspsych.ParameterType.INT,
-              default: 10000,
+              default: 10,
           },  
           Circles: {
               type: jspsych.ParameterType.INT,
@@ -295,7 +295,9 @@ var jsPsychSketchpad = (function (jspsych) {
         <canvas id="sketchpad-canvas" 
         width="${this.params.canvas_width}" 
         height="${this.params.canvas_height}"
-        style="border:4px solid" 
+        left=0px
+
+        style="border:3px solid" 
         class="sketchpad-rectangle"></canvas>
       `;
           }

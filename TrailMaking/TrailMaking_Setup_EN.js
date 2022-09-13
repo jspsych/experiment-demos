@@ -25,7 +25,7 @@ var tolerance = 0;
 // width of the pen
 var pen_width = 2;
 
-// The order in this list is the correct and expected order
+// This adjust the height so there is room for the Finished button and the timer
 var HeightAdj = 160;
 
 //Whether or not to change the color of the circle when response is correct
@@ -34,6 +34,7 @@ var GiveFeedback = true;
 var LocationsAsProportions = true;
 
 // SETUP FOR SAMPLE OF TRAILS A 
+// The order in this list is the correct and expected order
 var SampleCirclesA = [
     {centerX:0.540983606557377, centerY:0.660919540229885, radius: radius, label: '1'},
     {centerX:0.79672131147541, centerY:0.186781609195402, radius: radius, label: '2'},
@@ -45,9 +46,9 @@ var SampleCirclesA = [
     {centerX:0.49016393442623, centerY:0.333333333333333, radius: radius, label: '8'}
 ]
 // canvas width
-var SuggestedWidthSampleA = 610;
+var SuggestedWidthSampleA = 350;//610;
 // canvas height
-var SuggestedHeightSampleA = 348;
+var SuggestedHeightSampleA = 610;//348;
 // use timer?
 var ShowTimerSampleA = false;
 

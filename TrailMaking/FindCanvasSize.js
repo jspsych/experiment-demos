@@ -14,9 +14,16 @@ function FindCanvasSize(SuggestedWidth, SuggestedHeight, HeightOffset, WidthOffs
   console.log("Actual Height")
   console.log(ScreenHeight)
 
+  console.log("Suggested Width")
+  console.log(SuggestedWidth)
+  console.log("Actual Width")
+  console.log(ScreenWidth)
+
   /* Check the canvas size and adjust as needed */
   // is suggested size SMALLER than the full screen?
   ratio = SuggestedWidth/SuggestedHeight
+  console.log('Ratio:')
+  console.log(ratio)
   var EnoughWidth = ScreenWidth > SuggestedWidth
   var EnoughHeight = ScreenHeight > SuggestedHeight
 
@@ -29,11 +36,15 @@ function FindCanvasSize(SuggestedWidth, SuggestedHeight, HeightOffset, WidthOffs
     console.log('Not enought height OR width')
     // check if screen is portrair or landscape
     if ( ScreenWidth > ScreenHeight) {
+      console.log('Landscape')
       // landscape -- use height adjust width
+      CanvasHeight = ScreenHeight - HeightOffset
       CanvasWidth = ScreenHeight * ratio
     }
     else {
       // portrait
+      console.log('portrait')
+      CanvasWidth = ScreenWidth*0.95
       CanvasHeight = ScreenWidth / ratio
     }
   }
