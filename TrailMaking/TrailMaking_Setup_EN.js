@@ -46,9 +46,9 @@ var SampleCirclesA = [
     {centerX:0.49016393442623, centerY:0.333333333333333, radius: radius, label: '8'}
 ]
 // canvas width
-var SuggestedWidthSampleA = 350;//610;
+var SuggestedWidthSampleA = 610;
 // canvas height
-var SuggestedHeightSampleA = 610;//348;
+var SuggestedHeightSampleA = 348;
 // use timer?
 var ShowTimerSampleA = false;
 

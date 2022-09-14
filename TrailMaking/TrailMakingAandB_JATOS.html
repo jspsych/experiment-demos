@@ -20,20 +20,15 @@
     <script src="FindCanvasSize.js"></script>
     <script src="plugin-sketchpad-trailmaking.js"></script>
     <script src="jatos.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/jspsych@7.1.2/css/jspsych.css" />
     <link rel='stylesheet' type='text/css' href='default_style.css'>
-    <style>
-      .stimulus { font-size: StimulusFontSize; }
-      .jspsych-content {
-         max-width: 60%;
-      }
-      .jspsych-display-element {
-      font-size: 25px;
-    </style>
+    <link rel="stylesheet" href="https://unpkg.com/jspsych@7.1.2/css/jspsych.css" />
+    
+    <link rel="stylesheet" type='text/css' href='TrailMaking.css'>
 
   </head>
   <script>
   var jsPsych = initJsPsych({
+    on_finish: () => jatos.endStudy(jsPsych.data.get().json())
       //on_finish: () => {
         //jsPsych.data.displayData();
       //}
@@ -58,9 +53,14 @@
   sizes = FindCanvasSize(SuggestedWidthB, SuggestedHeightB, HeightAdj,0) 
   CanvasWidthB = sizes.CanvasWidth
   CanvasHeightB = sizes.CanvasHeight
+  console.log('CANVAS SIZE FOR SAMPLE A')
   sizes = FindCanvasSize(SuggestedWidthSampleA, SuggestedHeightSampleA, HeightAdj,0) 
   CanvasWidthSampleA = sizes.CanvasWidth
+  console.log(CanvasWidthSampleA)
   CanvasHeightSampleA = sizes.CanvasHeight
+
+  console.log('CANVAS SIZE FOR SAMPLE B')
+  
   sizes = FindCanvasSize(SuggestedWidthSampleB, SuggestedHeightSampleB, HeightAdj,0) 
   CanvasWidthSampleB = sizes.CanvasWidth
   CanvasHeightSampleB = sizes.CanvasHeight
@@ -185,13 +185,18 @@
     timeline.push(exit_fullscreen)
   }
   
-  //jsPsych.run(timeline)
-  jatos.onLoad(() => {
+    jatos.onLoad(() => {
       console.log(jatos)
-      jatos.addAbortButton();
+      jatos.addAbortButton({
+        text: "Quit",
+        confirmText: "You really wanne quit?",
+        tooltip: "Don't you dare clicking here!",
+        msg: "This worker aborted the mission.",
+        style: "color:green",
+        style: "left:1em"
+      });
       jsPsych.run(timeline);
     });
-
 
     //});
   </script>
