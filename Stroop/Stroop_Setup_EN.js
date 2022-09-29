@@ -41,6 +41,8 @@ var ColorWordThankYouText = 'Thank you. Press any key to end the experiment.'
 */
 var ResponseChoices = ['v','b','n','m',27]
 
+var ResponseButtons = ['Red','Yellow','Green','Blue']
+
 var FeedbackLength = 400; // This is in milliseconds
 
 //var FixationLength = 500; // This is in milliseconds
