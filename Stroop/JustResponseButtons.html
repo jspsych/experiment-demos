@@ -24,44 +24,95 @@
   <script>
   // It would be nice to get the response buttons at the bottom of the screen, the prompt at the top and the stimulus in the center.
   var jsPsych = initJsPsych({
-    display_element: 'jspsych-target'
+    display_element: 'jspsych-target',
+    on_interaction_data_update: function(data) {
+        console.log(JSON.stringify(data))
+    },
+    on_finish: function() {
+      jsPsych.data.get().localSave('csv','StroopWordMydata.csv');
+    }
   });
   timeline = [];
+
   var enter_fullscreen = {
     type: jsPsychFullscreen,
     fullscreen_mode: true
   }
-  var trial = {
+  
+  var fixation = {
     type: jsPsychHtmlButtonResponse,
-    stimulus: '<p style="font-size:48px; color:red;">GREEN</p>',
-    choices: ['Red', 'Yellow','Green', 'Blue'],
-    prompt: "<p>What color is the ink?</p>"
+    stimulus: "+",
+    choices: ResponseButtons,
+    post_trial_gap: 0,
+    prompt: StroopWordPrompt,
+    trial_duration: function(){
+      return jsPsych.randomization.sampleWithoutReplacement([250, 500, 750, 1000, 1250, 1500, 1750, 2000], 1)[0];
+    },
+    data: {task: 'fixation'}
+  }
+
+  var feedback = {
+    type: jsPsychHtmlButtonResponse,
+    stimulus: function(){
+      var last_trial_correct = jsPsych.data.get().last(1).values()[0].correct;
+      if (last_trial_correct) {
+        return "Correct";
+      } else {
+        return "Incorrect";
+      }
+    },
+    choices: ResponseButtons,
+    post_trial_gap: 0,
+    prompt: StroopWordPrompt,
+    trial_duration: FeedbackLength,
+  }  
+  // This creates the stimulus
+  var Stimulus = {
+    type: jsPsychHtmlButtonResponse,
+    stimulus: jsPsych.timelineVariable('Word'), // Variable in the config file
+    choices: ResponseButtons, 
+    post_trial_gap: 0,
+    prompt: StroopWordPrompt, //Add this to config file
+    on_finish: function(data){
+      // check to see if teh response is correct 
+      data.correct = data.response == data.button;
+      },
   };
+  // This is used for labelling trials in the output data
+  var prac_stimulus = Object.assign({}, Stimulus)
+    prac_stimulus = Object.assign(prac_stimulus, {    
+      data: {
+        button: jsPsych.timelineVariable('button'),
+        task: 'practice trial'
+      }
+  })
 
-  var test_procedure = {
-    timeline: [
-            {
-            type: jsPsychHtmlButtonResponse,
-            stimulus: '+',
-            choices: ResponseButtons,
-            prompt: "<p>What color is the ink?</p>",
-            trial_duration: 500
+  var test_stimulus = Object.assign({}, Stimulus)
+    test_stimulus = Object.assign(test_stimulus, {    
+      data: {
+        letter: jsPsych.timelineVariable('button'),
+        task: 'test trial'
+      }
+  })
 
-        },
-    {
-      type: jsPsychHtmlButtonResponse,
-      stimulus: jsPsych.timelineVariable('Word'),
-      choices: ResponseButtons,
-      prompt: "<p>What color is the ink?</p>"
+  // Define a practie procedure which provides feedback
+  var practice_procedure = {
+      timeline: [fixation, prac_stimulus, feedback],
+      timeline_variables: StroopWordList,
+      randomize_order: true,
+      repetitions: WordPracticeRepeats,
     }
-    ], 
-    timeline_variables: StroopWordList,
-    randomize_order: true,
-    repetitions: WordTestRepeats 
-
+  // Define the test procedure which does NOT provide feedback
+  var test_procedure = {
+      timeline: [fixation, test_stimulus],
+      timeline_variables: StroopWordList,
+      randomize_order: true,
+      repetitions: WordTestRepeats, 
   }
   //timeline.push(enter_fullscreen)
-  timeline.push(test_procedure)  
+  //timeline.push(Stimulus)
+  timeline.push(practice_procedure)  
+  //timeline.push(test_procedure)  
   jsPsych.run(timeline)
 
 

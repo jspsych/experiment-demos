@@ -74,26 +74,31 @@ function PutIntoTable(top='top', middle='mid', width=600, height=300, img_path=k
 	This is the stimuli list for both stroop color and word
    The green is very bright. TO make it less bright change it to something like (0,200,0)
 */
+var StroopWordPrompt = "<p>What word is written on the screen?</p>";
 
 var StroopWordList = [
    {
       "Word": "Red",
       "letter": "v",
+      "button": 0,
       "Color": "(255,0,0)"
     },
     {
       "Word": "Yellow",
       "letter": "b",
+      "button": 1,
       "Color": "(255,255,0)"
     },
     {
       "Word": "Green",
       "letter": "n",
+      "button": 2,
       "Color": "(0,255,0)"
     },
     {
       "Word": "Blue",
       "letter": "m",
+      "button": 3,
       "Color": "(0,0,255)"
     }
 ]

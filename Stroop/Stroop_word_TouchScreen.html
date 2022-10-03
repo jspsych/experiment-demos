@@ -2,28 +2,42 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <meta name="description" content="jsPsych Stroop: Color Task">
+    <meta name="description" content="jsPsych Stroop Word">
     <meta name="keywords" content="HTML, CSS, JavaScript">
     <meta name="author" content="Jason Steffener, NCMLab">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stroop: Color</title>
-    <script src="jspsych-6.2.0/jspsych.js"></script>
-    <script src="jspsych-6.2.0/plugins/jspsych-html-keyboard-response.js"></script>
-    <script src="jspsych-6.2.0/plugins/jspsych-image-keyboard-response.js"></script>
-    <script src="jspsych-6.2.0/plugins/jspsych-fullscreen.js"></script>
-    <script src="jspsych-6.2.0/plugins/jspsych-instructions.js"></script>
+    <title>Stroop Word</title>
+    <script src="jspsych/dist/jspsych.js"></script>
+    <script src="jspsych/dist/plugin-fullscreen.js"></script>
+    <script src="jspsych/dist/plugin-html-keyboard-response.js"></script>
+    <script src="jspsych/dist/plugin-instructions.js"></script>
+    <script src="jspsych/dist/plugin-html-button-response_Stroop.js"></script>
+    
+    
+    <link rel="stylesheet" href="https://unpkg.com/jspsych@7.1.2/css/jspsych.css" />
     <script src="Stroop_Setup_EN.js"></script>
-    <link href="jspsych-6.2.0/css/jspsych.css" rel="stylesheet" type="text/css">
-    <link href="Stroop.css" rel="stylesheet">
-    <style>
-      .stimulus { font-size: StimulusFontSize; }
-    </style>
+    <link rel="stylesheet" type='text/css' href='Test.css'>
 
   </head>
-  <script>
+  <body>
+    <div id="jspsych-target"  style="overflow:hidden; height:100%" class='center'></div>
+</body>
 
-  	/* create timeline */
+  </var>
+  <script>
+	/*<?php
+		$post_data = json_decode(file_get_contents('php://input'), true); 
+		// the directory "data" must be writable by the server
+		$name = "data/".$post_data['filename'].".csv"; 
+		$data = $post_data['filedata'];
+		// write the file to disk
+		file_put_contents($name, $data);
+		?>*/
+
+    /* create timeline */
+
     var timeline = [];
+
     // Make experiment run in full screen mode
     // Note, that the fullscreen plugin needs to imported above
     timeline.push({
@@ -33,37 +47,38 @@
 
    /* Create the initial welcome and instructions for practice.
    This uses the built in instructions module. Make sure it gets imported above */ 
-    var ColorInstr = {
+    var WordInstr = {
        type: 'instructions',
-       pages: ColorInstrText,
-       show_clickable_nav: true
-    }
-    
-    /* After practice is completed the performance is being checked. If accuracy is below 50% then the practice is repeated.
-    These are the instructions stating that practice will be repeated. */
-    var ColorPoorPerfInstr = {
-       type: 'instructions',
-       pages: ColorInstrPoorPerformanceText,
-       show_clickable_nav: true
-    }
-    /* Instructions shown to participants before test trials begin. */
-    var ColorTestInstr = {
-       type: 'instructions',
-       pages: ColorTestInstrText,
+       pages: WordInstrText,
        show_clickable_nav: true
     }
 
+    /* After practice is completed the performance is being checked. If accuracy is below 50% then the practice is repeated.
+    These are the instructions stating that practice will be repeated. */
+    var WordPoorPerfInstr = {
+       type: 'instructions',
+       pages: WordInstrPoorPerformanceText,
+       show_clickable_nav: true
+    }
+
+    /* Instructions shown to participants before test trials begin. */
+    var WordTestInstr = {
+       type: 'instructions',
+       pages: WordTestInstrText,
+       show_clickable_nav: true
+    }
+    
       /* define thank you trial */
     var thank_you = {
-      	type: "html-keyboard-response",
-      	stimulus: ColorThankYouText
+      type: "html-keyboard-response",
+      stimulus: WordThankYouText
     };
 
     var Stimulus = {
       type: 'html-keyboard-response',
       stimulus: function()
       { 
-        var Stim = '<svg width="400" height="100"><rect width="400" height="100" style="fill:rgb'+jsPsych.timelineVariable('Color', true)+'; stroke-width:3;stroke:rgb(0,0,0)" /></svg>'
+        var Stim = jsPsych.timelineVariable('Word', true)
         var temp = PutIntoTable('',Stim)
         return temp;
       },
@@ -104,13 +119,13 @@
       },
   	  choices: jsPsych.NO_KEYS,
   	  trial_duration: function(){
-          return jsPsych.randomization.sampleWithoutReplacement([250, 500, 750, 1000, 1250, 1500, 1750, 2000], 1)[0];
-        },
+        return jsPsych.randomization.sampleWithoutReplacement([250, 500, 750, 1000, 1250, 1500, 1750, 2000], 1)[0];
+      },
       data: {type: 'fixation'}
   	}
-    
     /* ARROWS 37 = left, 38 = up, 39 = right, 40 = down */
-    /* Escape = 27 */ 
+    /* Escape = 27 */
+
     var feedback = {
       type: 'html-keyboard-response',
       trial_duration: FeedbackLength,
@@ -125,47 +140,48 @@
         }
       }
     }
-    
-    // Define a practice procedure which provides feedback
+
+    // Define a practie procedure which provides feedback
     var practice_procedure = {
       timeline: [fixation, prac_stimulus, feedback],
       timeline_variables: StroopWordList,
       sample: {
         type: 'fixed-repetitions',
-        size: ColorPracticeRepeats, 
+        size: WordPracticeRepeats, 
       }
     }
+
     // Define the test procedure which does NOT provide feedback
     var test_procedure = {
       timeline: [fixation, test_stimulus],
       timeline_variables: StroopWordList,
       sample: {
         type: 'fixed-repetitions',
-        size: ColorTestRepeats, 
+        size: WordTestRepeats, 
       }
     }
+
     // Prepare debriefing for after the practice trials
     var debrief = {
       type: "html-keyboard-response",
-        stimulus: function() {
-          var DataFromThisPracticeRun = jsPsych.data.get().filter({type: 'practice trial'}).last(4*ColorPracticeRepeats)
-          var total_trials = DataFromThisPracticeRun.count();
-          var NumberCorrect = DataFromThisPracticeRun.filter({correct: true}).count()
-          var accuracy = Math.round(NumberCorrect / total_trials * 100);
-          return "<p>You responded correctly on <strong>"+accuracy+"%</strong> of the "+total_trials+" trials.</p> " +
-          "<p>Press any key to continue the experiment. </p>";
-          
-        }
+      stimulus: function() {
+        var DataFromThisPracticeRun = jsPsych.data.get().filter({type: 'practice trial'}).last(4*WordPracticeRepeats)
+        var total_trials = DataFromThisPracticeRun.count();
+        var NumberCorrect = DataFromThisPracticeRun.filter({correct: true}).count()
+        
+        var accuracy = Math.round(NumberCorrect / total_trials * 100);
+        return "<p>You responded correctly on <strong>"+accuracy+"%</strong> of the "+total_trials+" trials.</p> " +
+        "<p>Press any key to continue the experiment. </p>"; 
+      }
     };
     // This a conditional block which checks to see if the performance during practice was good enough
     // if performance on the practice is above 50% accurate then the test procedure is done.
     // otherwise practice is done again
-    // If accuracy is below 50% then run what is in the  if_node timeline, else skip it
     var if_node = {
-      timeline: [ColorPoorPerfInstr, practice_procedure, debrief],
+      timeline: [WordPoorPerfInstr, practice_procedure, debrief],
       conditional_function: function(){
         // check performance on the practice
-            var DataFromThisPracticeRun = jsPsych.data.get().filter({type: 'practice trial'}).last(4*ColorPracticeRepeats)
+              var DataFromThisPracticeRun = jsPsych.data.get().filter({type: 'practice trial'}).last(4*WordPracticeRepeats)
               var total_trials = DataFromThisPracticeRun.count();
               var NumberCorrect = DataFromThisPracticeRun.filter({correct: true}).count()
               var accuracy = Math.round(NumberCorrect / total_trials * 100);
@@ -177,7 +193,7 @@
       }
     }
 
-    timeline.push(ColorInstr);
+    timeline.push(WordInstr);
     // run the practice trials
     timeline.push(practice_procedure);
     // provide feedback as to their performance
@@ -187,25 +203,23 @@
     // decide if the person did well enough
     timeline.push(if_node);
     // Present test instructions
-    timeline.push(ColorTestInstr);
+    timeline.push(WordTestInstr);
     // run the test
     timeline.push(test_procedure);
     timeline.push(thank_you);
-
+    
     /* start the experiment */
-    //jatos.onLoad(function() {  
+    //jatos.onLoad(function() {
     jsPsych.init({
-    // This sets the width of the experiment to 600 pixels. This will wrap all text to that amount.
-      experiment_width: 600,
-    	timeline: timeline,
-      on_interaction_data_update: function(data) {
-        console.log(JSON.stringify(data))
-      },
-      on_finish: function() {
-        jsPsych.data.get().localSave('csv','StroopColorMydata.csv');
-      }
-      //on_finish: saveData
-    });
+        experiment_width: 600,
+        timeline: timeline,
+        on_interaction_data_update: function(data) {
+          console.log(JSON.stringify(data))
+        },
+        on_finish: function() {
+          jsPsych.data.get().localSave('csv','StroopWordMydata.csv');
+        }
+      });
     //});
   </script>
 </html>
