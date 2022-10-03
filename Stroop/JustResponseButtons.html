@@ -9,6 +9,7 @@
     <title>Stroop Word</title>
     <script src="jspsych/dist/jspsych.js"></script>
     <script src="jspsych/dist/plugin-fullscreen.js"></script>
+    <script src="jspsych/dist/plugin-instructions.js"></script>
     <script src="jspsych/dist/plugin-html-keyboard-response.js"></script>
     <script src="jspsych/dist/plugin-html-button-response_Stroop.js"></script>
     
@@ -29,7 +30,7 @@
         console.log(JSON.stringify(data))
     },
     on_finish: function() {
-      jsPsych.data.get().localSave('csv','StroopWordMydata.csv');
+      //jsPsych.data.get().localSave('csv','StroopWordMydata.csv');
     }
   });
   timeline = [];
@@ -39,6 +40,34 @@
     fullscreen_mode: true
   }
   
+  /* Create the initial welcome and instructions for practice.
+   This uses the built in instructions module. Make sure it gets imported above */ 
+    var ColorInstr = {
+       type: jsPsychInstructions,
+       pages: ColorInstrText,
+       show_clickable_nav: true
+    }
+    
+    /* After practice is completed the performance is being checked. If accuracy is below 50% then the practice is repeated.
+    These are the instructions stating that practice will be repeated. */
+    var ColorPoorPerfInstr = {
+       type: jsPsychInstructions,
+       pages: ColorInstrPoorPerformanceText,
+       show_clickable_nav: true
+    }
+    /* Instructions shown to participants before test trials begin. */
+    var ColorTestInstr = {
+       type: jsPsychInstructions,
+       pages: ColorTestInstrText,
+       show_clickable_nav: true
+    }
+
+    /* define thank you trial */
+    var thank_you = {
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: ColorThankYouText
+    };
+
   var fixation = {
     type: jsPsychHtmlButtonResponse,
     stimulus: "+",
@@ -109,10 +138,73 @@
       randomize_order: true,
       repetitions: WordTestRepeats, 
   }
-  //timeline.push(enter_fullscreen)
-  //timeline.push(Stimulus)
-  timeline.push(practice_procedure)  
-  //timeline.push(test_procedure)  
+
+      // Prepare debriefing for after the practice trials
+    var debrief = {
+      type: jsPsychHtmlKeyboardResponse,
+        stimulus: function() {
+          var DataFromThisPracticeRun = jsPsych.data.get().filter({task: 'practice trial'}).last(4*WordPracticeRepeats)
+          console.log(DataFromThisPracticeRun)
+          var total_trials = DataFromThisPracticeRun.count();
+          var NumberCorrect = DataFromThisPracticeRun.filter({correct: true}).count()
+          var accuracy = Math.round(NumberCorrect / total_trials * 100);
+          return "<p>You responded correctly on <strong>"+accuracy+"%</strong> of the "+total_trials+" trials.</p> " +
+          "<p>Press any key to continue the experiment. </p>";
+          
+        }
+    };
+    var debrief2 = {
+      prompt: '',
+      type: jsPsychHtmlButtonResponse,
+      stimulus: function() {
+            var DataFromThisPracticeRun = jsPsych.data.get().filter({task: 'practice trial'}).last(4*WordPracticeRepeats)
+            console.log(DataFromThisPracticeRun)
+            var total_trials = DataFromThisPracticeRun.count();
+            var NumberCorrect = DataFromThisPracticeRun.filter({correct: true}).count()
+            var accuracy = Math.round(NumberCorrect / total_trials * 100);
+            return "<p>You responded correctly on <strong>"+accuracy+"%</strong> of the "+total_trials+" trials.</p> " +
+            "<p>Press any key to continue the experiment. </p>";
+            
+          },
+      choices: ['Next'], 
+    }
+  // This a conditional block which checks to see if the performance during practice was good enough
+    // if performance on the practice is above 50% accurate then the test procedure is done.
+    // otherwise practice is done again
+    // If accuracy is below 50% then run what is in the  if_node timeline, else skip it
+    var if_node = {
+      timeline: [ColorPoorPerfInstr, practice_procedure, debrief],
+      conditional_function: function(){
+        // check performance on the practice
+            var DataFromThisPracticeRun = jsPsych.data.get().filter({task: 'practice trial'}).last(4*ColorPracticeRepeats)
+              var total_trials = DataFromThisPracticeRun.count();
+              var NumberCorrect = DataFromThisPracticeRun.filter({correct: true}).count()
+              var accuracy = Math.round(NumberCorrect / total_trials * 100);
+          if (accuracy < 50) {
+            return true;
+          } else {
+            return false;
+          }
+      }
+    }
+
+  timeline.push(ColorInstr);
+  // run the practice trials
+  timeline.push(practice_procedure);
+  // provide feedback as to their performance
+  timeline.push(debrief2);
+  // decide if the person did well enough
+  timeline.push(if_node);
+  // decide if the person did well enough
+  timeline.push(if_node);
+  // Present test instructions
+  timeline.push(ColorTestInstr);
+  // run the test
+  timeline.push(test_procedure);
+  timeline.push(thank_you);
+
+
+
   jsPsych.run(timeline)
 
 

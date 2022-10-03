@@ -8,15 +8,15 @@ table {
   margin-right: auto;
   }
 .TopRow {
-  height:  20vh, 
+  height:  30%, 
     text-align: center;
   }
 .MidRow {
   text-align: center;
-  height:  60%; 
+  height:  40%; 
   vertical-align: middle;
   } 
 .BotRow {
-  text-align: center;
-  height:  20%; 
+  text-align: top;
+  height:  30%; 
   } 
