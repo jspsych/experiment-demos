@@ -5,13 +5,18 @@ var StimulusFontSize = '60px';
 var keyboard_path = "./assets/images/StroopColorsKeyboard.png"
 
 var ColorInstrText = [
-      '<p style="font-size:'+TextFontSize+'">Welcome to the Stroop Color experiment.</p>',
-      '<p style="font-size:'+TextFontSize+'">You will be identifying the color of rectangles shown on the screen. When a rectangle is shown on the screen you are to press the key that corresponds to that color, as shown in the figure. This figure will be present during the entire experiment.</p><img src="' + keyboard_path + '"></img>',
-      '<p style="font-size:'+TextFontSize+'">Before doing the actual experiment you will complete some practice trials. These will give you feedback about your accuracy. <p style="font-size:'+TextFontSize+'">Remember to respond as accurately and quickly as possible.</p>'];
+      {'page': '<p style="font-size:'+TextFontSize+'">Welcome to the Stroop Color experiment.</p>'},
+      {'page':'<p style="font-size:'+TextFontSize+'">You need to indicate what color is shown on the screen. </br>You will press the button that corresponds to that color.'},
+      {'page':'<p style="font-size:'+TextFontSize+'">Before doing the actual experiment you will complete some practice trials. These will give you feedback about your accuracy. <p style="font-size:'+TextFontSize+'">Remember to respond as accurately and quickly as possible.</p>'},
+      ];
 
-var ColorInstrPoorPerformanceText = ['<p style="font-size:'+TextFontSize+'">There will be another run of practice trials with feedback.</p> <p style="font-size:'+TextFontSize+'">Remember to respond as accurately and quickly as possible.</p>'];
+var ColorInstrPoorPerformanceText = [
+      {'page':'<p style="font-size:'+TextFontSize+'">There will be another run of practice trials with feedback.</p> <p style="font-size:'+TextFontSize+'">Remember to respond as accurately and quickly as possible.</p>'}
+      ];
 
-var ColorTestInstrText = ['<p style="font-size:'+TextFontSize+'">You will now respond without any feedback. Try to respond as quickly and accurately as possible. </p>'];
+var ColorTestInstrText = [
+      {'page':'<p style="font-size:'+TextFontSize+'">Now you will do the task.</br>It will be exactly like the practice except you will not get feedback. </p>'}
+      ];
 
 var WordInstrText = [
       {'page': '<p style="font-size:'+TextFontSize+'">Welcome to the Stroop Word experiment.</p>'},
@@ -38,7 +43,7 @@ var ColorWordInstrPoorPerformanceText = ['<p style="font-size:'+TextFontSize+'">
 
 var ColorWordTestInstrText = ['<p style="font-size:'+TextFontSize+'">You will now respond without any feedback. Try to respond as quickly and accurately as possible. </p>'];
 
-var ColorThankYouText = 'Thank you. Press any key to end the experiment.'
+var ColorThankYouText = [{'page':'Thank you. Press any key to end the experiment.'}]
 
 var WordThankYouText = [{'page': 'Thank you. Press Next to end the experiment.'}]
 
@@ -81,7 +86,8 @@ function PutIntoTable(top='top', middle='mid', width=600, height=300, img_path=k
 	This is the stimuli list for both stroop color and word
    The green is very bright. TO make it less bright change it to something like (0,200,0)
 */
-var StroopWordPrompt = "<p>What word is written on the screen?</p>";
+var StroopWordPrompt = "<p>What word is shown below?</p>";
+var StroopColorPrompt = "<p>What color is shown below?</p>";
 
 var StroopWordList = [
    {
