@@ -55,7 +55,7 @@
 
   var fixation = {
     type: jsPsychHtmlButtonResponse,
-    stimulus: "+",
+    stimulus: '<p style="font-size:'+StimulusFontSize+'">+</p>',
     choices: ResponseButtons,
     post_trial_gap: 0,
     prompt: StroopWordPrompt,
@@ -70,9 +70,9 @@
     stimulus: function(){
       var last_trial_correct = jsPsych.data.get().last(1).values()[0].correct;
       if (last_trial_correct) {
-        return "Correct";
+        return '<p style="font-size:'+FeedbackFontSize+'";>Correct</p>';
       } else {
-        return "Incorrect";
+        return '<p style="font-size:'+FeedbackFontSize+'";>Incorrect</p>';
       }
     },
     choices: ResponseButtons,
@@ -84,6 +84,11 @@
   var Stimulus = {
     type: jsPsychHtmlButtonResponse,
     stimulus: jsPsych.timelineVariable('Word'), // Variable in the config file
+    stimulus: function()
+      {
+        var Stim = '<p class="stimulus" style="font-size:'+StimulusFontSize+'">' +jsPsych.timelineVariable('Word')+'</p>'
+        return Stim
+      },
     choices: ResponseButtons, 
     post_trial_gap: 0,
     prompt: StroopWordPrompt, //Add this to config file
