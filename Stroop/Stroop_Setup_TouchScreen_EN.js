@@ -1,6 +1,7 @@
 var FullScreenMode = false;
 var TextFontSize = "30px";
 var StimulusFontSize = '60px';
+var FeedbackFontSize = "30px";
 
 var keyboard_path = "./assets/images/StroopColorsKeyboard.png"
 
@@ -35,19 +36,25 @@ var WordTestInstrText = [
       ]
     
 var ColorWordInstrText = [
-      '<p style="font-size:'+TextFontSize+'">Welcome to the Stroop Color/Word experiment.</p>',
-      '<p style="font-size:'+TextFontSize+'">In this task, words will appear in the center of the screen. You need to indicate the COLOR that the word is written in (and ignore what the word says). Press the key that corresponds to that color, as shown in the figure. This figure will be present during the entire experiment.</p><img src="' + keyboard_path + '"></img>',
-      '<p style="font-size:'+TextFontSize+'">Before doing the actual experiment you will complete some practice trials. These will give you feedback about your accuracy. <p style="font-size:'+TextFontSize+'">Remember to respond as accurately and quickly as possible.</p>'];
+      {'page': '<p style="font-size:'+TextFontSize+'">Welcome to the Stroop Color/Word experiment.</p>'},
+      {'page': '<p style="font-size:'+TextFontSize+'">In this task, words will appear like this:</p><p style="font-size:'+ StimulusFontSize+'; color:rgb(250,0,0)">BLUE</p>'},
+      {'page': '<p style="font-size:'+TextFontSize+'">You need to indicate the COLOR that the word is written in (and ignore what the word says). Press the button that corresponds to that color.' },
+      {'page': '<p style="font-size:'+TextFontSize+'">Before doing the actual experiment you will complete some practice trials. These will give you feedback about your accuracy. <p style="font-size:'+TextFontSize+'">Remember to respond as accurately and quickly as possible.</p>'},
+      ];
 
-var ColorWordInstrPoorPerformanceText = ['<p style="font-size:'+TextFontSize+'">There will be another run of practice trials with feedback.</p> <p style="font-size:'+TextFontSize+'">Remember to respond as accurately and quickly as possible.</p>'];
+var ColorWordInstrPoorPerformanceText = [
+      {'page': '<p style="font-size:'+TextFontSize+'">There will be another run of practice trials with feedback.</p> <p style="font-size:'+TextFontSize+'">Remember to respond as accurately and quickly as possible.</p>'}
+      ];
 
-var ColorWordTestInstrText = ['<p style="font-size:'+TextFontSize+'">You will now respond without any feedback. Try to respond as quickly and accurately as possible. </p>'];
+var ColorWordTestInstrText = [
+      {'page': '<p style="font-size:'+TextFontSize+'">You will now respond without any feedback. Try to respond as quickly and accurately as possible. </p>'}
+      ];
 
 var ColorThankYouText = [{'page':'Thank you. Press any key to end the experiment.'}]
 
 var WordThankYouText = [{'page': 'Thank you. Press Next to end the experiment.'}]
 
-var ColorWordThankYouText = 'Thank you. Press any key to end the experiment.'
+var ColorWordThankYouText = [{'page': 'Thank you. Press any key to end the experiment.'}]
 
 /* If the response choice get modified here they also need to be modified below
 */
@@ -61,7 +68,7 @@ var FeedbackLength = 400; // This is in milliseconds
 
 var ColorPracticeRepeats = 4
 var WordPracticeRepeats = 1 
-var ColorWordPracticeRepeats = 2
+var ColorWordPracticeRepeats = 1
 
 // Since there are 4 possible trials, the number of trials will be 4 times the number of repeats
 var ColorTestRepeats = 8
@@ -88,6 +95,7 @@ function PutIntoTable(top='top', middle='mid', width=600, height=300, img_path=k
 */
 var StroopWordPrompt = "<p>What word is shown below?</p>";
 var StroopColorPrompt = "<p>What color is shown below?</p>";
+var StroopColorWordPrompt = "<p>What color is the word written in?</p>";
 
 var StroopWordList = [
    {
@@ -124,96 +132,112 @@ var StroopColorWordList = [
    "Word": "Red",
    "Congruency": "Con",
    "letter": "v",
+   "button": 0,
    "Color": "(255,0,0)"
  },
  {
    "Word": "Red",
    "Congruency": "Incon",
    "letter": "b",
+   "button": 1,
    "Color": "(255,255,0)"
  },
  {
    "Word": "Red",
    "Congruency": "Incon",
    "letter": "m",
+   "button": 3,
    "Color": "(0,0,255)"
  },
  {
    "Word": "Red",
    "Congruency": "Incon",
    "letter": "n",
+   "button": 2,
    "Color": "(0,255,0)"
  },
  {
    "Word": "Yellow",
    "Congruency": "Incon",
    "letter": "v",
+   "button": 0,
    "Color": "(255,0,0)"
  },
  {
    "Word": "Yellow",
    "Congruency": "Con",
    "letter": "b",
+   "button": 1,
    "Color": "(255,255,0)"
  },
  {
    "Word": "Yellow",
    "Congruency": "Incon",
    "letter": "m",
+   "button": 3,
    "Color": "(0,0,255)"
  },
  {
    "Word": "Yellow",
    "Congruency": "Incon",
    "letter": "n",
+   "button": 2,
    "Color": "(0,255,0)"
  },
  {
    "Word": "Blue",
    "Congruency": "Incon",
    "letter": "v",
+   "button": 0,
    "Color": "(255,0,0)"
  },
  {
    "Word": "Blue",
    "Congruency": "Incon",
    "letter": "b",
+   "button": 1,
    "Color": "(255,255,0)"
  },
  {
    "Word": "Blue",
    "Congruency": "Con",
    "letter": "m",
+   "button": 3,
    "Color": "(0,0,255)"
  },
  {
    "Word": "Blue",
    "Congruency": "Incon",
    "letter": "n",
+   "button": 2,
    "Color": "(0,255,0)"
  },
  {
    "Word": "Green",
    "Congruency": "Incon",
    "letter": "v",
+   "button": 0,
    "Color": "(255,0,0)"
  },
  {
    "Word": "Green",
    "Congruency": "Incon",
    "letter": "b",
+   "button": 1,
    "Color": "(255,255,0)"
  },
  {
    "Word": "Green",
    "Congruency": "Incon",
    "letter": "m",
+   "button": 3,
    "Color": "(0,0,255)"
  },
  {
    "Word": "Green",
    "Congruency": "Con",
    "letter": "n",
+   "button": 2,
    "Color": "(0,255,0)"
  }
 ]
