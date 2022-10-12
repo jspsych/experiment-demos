@@ -48,7 +48,7 @@ var FeedbackLength = 400; // This is in milliseconds
 //var FixationLength = 500; // This is in milliseconds
 
 var ColorPracticeRepeats = 4
-var WordPracticeRepeats = 1
+var WordPracticeRepeats = 4
 var ColorWordPracticeRepeats = 2
 
 // Since there are 4 possible trials, the number of trials will be 4 times the number of repeats
@@ -74,7 +74,7 @@ function PutIntoTable(top='top', middle='mid', width=600, height=300, img_path=k
 	This is the stimuli list for both stroop color and word
    The green is very bright. TO make it less bright change it to something like (0,200,0)
 */
-var StroopWordPrompt = "<p>What word is written on the screen?</p>";
+var StroopWordPrompt = "<p>What color is the ink?</p>";
 
 var StroopWordList = [
    {

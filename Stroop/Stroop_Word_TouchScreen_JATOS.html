@@ -28,9 +28,23 @@
     on_interaction_data_update: function(data) {
         console.log(JSON.stringify(data))
     },
+    on_trial_start: function() {
+      //http://127.0.0.1:9000/publix/fNTRhuguK1x
+      console.log(jatos.urlQueryParameters);
+      var input = jatos.urlQueryParameters;
+      console.log(input.a);
+      // Add jatos info to the data file
+      jsPsych.data.addProperties({assignedURLID: input.a});
+      jsPsych.data.addProperties({jatosWorkerID: jatos.workerId});
+      jsPsych.data.addProperties({jatosBatchID: jatos.batchId});
+      jsPsych.data.addProperties({jatosStudyName: jatos.studyProperties.title});
+      jsPsych.data.addProperties({jatosTaskName: jatos.componentProperties.title});
+      
+    },
     on_finish: function() {
       jatos.endStudy(jsPsych.data.get().json())
-      jatos.startNextComponent();
+      jatos.startComponent(15);
+      
       //jsPsych.data.get().localSave('csv','StroopWordMydata.csv');
     }
   });
@@ -211,6 +225,7 @@
   timeline.push(thank_you);
 
   jatos.onLoad(() => {
+      console.log('JATOS:')
       console.log(jatos)
       jatos.addAbortButton({
         text: "Quit",
