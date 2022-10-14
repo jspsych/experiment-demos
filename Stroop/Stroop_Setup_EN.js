@@ -15,7 +15,7 @@ var ColorTestInstrText = ['<p style="font-size:'+TextFontSize+'">You will now re
 
 var WordInstrText = [
    '<p style="font-size:'+TextFontSize+'">Welcome to the Stroop Word experiment.</p>',
-   '<p style="font-size:'+TextFontSize+'">In this task, words will appear in the center of the screen, like   this:</p><p style="font-size:'+TextFontSize+'">BLUE</p><p style="font-size:'+TextFontSize+'">You need to indicate what word is written. </br>Press the key that corresponds to that color, as shown in the figure. This figure will be present during the entire experiment.</p><img src="' + keyboard_path + '"></img>',
+   '<p style="font-size:'+TextFontSize+'">In this task, words will appear in the center of the screen, like this:</p><p style="font-size:'+TextFontSize+'">BLUE</p><p style="font-size:'+TextFontSize+'">You need to indicate what word is written. </br>Press the key that corresponds to that color, as shown in the figure. This figure will be present during the entire experiment.</p><img src="' + keyboard_path + '"></img>',
    '<p style="font-size:'+TextFontSize+'">Before doing the actual experiment you will complete some practice trials. These will give you feedback about your accuracy. <p style="font-size:'+TextFontSize+'">Remember to respond as accurately and quickly as possible.</p>'];
    
 var WordInstrPoorPerformanceText = ['<p style="font-size:'+TextFontSize+'">There will be another run of practice trials with feedback.</p> <p style="font-size:'+TextFontSize+'">Remember to respond as accurately and quickly as possible.</p>'];
@@ -40,6 +40,8 @@ var ColorWordThankYouText = 'Thank you. Press any key to end the experiment.'
 /* If the response choice get modified here they also need to be modified below
 */
 var ResponseChoices = ['v','b','n','m',27]
+
+var ResponseButtons = ['Red','Yellow','Green','Blue']
 
 var FeedbackLength = 400; // This is in milliseconds
 
@@ -72,26 +74,31 @@ function PutIntoTable(top='top', middle='mid', width=600, height=300, img_path=k
 	This is the stimuli list for both stroop color and word
    The green is very bright. TO make it less bright change it to something like (0,200,0)
 */
+var StroopWordPrompt = "<p>What color is the ink?</p>";
 
 var StroopWordList = [
    {
       "Word": "Red",
       "letter": "v",
+      "button": 0,
       "Color": "(255,0,0)"
     },
     {
       "Word": "Yellow",
       "letter": "b",
+      "button": 1,
       "Color": "(255,255,0)"
     },
     {
       "Word": "Green",
       "letter": "n",
+      "button": 2,
       "Color": "(0,255,0)"
     },
     {
       "Word": "Blue",
       "letter": "m",
+      "button": 3,
       "Color": "(0,0,255)"
     }
 ]
